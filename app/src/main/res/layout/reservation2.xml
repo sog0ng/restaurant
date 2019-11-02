@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/reservation2"
+        android:id="@+id/next"
         android:layout_width="408dp"
         android:layout_height="104dp"
         android:layout_marginEnd="2dp"

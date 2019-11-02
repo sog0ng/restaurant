@@ -61,13 +61,13 @@ public class ReservationActivity extends AppCompatActivity {
             Button next = (Button) findViewById(R.id.next);
 
             next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
-                    reservation2.putExtra("restaurant_name", restaurant_name.getText());
-                    // 메뉴, 수량도 전달해주기.
-                    startActivity(reservation2);
-                }
-            });
+            @Override
+            public void onClick(View v) {
+                Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
+                reservation2.putExtra("restaurant_name", restaurant_name.getText());
+                // 메뉴, 수량도 전달해주기.
+                startActivity(reservation2);
+            }
+        });
     }
 }

@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity">
+        <activity android:name=".ListActivity" android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity android:name=".ReservationActivity">
@@ -26,6 +26,12 @@
 
         </activity>
         <activity android:name=".SignUpActivity">
+
+        </activity>
+        <activity android:name=".ResultActivity">
+
+        </activity>
+        <activity android:name="SetupActivity">
 
         </activity>
     </application>
