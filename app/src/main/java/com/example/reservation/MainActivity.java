@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent list = new Intent(getApplicationContext(), ListActivity.class);
+                Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);
                 // id, pw 맞는지 검사하는 코드 작성...
-                startActivity(list);
+                startActivity(customer);
             }
         });
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 테스트용
-        Intent test = new Intent(getApplicationContext(), SetupActivity.class);
-        startActivity(test);
+        Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);
+        startActivity(owner);
     }
 }
