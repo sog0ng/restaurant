@@ -56,15 +56,15 @@ public class OwnerHomeActivity extends AppCompatActivity {
 
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
         // 닉네임 년 월 일 시간 분 도착시간 인원
-        adapter.addItem("닉네임", 2019, 11, 9, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 13, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "몇시몇분", 3);
-        adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "몇시몇분", 3);
+        adapter.addItem("닉네임", 2019, 11, 9, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 13, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "도착시간", 3);
 
 
 

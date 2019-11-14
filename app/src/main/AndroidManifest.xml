@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".CustomerHomeActivity" android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".OwnerHomeActivity" android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity android:name=".ReservationActivity">

@@ -92,7 +92,7 @@ public class ListViewAdapter extends BaseAdapter {
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
             arrival_time.setText(listViewItem.getArrival_time());
-            covers.setText(Integer.toString(listViewItem.getCovers()) + "명");
+            covers.setText(listViewItem.getCovers() + "명");
             Button submit = (Button) convertView.findViewById(R.id.submit);
 
             submit.setOnClickListener(new Button.OnClickListener() {
@@ -106,14 +106,14 @@ public class ListViewAdapter extends BaseAdapter {
             title.setText("승인 예약");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
-            covers.setText(Integer.toString(listViewItem.getCovers()) + "명");
+            covers.setText(listViewItem.getCovers() + "명");
             dDay.setText(Integer.toString(iDday));
         } else {
             // unaccepted
             title.setText("미승인 예약");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
-            covers.setText(Integer.toString(listViewItem.getCovers()) + "명");
+            covers.setText(listViewItem.getCovers() + "명");
             accept.setText("승인");
             reject.setText("거절");
 
