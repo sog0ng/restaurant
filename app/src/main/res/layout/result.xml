@@ -7,7 +7,7 @@
 
     <Button
         android:layout_width="408dp"
-        android:layout_height="104dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="1dp"
@@ -17,14 +17,17 @@
 
     <TextView
         android:id="@+id/restaurant_name2"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="87dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:text="가게 이름"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
