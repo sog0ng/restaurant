@@ -16,10 +16,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.reservation.CustomerHomeActivity;
 import com.example.reservation.MainActivity;
+import com.example.reservation.Owner;
 import com.example.reservation.OwnerHomeActivity;
 import com.example.reservation.R;
 import com.example.reservation.ReservationActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,12 +35,14 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     Activity activity;
+
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
     }
-    public ListViewAdapter() {
+    public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<Owner> list) {
 
     }
+
 
     @Override
     public int getCount() {
