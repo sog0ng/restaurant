@@ -55,10 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
                             if((editid.getText().toString().equals(user_each.getId1())) && (user_each.getIs_owner().equals("1")) && (editpw.getText().toString().equals(user_each.getPassword())) ){//
                                 //손님이고 아이디,패스워드 일치할 경우
-                                Log.i("id:", editid.getText().toString());
-                                Log.i("pw:", editpw.getText().toString());
-                                Log.i("누구냐:",user_each.getIs_owner());
+                                Log.i("id:", editid.getText().toString());//test용 log
+                                Log.i("pw:", editpw.getText().toString());//test용 log
+                                Log.i("누구냐:",user_each.getIs_owner());//test용 log
+                                Log.i("key값:",key);//test용 log
                                 Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
+                                customer.putExtra("key",key);
+                                customer.putExtra("id", editid.getText().toString());
                                 startActivity(customer);
                                 break;
                             }
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                                 Log.i("pw:", editpw.getText().toString());
                                 Log.i("누구냐:",user_each.getIs_owner());
                                 Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
+                                owner.putExtra("key",key);
+                                owner.putExtra("id", editid.getText().toString());
                                 startActivity(owner);
                                 break;
                             }

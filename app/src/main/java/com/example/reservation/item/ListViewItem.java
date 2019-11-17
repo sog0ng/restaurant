@@ -3,8 +3,8 @@ package com.example.reservation.item;
 import android.widget.Button;
 
 public class ListViewItem {
+    //손님이 예앾
     private int type;
-
     private String nickname;
     private String r_date;
     private String arrival_time;

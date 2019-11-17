@@ -2,12 +2,15 @@ package com.example.reservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,7 +19,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.reservation.item.ListViewItem;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CustomerHomeActivity extends AppCompatActivity {
 
@@ -29,6 +40,37 @@ public class CustomerHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.customer_home);
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef2 = database.getReference("User_info/");
+
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i=0;
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
+
+                    String key=childSnapshot.getKey();
+                    User user_each=childSnapshot.getValue(User.class);
+                    if(!user_each.getRestaurant_name().equals("null")) {
+                        Log.i("가게이름:", user_each.getRestaurant_name());
+                        Log.i("이름", key);
+                        //list[i]=user_each.getRestaurant_name();
+
+                    }else {
+                        continue;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         // 네비게이션
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -46,6 +88,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
         // 리스트 검색 코드 작성
 

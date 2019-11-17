@@ -88,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                             User user_info = new User();
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
+                            user_info .setRestaurant_name("null");
                             user_info.setId1(s_id1);
                             user_info.setPassword(s_password);
                             user_info.setPhone_num(s_phone_num);
