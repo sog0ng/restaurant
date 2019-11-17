@@ -28,11 +28,9 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("Owner_info/");
-        final DatabaseReference myRef1 = database.getReference("customer_info/");
+        final DatabaseReference myRef = database.getReference("User_info");
+        final String user_info_key =  myRef.push().getKey();//고유키
 
-        final String owner_info_key =  myRef.push().getKey();//고유키
-        final String customer_info_key =  myRef1.push().getKey();//고유키
 
         submit = (Button) findViewById(R.id.submit);
         owner = (CheckBox) findViewById(R.id.owner);
@@ -51,24 +49,30 @@ public class SignUpActivity extends AppCompatActivity {
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Owner_info owner_info = new Owner_info();
+                            User user_info = new User();
+
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
-                            owner_info.setRestaurant_name(s_restaurant_name);
-                            owner_info.setId1(s_id1);
-                            owner_info.setPhone_num(s_phone_num);
-                            owner_info.setPassword(s_password);
-                            myRef.child(owner_info_key).setValue(owner_info);
+                            user_info .setRestaurant_name(s_restaurant_name);
+                            user_info .setId1(s_id1);
+                            user_info .setPhone_num(s_phone_num);
+                            user_info .setPassword(s_password);
+                            user_info.setOperation_hour("null");//나중에 추가
+                            user_info .setIs_owner("0");//사장일 경우 0
+                            user_info.setConfirm("0");//
+                            user_info.setIs_accepted("null");
+                            myRef.child(user_info_key).setValue(user_info);
+
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(main);
                         }
                     });
                 }
 
-            else{
-                restaurant_name.setVisibility(View.GONE);
+                else{
+                    restaurant_name.setVisibility(View.GONE);
+                }
             }
-        }
         });
 
         customer.setOnClickListener(new CheckBox.OnClickListener() {//customer체크박스 클릭시
@@ -81,13 +85,17 @@ public class SignUpActivity extends AppCompatActivity {
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Customer_info customer_info = new Customer_info();
+                            User user_info = new User();
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
-                            customer_info.setC_id(s_id1);
-                            customer_info.setC_phone_num(s_phone_num);
-                            customer_info.setC_password(s_password);
-                            myRef1.child(customer_info_key).setValue(customer_info);
+                            user_info.setId1(s_id1);
+                            user_info.setPassword(s_password);
+                            user_info.setPhone_num(s_phone_num);
+                            user_info.setOperation_hour("null");//손님일 경우 null
+                            user_info .setIs_owner("1");//손님일 경우1
+                            user_info.setConfirm("null");//손님일 경우 null
+                            user_info.setIs_accepted("0");
+                            myRef.child(user_info_key).setValue(user_info);
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(main);
                         }
@@ -103,15 +111,12 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void GetDataFromEditText(){
-        //owner_info
+        //edittext값을 string으로 바꿔줌
         s_restaurant_name = restaurant_name.getText().toString().trim();
         s_id1 = id1.getText().toString().trim();
         s_password = password.getText().toString().trim();
         s_phone_num = phone_num.getText().toString().trim();
-        //customer_info
-        c_id1 = id1.getText().toString().trim();
-        c_password = password.getText().toString().trim();
-        c_phone_num = phone_num.getText().toString().trim();
+
 
     }
 
