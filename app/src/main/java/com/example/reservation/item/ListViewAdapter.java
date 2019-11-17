@@ -3,33 +3,23 @@ package com.example.reservation.item;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.reservation.CustomerHomeActivity;
-import com.example.reservation.MainActivity;
-import com.example.reservation.Owner;
-import com.example.reservation.OwnerHomeActivity;
+import com.example.reservation.Owner_info;
 import com.example.reservation.R;
-import com.example.reservation.ReservationActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
@@ -39,7 +29,7 @@ public class ListViewAdapter extends BaseAdapter {
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
     }
-    public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<Owner> list) {
+    public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<Owner_info> list) {
 
     }
 
