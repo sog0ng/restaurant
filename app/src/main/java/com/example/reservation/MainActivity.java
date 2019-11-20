@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference myRef1 = database.getReference("User_info/");
 
 
-        editid=(EditText) findViewById(R.id.editid);
-        editpw=(EditText) findViewById(R.id.editpw);
+        editid = (EditText) findViewById(R.id.editid);
+        editpw = (EditText) findViewById(R.id.editpw);
         login = (Button) findViewById(R.id.login);
         signUp = (Button) findViewById(R.id.signUp);
 
@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                             String key=childSnapshot.getKey();
                             User user_each=childSnapshot.getValue(User.class);
 
-                            if((editid.getText().toString().equals(user_each.getId1())) && (user_each.getIs_owner().equals("1")) && (editpw.getText().toString().equals(user_each.getPassword())) ){//
+                            if( editid.getText().toString().equals(user_each.getId1())
+                                    && user_each.getIs_owner().equals("1")  //손님
+                                    && editpw.getText().toString().equals(user_each.getPassword()) ){//
                                 //손님이고 아이디,패스워드 일치할 경우
                                 Log.i("id:", editid.getText().toString());//test용 log
                                 Log.i("pw:", editpw.getText().toString());//test용 log
@@ -65,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(customer);
                                 break;
                             }
-                            else if((editid.getText().toString().equals(user_each.getId1())) && (user_each.getIs_owner().equals("0")) && (editpw.getText().toString().equals(user_each.getPassword())) ){
+                            else if( editid.getText().toString().equals(user_each.getId1())
+                                    && user_each.getIs_owner().equals("0")  //사장
+                                    && editpw.getText().toString().equals(user_each.getPassword()) ){
                                 //사장이고 아이디, 패스워드 일치할 경우
                                 //오류!!! 사장일 경우에만 전부 일치해도 토스트 메세지가 뜸,,,들어가는 거는 정상적
                                 Log.i("id:", editid.getText().toString());

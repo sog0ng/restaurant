@@ -6,7 +6,7 @@ public class User {
     private String phone_num;
     private String restaurant_name;//사장일 경우만, 고객 null
     private String operation_hour;//사장일 경우만, 고객 null
-    private String is_owner;//사장일 경우 0,손님일 경우 1
+    private String is_owner;//사장일 경우 0, 손님일 경우 1
     private String confirm;//사장일 경우에만 표시 방문확인 전 0, 방문확인 후 1, 고객은 null값
     private String is_accepted;//고객일 경우에만 표시 승인 전 0, 승인 후 1 ,사장은 null값
 

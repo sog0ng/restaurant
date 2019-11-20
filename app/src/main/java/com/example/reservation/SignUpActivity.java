@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class SignUpActivity extends AppCompatActivity {
     Button submit;
-    CheckBox owner,customer;
-    EditText restaurant_name,id1, password, phone_num;
+    RadioButton owner,customer;
+    EditText restaurant_name,id1, password, password_check, phone_num;
     String s_restaurant_name,s_id1, s_password, s_phone_num, c_id1,c_password, c_phone_num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +41,49 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         submit = (Button) findViewById(R.id.submit);
-        owner = (CheckBox) findViewById(R.id.owner);
-        customer = (CheckBox) findViewById(R.id.customer);
-        id1=(EditText) findViewById(R.id.id1);
-        password=(EditText) findViewById(R.id.password);
+        owner = (RadioButton) findViewById(R.id.owner);
+        customer = (RadioButton) findViewById(R.id.customer);
+        id1 = (EditText) findViewById(R.id.id1);
+        password = (EditText) findViewById(R.id.password);
+        password_check = (EditText) findViewById(R.id.password_check);
         phone_num=(EditText) findViewById(R.id.phone_num);
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
 
-        owner.setOnClickListener(new CheckBox.OnClickListener() {//owner체크박스 클릭시
+        // 사용자 타입 선택 여부 검사
+        // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
+        // radioGroupListener 찾아봐야함
+        if( owner.isChecked()==false && customer.isChecked()==false ){
+            Toast.makeText(SignUpActivity.this, "회원가입 타입을 선택하세요!", Toast.LENGTH_SHORT).show();
+        }
+
+        // 비밀번호 일치 검사
+        password_check.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String str_password = password.getText().toString();
+                String str_password_check = password_check.getText().toString();
+
+                if( str_password.equals(str_password_check) ) {
+                    password.setTextColor(Color.BLACK);
+                    password_check.setTextColor(Color.BLACK);
+                } else {
+                    password.setTextColor(Color.RED);
+                    password_check.setTextColor(Color.RED);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        owner.setOnClickListener(new RadioButton.OnClickListener() {//owner체크박스 클릭시
             @Override
             public void onClick(View v) {
                 if (owner.isChecked()) {//오너클릭시
@@ -50,6 +93,45 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             User user_info = new User();
+
+                            // 아이디 입력 확인
+                            if( id1.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                id1.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 입력 확인
+                            if( password.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                password.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 확인 입력 확인
+                            if( password_check.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                password_check.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 일치 확인
+                            if( !password.getText().toString().equals(password_check.getText().toString()) ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
+                                password.setText("");
+                                password_check.setText("");
+                                password.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 조건 확인
+                            if( !ConfirmPassword(password.getText().toString()) ){
+                                Toast.makeText(SignUpActivity.this, "8~16자 길이로 영어 대소문자, 숫자를 혼합하세요!", Toast.LENGTH_SHORT).show();
+                                password.setText("");
+                                password_check.setText("");
+                                password.requestFocus();
+                                return;
+                            }
 
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
@@ -75,17 +157,56 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        customer.setOnClickListener(new CheckBox.OnClickListener() {//customer체크박스 클릭시
+        customer.setOnClickListener(new RadioButton.OnClickListener() {//customer체크박스 클릭시
             @Override
             public void onClick(View v) {
-                if (customer.isChecked()) {//오너클릭시
-                    //가게 이름 나타나게
-                    restaurant_name.setVisibility(View.GONE);
+                if (customer.isChecked()) {//고객 클릭시
+                    restaurant_name.setVisibility(View.GONE);  //가게 이름 나타나지않게
 
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             User user_info = new User();
+
+                            // 아이디 입력 확인
+                            if( id1.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                id1.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 입력 확인
+                            if( password.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                password.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 확인 입력 확인
+                            if( password_check.getText().toString().length() == 0 ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                password_check.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 일치 확인
+                            if( !password.getText().toString().equals(password_check.getText().toString()) ) {
+                                Toast.makeText(SignUpActivity.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
+                                password.setText("");
+                                password_check.setText("");
+                                password.requestFocus();
+                                return;
+                            }
+
+                            // 비밀번호 조건 확인
+                            if( !ConfirmPassword(password.getText().toString()) ){
+                                Toast.makeText(SignUpActivity.this, "8~16자 길이로 영어 대소문자, 숫자를 혼합하세요!", Toast.LENGTH_SHORT).show();
+                                password.setText("");
+                                password_check.setText("");
+                                password.requestFocus();
+                                return;
+                            }
+
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
                             user_info .setRestaurant_name("null");
@@ -117,8 +238,42 @@ public class SignUpActivity extends AppCompatActivity {
         s_id1 = id1.getText().toString().trim();
         s_password = password.getText().toString().trim();
         s_phone_num = phone_num.getText().toString().trim();
-
-
     }
 
+    public boolean ConfirmPassword(String input){
+        boolean result = false;
+        //비밀번호 조건은 8자리~16자리
+        // 영문 대소문자, 숫자 혼합 두가지만 하면 true
+
+        Pattern pAlphaLow = Pattern.compile("[a-z]]");
+        Pattern pAlphaUp = Pattern.compile("[A-Z]]");
+        Pattern pNumber = Pattern.compile("[0-9]]");
+        Matcher match;
+        int nCharType = 0;//비밀번호가 몇가지의 조합인지를 확인
+
+        // 영소문자 포함?
+        match = pAlphaLow.matcher(input);
+        if(match.find())
+            nCharType++;
+        // 영대문자 포함?
+        match = pAlphaUp.matcher(input);
+        if(match.find())
+            nCharType++;
+        // 숫자 포함?
+        match = pNumber.matcher(input);
+        if(match.find())
+            nCharType++;
+
+        // 두가지 이상 섞여있고 길이 제한도 잘 지켜진 경우
+        //if( nCharType >=2 && 8 <= input.length() && input.length() <= 16 ){
+        if( 8 <= input.length() && input.length() <= 16 ){
+            result = true;
+        }
+        //else if( nCharType < 2 || input.length() < 8 || input.length() > 16 ){
+        else if( input.length() < 8 || input.length() > 16 ) {
+            //Toast.makeText(SignUpActivity.this, "nCharType:"+nCharType+" input.length():"+input.length(), Toast.LENGTH_SHORT).show();
+            result = false;
+        }
+        return result;
+    }
 }
