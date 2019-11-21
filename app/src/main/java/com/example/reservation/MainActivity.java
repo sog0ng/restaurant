@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button login, signUp;
     ValueEventListener mValueEventListener;
     String userid, userpw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,43 +50,38 @@ public class MainActivity extends AppCompatActivity {
                 myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot childSnapshot:dataSnapshot.getChildren()){
-                            String key=childSnapshot.getKey();
-                            User user_each=childSnapshot.getValue(User.class);
 
-                            if( editid.getText().toString().equals(user_each.getId1())
-                                    && user_each.getIs_owner().equals("1")  //손님
-                                    && editpw.getText().toString().equals(user_each.getPassword()) ){//
-                                //손님이고 아이디,패스워드 일치할 경우
-                                Log.i("id:", editid.getText().toString());//test용 log
-                                Log.i("pw:", editpw.getText().toString());//test용 log
-                                Log.i("누구냐:",user_each.getIs_owner());//test용 log
-                                Log.i("key값:",key);//test용 log
-                                Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
-                                customer.putExtra("key",key);
-                                customer.putExtra("id", editid.getText().toString());
-                                startActivity(customer);
+                        boolean login_success = false;
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            String key = childSnapshot.getKey();
+                            User user_each = childSnapshot.getValue(User.class);
+
+                            if (editid.getText().toString().equals(user_each.getId1())
+                                    && editpw.getText().toString().equals(user_each.getPassword())) {
+                                if (user_each.getIs_owner().equals("0")) {//사장인 경우
+                                    Log.i("id:", editid.getText().toString());
+                                    Log.i("pw:", editpw.getText().toString());
+                                    Log.i("누구냐:", user_each.getIs_owner());
+                                    Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
+                                    owner.putExtra("key", key);
+                                    owner.putExtra("id", editid.getText().toString());
+                                    startActivity(owner);
+                                } else {//고객인 경우
+                                    Log.i("id:", editid.getText().toString());//test용 log
+                                    Log.i("pw:", editpw.getText().toString());//test용 log
+                                    Log.i("누구냐:", user_each.getIs_owner());//test용 log
+                                    Log.i("key값:", key);//test용 log
+                                    Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
+                                    customer.putExtra("key", key);
+                                    customer.putExtra("id", editid.getText().toString());
+                                    startActivity(customer);
+                                }
+                                login_success = true;
                                 break;
                             }
-                            else if( editid.getText().toString().equals(user_each.getId1())
-                                    && user_each.getIs_owner().equals("0")  //사장
-                                    && editpw.getText().toString().equals(user_each.getPassword()) ){
-                                //사장이고 아이디, 패스워드 일치할 경우
-                                //오류!!! 사장일 경우에만 전부 일치해도 토스트 메세지가 뜸,,,들어가는 거는 정상적
-                                Log.i("id:", editid.getText().toString());
-                                Log.i("pw:", editpw.getText().toString());
-                                Log.i("누구냐:",user_each.getIs_owner());
-                                Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
-                                owner.putExtra("key",key);
-                                owner.putExtra("id", editid.getText().toString());
-                                startActivity(owner);
-                                break;
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(), "아이디와 비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
-                            }
-
-
+                        }
+                        if( !login_success ){
+                            Toast.makeText(getApplicationContext(), "아이디와 비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -109,4 +105,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }
