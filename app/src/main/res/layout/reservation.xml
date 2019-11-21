@@ -9,11 +9,9 @@
         android:id="@+id/restaurant_name"
         android:layout_width="0dp"
         android:layout_height="87dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
         android:text="가게 이름"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +22,8 @@
         android:id="@+id/table"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,26 +32,26 @@
         app:layout_constraintTop_toBottomOf="@+id/restaurant_name">
 
         <TableRow
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="48dp">
 
             <TextView
-                android:id="@+id/textView7"
-                android:layout_width="213dp"
+                android:id="@+id/menu"
+                android:layout_width="160dp"
                 android:layout_height="42dp"
                 android:text="메뉴" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/price"
                 android:layout_width="137dp"
                 android:layout_height="match_parent"
                 android:text="가격" />
 
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="58dp"
+                android:id="@+id/check"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="수량" />
+                android:text="선택" />
         </TableRow>
 
     </TableLayout>
@@ -64,11 +60,9 @@
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
