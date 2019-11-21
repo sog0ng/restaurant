@@ -33,44 +33,15 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     // 가게 리스트 임시 데이터,,, db로부터 가져오는 코드 작성...
-    String[] list = {"리스트1", "리스트2", "리스트3", "리스트4", "리스트5", "리스트6", "리스트7", "리스트8", "리스트9", "리스트10", "리스트11", "리스트12", "리스트13", "리스트14", "리스트15", "리스트16"};
-
+    //String[] list = {"리스트1", "리스트2", "리스트3", "리스트4", "리스트5", "리스트6", "리스트7", "리스트8", "리스트9", "리스트10", "리스트11", "리스트12", "리스트13", "리스트14", "리스트15", "리스트16"};
+    final ArrayList<String> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.customer_home);
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef2 = database.getReference("User_info/");
-
-        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int i=0;
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
-
-                    String key=childSnapshot.getKey();
-                    User user_each=childSnapshot.getValue(User.class);
-                    if(!user_each.getRestaurant_name().equals("null")) {
-                        Log.i("가게이름:", user_each.getRestaurant_name());
-                        Log.i("이름", key);
-                        //list[i]=user_each.getRestaurant_name();
-
-                    }else {
-                        continue;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
 
         // 네비게이션
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -92,19 +63,46 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
         // 리스트 검색 코드 작성
 
-        ArrayAdapter<String> adapter;
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-
+        //ArrayAdapter<String> adapter;
         ListView listview = (ListView) findViewById(R.id.ListView);
 
+
+//리스트가 뜨는데 돋보기 눌러야뜸
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
+                    String key=childSnapshot.getKey();
+                    User user_each=childSnapshot.getValue(User.class);
+                    // list.add(user_each.getRestaurant_name());
+                    if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
+                        Log.i("가게이름:", user_each.getRestaurant_name());
+                        Log.i("이름", key);
+                        list.add(user_each.getRestaurant_name());
+
+                    }else {
+                        continue;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
             @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id){
+            public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
                 Intent reservation = new Intent(getApplicationContext(), ReservationActivity.class);
-                reservation.putExtra("restaurant_name", list[position]);
+                reservation.putExtra("restaurant_name", list);
                 startActivity(reservation);
             }
         });
