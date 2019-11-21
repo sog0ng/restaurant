@@ -23,7 +23,9 @@
             <item
                 android:id="@+id/nav_manage"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_manage" />
+                android:title="@string/menu_manage"
+                tools:visibility="GONE"
+                />
             <item
                 android:id="@+id/nav_statistics"
                 android:icon="@drawable/ic_menu_send"

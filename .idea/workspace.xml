@@ -17,25 +17,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_navigation_navigation_ui_2_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_navigation_navigation_ui_2_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_0_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_common_16_0_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_common_16_0_3_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_database_16_0_4_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_database_16_0_4_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/signup.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,12 +47,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/CustomerHomeActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1729">
-              <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="446">
+              <caret line="122" column="60" selection-start-line="122" selection-start-column="60" selection-end-line="122" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3823#4213#0" expanded="true" />
-                <element signature="e#4212#4213#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,18 +59,41 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="45" column="48" lean-forward="true" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+            <state relative-caret-position="-276">
+              <caret line="114" selection-start-line="114" selection-end-line="114" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3203#6808#0" expanded="true" />
-                <element signature="e#3490#6661#0" expanded="true" />
-                <element signature="e#6660#6661#0" expanded="true" />
-                <element signature="e#6807#6808#0" expanded="true" />
-                <element signature="e#6848#10467#0" expanded="true" />
-                <element signature="e#7143#10316#0" expanded="true" />
-                <element signature="e#10315#10316#0" expanded="true" />
-                <element signature="e#10466#10467#0" expanded="true" />
+                <element signature="method#onTextChanged#0;class#2301:3166" />
+                <element signature="e#3307#4546#0" expanded="true" />
+                <element signature="e#3685#4233#1" />
+                <element signature="method#onCancelled#0;class#3371:4216" />
+                <element signature="e#4545#4546#0" expanded="true" />
+                <element signature="e#4870#8032#0" expanded="true" />
+                <element signature="e#8031#8032#0" expanded="true" />
+                <element signature="e#8498#9698#0" expanded="true" />
+                <element signature="e#9697#9698#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="703">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-846">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/setup.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="1056">
-              <caret line="134" column="29" lean-forward="true" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+            <state relative-caret-position="2508">
+              <caret line="134" column="29" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
             </state>
           </provider>
           <provider selected="true" editor-type-id="android-designer2" />
@@ -103,71 +112,50 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signup.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+            <state relative-caret-position="1805">
+              <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="61" column="81" lean-forward="true" selection-start-line="61" selection-start-column="81" selection-end-line="61" selection-end-column="81" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/C_ListViewItem.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/C_ListViewAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="32" lean-forward="true" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/ListViewAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2369">
-              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/OwnerHomeActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="760">
-              <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+            <state relative-caret-position="285">
+              <caret line="32" column="37" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml">
+          <provider editor-type-id="nav-designer" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="509">
+              <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -196,6 +184,9 @@
       <find>checkBox</find>
       <find>submit</find>
       <find>GetDataFromEditText</find>
+      <find>restaurant_name</find>
+      <find>navigation</find>
+      <find>valueEventList</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,7 +209,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/statistics/StatisticsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_statistics.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/owner_home.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/listview_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/accepted_listview_item.xml" />
@@ -243,7 +233,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_info.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/Customer.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/Owner.java" />
@@ -259,6 +248,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/signup.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java" />
       </list>
     </option>
@@ -274,7 +265,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -296,7 +286,14 @@
             <path>
               <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java (generated)" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="reservation" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="reservation" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
             <path>
               <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
@@ -311,6 +308,24 @@
             </path>
             <path>
               <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="menu" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="mipmap" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="navigation" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Reservation" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
@@ -319,6 +334,7 @@
       </pane>
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,10 +369,63 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android App.SignUpActivity">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SignUpActivity" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="specific_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="com.example.reservation.SignUpActivity" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
@@ -414,6 +483,11 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android App.SignUpActivity" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -470,12 +544,12 @@
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3286334" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3329718" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5002667" side_tool="true" visible="true" weight="0.03253796" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49973333" weight="0.329718" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5008" side_tool="true" visible="true" weight="0.31561822" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4992" weight="0.31561822" />
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49973333" visible="true" weight="0.03253796" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32936078" />
       <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32939914" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" weight="0.32939914" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -486,37 +560,6 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Viewer" order="8" side_tool="true" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Captures" order="0" sideWeight="0.5006821" side_tool="true" weight="0.24093817" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49931788" visible="true" weight="0.2408889" />
-      <window_info id="Structure" order="2" sideWeight="0.5006821" side_tool="true" weight="0.24093817" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Designer" order="6" />
-      <window_info id="Resources Explorer" order="7" weight="0.32995737" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.32800853" />
-      <window_info anchor="bottom" id="Logcat" order="1" visible="true" weight="0.25214592" />
-      <window_info anchor="bottom" id="TODO" order="2" weight="0.3286334" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3329718" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.5772098" />
-      <window_info anchor="bottom" id="Find" order="8" weight="0.32936078" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32939914" />
-      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Preview" order="4" weight="0.1264" />
-      <window_info anchor="right" id="StringPreview" order="5" />
-      <window_info anchor="right" id="Assistant" order="6" weight="0.08629441" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Viewer" order="8" side_tool="true" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -543,6 +586,20 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="navgation edit" />
@@ -552,22 +609,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="UI 변경&#10;  레이아웃, 버튼 등 위치 조정&#10;  색상 변경&#10;   메인색상 변경&#10;   상태바 색상변경&#10; &#10; 초기화면 추가&#10;  초기화면 이미지(splash.png) 추가&#10;  초기화면 Activity(splash) 추가" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statistics.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/res/google-services/debug/values/values.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/owner_past_listview_item.xml">
       <provider editor-type-id="text-editor">
@@ -671,12 +712,12 @@
       <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_owner.xml">
-      <provider editor-type-id="text-editor">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-29/data/res/layout/simple_list_item_1.xml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -691,41 +732,22 @@
       <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_customer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-228">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="19">
           <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="14" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/Owner_info.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/Customer_info.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-          <folding>
-            <element signature="e#227#252#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="988">
           <caret line="52" column="54" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="54" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/QueryViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -821,8 +843,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/SetupActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="32" column="66" lean-forward="true" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
+        <state relative-caret-position="668">
+          <caret line="57" column="74" lean-forward="true" selection-start-line="57" selection-start-column="74" selection-end-line="57" selection-end-column="74" />
         </state>
       </provider>
     </entry>
@@ -903,51 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/OwnerHomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/CustomerHomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1729">
-          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3823#4213#0" expanded="true" />
-            <element signature="e#4212#4213#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/setup.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="1056">
-          <caret line="134" column="29" lean-forward="true" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signup.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="61" column="81" lean-forward="true" selection-start-line="61" selection-start-column="81" selection-end-line="61" selection-end-column="81" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="636">
@@ -955,20 +932,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/setup.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2508">
+          <caret line="134" column="29" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/CustomerHomeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="45" column="48" lean-forward="true" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+        <state relative-caret-position="446">
+          <caret line="122" column="60" selection-start-line="122" selection-start-column="60" selection-end-line="122" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3203#6808#0" expanded="true" />
-            <element signature="e#3490#6661#0" expanded="true" />
-            <element signature="e#6660#6661#0" expanded="true" />
-            <element signature="e#6807#6808#0" expanded="true" />
-            <element signature="e#6848#10467#0" expanded="true" />
-            <element signature="e#7143#10316#0" expanded="true" />
-            <element signature="e#10315#10316#0" expanded="true" />
-            <element signature="e#10466#10467#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-846">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/OwnerHomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="32" column="37" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml">
+      <provider editor-type-id="nav-designer" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/signup.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1805">
+          <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="703">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/SignUpActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-276">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onTextChanged#0;class#2301:3166" />
+            <element signature="e#3307#4546#0" expanded="true" />
+            <element signature="e#3685#4233#1" />
+            <element signature="method#onCancelled#0;class#3371:4216" />
+            <element signature="e#4545#4546#0" expanded="true" />
+            <element signature="e#4870#8032#0" expanded="true" />
+            <element signature="e#8031#8032#0" expanded="true" />
+            <element signature="e#8498#9698#0" expanded="true" />
+            <element signature="e#9697#9698#0" expanded="true" />
           </folding>
         </state>
       </provider>
