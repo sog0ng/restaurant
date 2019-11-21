@@ -3,6 +3,7 @@ package com.example.reservation;
 public class User {
     private String id1;
     private String password;
+    private String nickname;
     private String phone_num;
     private String restaurant_name;//사장일 경우만, 고객 null
     private String operation_hour;//사장일 경우만, 고객 null
@@ -24,6 +25,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNickname() {
+        return password;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhone_num() {
@@ -65,6 +74,7 @@ public class User {
     public void setConfirm(String confirm) {
         this.confirm = confirm;
     }
+
     public String getIs_accepted() {
         return is_accepted;
     }
@@ -72,16 +82,20 @@ public class User {
     public void setIs_accepted(String is_accepted) {
         this.is_accepted = is_accepted;
     }
-    public User(){}
-    public User(String id1, String password, String phone_num, String restaurant_name, String operation_hour, String is_owner, String confirm, String is_accepted){
-        this.id1=id1;
-        this.phone_num=phone_num;
-        this.password=password;
-        this.restaurant_name=restaurant_name;
-        this.operation_hour=operation_hour;
-        this.is_owner=is_owner;
-        this.confirm=confirm;
-        this.is_accepted=is_accepted;
+
+    public User() {
+    }
+
+    //사장일때만 쓰이는건지 모르겠어서 this.nickname = nickname; 아직 안넣음
+    public User(String id1, String password, String phone_num, String restaurant_name, String operation_hour, String is_owner, String confirm, String is_accepted) {
+        this.id1 = id1;
+        this.phone_num = phone_num;
+        this.password = password;
+        this.restaurant_name = restaurant_name;
+        this.operation_hour = operation_hour;
+        this.is_owner = is_owner;
+        this.confirm = confirm;
+        this.is_accepted = is_accepted;
     }
 
 }
