@@ -2,6 +2,7 @@ package com.example.reservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +25,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.lang.Object;
 
 public class SignUpActivity extends AppCompatActivity {
     Button submit, same_id_check;
     RadioButton owner, customer;
-    EditText restaurant_name, id1, password, password_check, phone_num;
+    EditText restaurant_name, id1, password, password_check, nickname, phone_num;
     String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
 
     @Override
@@ -46,10 +48,10 @@ public class SignUpActivity extends AppCompatActivity {
         id1 = (EditText) findViewById(R.id.id1);
         password = (EditText) findViewById(R.id.password);
         password_check = (EditText) findViewById(R.id.password_check);
+        nickname = (EditText) findViewById(R.id.nickname);
         phone_num = (EditText) findViewById(R.id.phone_num);
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
-
 
         // 사용자 타입 선택 여부 검사
         // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
@@ -100,6 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "이미 사용중이거나 탈퇴한 아이디입니다.", Toast.LENGTH_SHORT).show();
                                 id1.setText("");
                                 id1.requestFocus();
+                                break;
                             } else {
                                 Toast.makeText(SignUpActivity.this, "사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -112,6 +115,9 @@ public class SignUpActivity extends AppCompatActivity {
                 });
             }
         });
+
+        //전화번호 입력시 -입력
+        phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         owner.setOnClickListener(new RadioButton.OnClickListener() {//owner체크박스 클릭시
             @Override
@@ -163,6 +169,23 @@ public class SignUpActivity extends AppCompatActivity {
                                 return;
                             }
 
+                            // 닉네임 조건 확인
+                            if (!ConfirmNickname(nickname.getText().toString())) {
+                                Toast.makeText(SignUpActivity.this, "2~8자 길이로 한글을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                nickname.setText("");
+                                nickname.requestFocus();
+                                return;
+                            }
+
+                            // 전화 번호 조건 확인
+                            if( !ConfirmPhonenum(phone_num.getText().toString()) )
+                            {
+                                Toast.makeText(SignUpActivity.this,"올바른 번호를 입력하세요!",Toast.LENGTH_SHORT).show();
+                                phone_num.setText("");
+                                phone_num.requestFocus();
+                                return;
+                            }
+
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
                             user_info.setRestaurant_name(s_restaurant_name);
@@ -195,7 +218,6 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             User user_info = new User();
-
 
                             // 아이디 입력 확인
                             if (id1.getText().toString().length() == 0) {
@@ -233,6 +255,23 @@ public class SignUpActivity extends AppCompatActivity {
                                 password.setText("");
                                 password_check.setText("");
                                 password.requestFocus();
+                                return;
+                            }
+
+                            // 닉네임 조건 확인
+                            if (!ConfirmNickname(nickname.getText().toString())) {
+                                Toast.makeText(SignUpActivity.this, "2~8자 길이로 한글을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                nickname.setText("");
+                                nickname.requestFocus();
+                                return;
+                            }
+
+                            // 전화 번호 조건 확인
+                            if( !ConfirmPhonenum(phone_num.getText().toString()) )
+                            {
+                                Toast.makeText(SignUpActivity.this,"올바른 번호를 입력하세요!",Toast.LENGTH_SHORT).show();
+                                phone_num.setText("");
+                                phone_num.requestFocus();
                                 return;
                             }
 
@@ -300,6 +339,37 @@ public class SignUpActivity extends AppCompatActivity {
             //Toast.makeText(SignUpActivity.this, "nCharType:"+nCharType+" input.length():"+input.length(), Toast.LENGTH_SHORT).show();
             result = false;
         }
+        return result;
+    }
+
+    public boolean ConfirmNickname(String input) {
+        boolean result = false;
+        //닉네임 조건은 2자리~8자리
+        //한글만 입력가능
+
+        String regExp_kor = "^[가-힣]*$";
+
+        if( input.matches(regExp_kor) && 2 <= input.length() && input.length() <= 8){
+            result = true;
+        }else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    public boolean ConfirmPhonenum(String input){
+        boolean result = false;
+
+        String regExp_mobile ="^01[016789][.-]?\\d{3,4}[.-]?\\d{4}$";
+        String regExp_wireline = "^\\d{2,3}[.-]?\\d{3,4}[.-]?\\d{4}$";
+
+        if( input.matches(regExp_mobile) || input.matches(regExp_wireline) ){
+            result = true;
+        }else {
+            result = false;
+        }
+
         return result;
     }
 

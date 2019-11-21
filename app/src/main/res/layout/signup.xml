@@ -70,6 +70,16 @@
                 android:inputType="textPassword" />
 
             <EditText
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="nickname"
+                android:inputType="textPersonName"
+                android:privateImeOptions="defaultInputmode=korean"
+                />
+
+            <EditText
                 android:id="@+id/phone_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
