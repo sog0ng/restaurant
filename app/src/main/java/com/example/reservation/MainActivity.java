@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Tag;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     EditText editpw, editid;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("뭐먹?");
         setContentView(R.layout.activity_main);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                                     Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
                                     owner.putExtra("key", key);
                                     owner.putExtra("id", editid.getText().toString());
+                                    editid.setText(null);
+                                    editpw.setText(null);
                                     startActivity(owner);
                                 } else {//고객인 경우
                                     Log.i("id:", editid.getText().toString());//test용 log
@@ -74,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                                     Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
                                     customer.putExtra("key", key);
                                     customer.putExtra("id", editid.getText().toString());
+                                    editid.setText(null);
+                                    editpw.setText(null);
                                     startActivity(customer);
                                 }
                                 login_success = true;
@@ -84,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "아이디와 비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
                         }
                     }
-
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
