@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if( !login_success ){
                             Toast.makeText(getApplicationContext(), "아이디와 비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
+                            editid.setText(null);
+                            editpw.setText(null);
                         }
                     }
 
@@ -98,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-
-
             }
         });
 
