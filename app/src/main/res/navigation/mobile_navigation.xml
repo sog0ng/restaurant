@@ -33,7 +33,12 @@
         android:id="@+id/nav_manage"
         android:name="com.example.reservation.ui.manage.ManageFragment"
         android:label="@string/menu_manage"
-        tools:layout="@layout/fragment_manage" />
+        tools:layout="@layout/fragment_manage_menu" />
+    <fragment
+        android:id="@+id/nav_manage"
+        android:name="com.example.reservation.ui.manage.ManageFragment"
+        android:label="@string/menu_manage"
+        tools:layout="@layout/fragment_manage_seat" />
 
     <fragment
         android:id="@+id/nav_statistics"

@@ -101,9 +101,9 @@ public class CustomerHomeActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
-                Intent reservation = new Intent(getApplicationContext(), ReservationActivity.class);
-                reservation.putExtra("restaurant_name", list);
-                startActivity(reservation);
+                Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
+                reservation2.putExtra("restaurant_name", list.get(position));
+                startActivity(reservation2);
             }
         });
 

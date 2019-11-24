@@ -62,9 +62,9 @@ public class OwnerHomeActivity extends AppCompatActivity {
         adapter.addItem("닉네임", 2019, 11, 12, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 13, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 14, 5, 7, "도착시간", 3);
-        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "도착시간", 3);
-        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "도착시간", 3);
-        adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 25, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 26, 5, 7, "도착시간", 3);
+        adapter.addItem("닉네임", 2019, 11, 27, 5, 7, "도착시간", 3);
 
 
 
