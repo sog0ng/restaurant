@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,8 +24,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.reservation.item.ListViewAdapter;
 import com.google.android.material.navigation.NavigationView;
 
-public class OwnerHomeActivity extends AppCompatActivity {
+public class OwnerHomeActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
+    private ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +57,8 @@ public class OwnerHomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
         // 임시 데이터
         ListView listview;
-        ListViewAdapter adapter;
         adapter = new ListViewAdapter(this);
 
         listview = (ListView)findViewById(R.id.ListView);
@@ -75,12 +75,6 @@ public class OwnerHomeActivity extends AppCompatActivity {
         adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "도착시간", 3);
-
-
-
-
-
-
     }
 
     @Override
@@ -98,7 +92,9 @@ public class OwnerHomeActivity extends AppCompatActivity {
                 btn_logout();
                 return true;
             case R.id.refresh:
-                //리프레쉬 할때 디비 다시 불러오기
+                //리스트 업데이트 함수
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -128,5 +124,10 @@ public class OwnerHomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    //뒤로가기 버튼 disable
+    @Override public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

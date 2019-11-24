@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button submit, same_id_check;
     RadioButton owner, customer;
     EditText restaurant_name, id1, password, password_check, phone_num;
+    TextView restaurant_TV;
     String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
 
     @Override
@@ -51,6 +53,8 @@ public class SignUpActivity extends AppCompatActivity {
         phone_num = (EditText) findViewById(R.id.phone_num);
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
+
+        restaurant_TV = (TextView)findViewById(R.id.text7);
 
         // 사용자 타입 선택 여부 검사
         // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
@@ -123,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (owner.isChecked()) {//오너클릭시
                     restaurant_name.setVisibility(View.VISIBLE);//가게 이름 나타나게
+                    restaurant_TV.setVisibility(View.VISIBLE);
 
                     submit.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -195,6 +200,7 @@ public class SignUpActivity extends AppCompatActivity {
                     });
                 } else {
                     restaurant_name.setVisibility(View.GONE);
+                    restaurant_TV.setVisibility(View.GONE);
                 }
             }
         });
@@ -204,6 +210,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (customer.isChecked()) {//고객 클릭시
                     restaurant_name.setVisibility(View.GONE);  //가게 이름 나타나지않게
+                    restaurant_TV.setVisibility(View.GONE);
 
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
