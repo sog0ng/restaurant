@@ -177,4 +177,9 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 .show();
     }
 
+    //뒤로가기 버튼 disable
+    @Override public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
 }

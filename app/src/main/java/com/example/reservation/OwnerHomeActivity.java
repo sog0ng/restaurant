@@ -125,4 +125,9 @@ public class OwnerHomeActivity extends AppCompatActivity{
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    //뒤로가기 버튼 disable
+    @Override public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }
