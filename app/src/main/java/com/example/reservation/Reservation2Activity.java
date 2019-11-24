@@ -40,18 +40,14 @@ public class Reservation2Activity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         Button next = (Button) findViewById(R.id.next);
 
         next.setOnClickListener(new View.OnClickListener() {
-            EditText covers;
+            EditText covers,nickname;
             @Override
             public void onClick(View v) {
                 covers = (EditText) findViewById(R.id.covers);
+                nickname = (EditText) findViewById(R.id.nickname);
                 Intent result = new Intent(getApplicationContext(), ResultActivity.class);
                 result.putExtra("restaurant_name", restaurant_name.getText());
                 // 시간, 인원수 전달
@@ -59,7 +55,7 @@ public class Reservation2Activity extends AppCompatActivity {
                 result.putExtra("month", m);
                 result.putExtra("day", d);
                 result.putExtra("covers", covers.getText().toString());
-
+                result.putExtra("nickname",nickname.getText().toString());
                 startActivity(result);
             }
         });

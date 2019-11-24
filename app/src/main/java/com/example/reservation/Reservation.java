@@ -18,8 +18,17 @@ public class Reservation {
     int covers;
     Date r_date;
     int is_accepted;
-    int r_index;
     int confirm;
+    int send_score;
+    public int getSend_score() {
+        return send_score;
+    }
+
+    public void setSend_score(int send_score) {
+        this.send_score = send_score;
+    }
+
+
 
     public int getR_id() {
         return r_id;
@@ -61,13 +70,7 @@ public class Reservation {
         this.is_accepted = is_accepted;
     }
 
-    public int getR_index() {
-        return r_index;
-    }
 
-    public void setR_index(int r_index) {
-        this.r_index = r_index;
-    }
 
     public int getConfirm() {
         return confirm;
