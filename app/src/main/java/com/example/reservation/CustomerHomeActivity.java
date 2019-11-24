@@ -90,21 +90,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
-                    String key=childSnapshot.getKey();
-                    User user_each=childSnapshot.getValue(User.class);
-                    // list.add(user_each.getRestaurant_name());
-                    if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
-                        Log.i("가게이름:", user_each.getRestaurant_name());
-                        Log.i("이름", key);
-                        list.add(user_each.getRestaurant_name());
-
-                    }else {
-                        continue;
-                    }
-
-                }
+                update_list(dataSnapshot);
             }
 
             @Override
@@ -120,18 +106,35 @@ public class CustomerHomeActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
-                Intent reservation = new Intent(getApplicationContext(), ReservationActivity.class);
-                reservation.putExtra("restaurant_name", list);
-                startActivity(reservation);
+                Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
+                reservation2.putExtra("restaurant_name", list.get(position));
+                startActivity(reservation2);
             }
         });
 
     }
 
+    private void update_list(@NonNull DataSnapshot dataSnapshot) {
+        for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
+            String key=childSnapshot.getKey();
+            User user_each=childSnapshot.getValue(User.class);
+            // list.add(user_each.getRestaurant_name());
+            if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
+                Log.i("가게이름:", user_each.getRestaurant_name());
+                Log.i("이름", key);
+                list.add(user_each.getRestaurant_name());
+
+            }else {
+                continue;
+            }
+
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
