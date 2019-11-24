@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("뭐먹?");
         setContentView(R.layout.activity_main);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
