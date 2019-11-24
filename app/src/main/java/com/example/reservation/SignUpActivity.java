@@ -30,7 +30,7 @@ import java.lang.Object;
 public class SignUpActivity extends AppCompatActivity {
     Button submit, same_id_check;
     RadioButton owner, customer;
-    EditText restaurant_name, id1, password, password_check, nickname, phone_num;
+    EditText restaurant_name, id1, password, password_check, phone_num;
     String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
 
     @Override
@@ -48,7 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
         id1 = (EditText) findViewById(R.id.id1);
         password = (EditText) findViewById(R.id.password);
         password_check = (EditText) findViewById(R.id.password_check);
-        nickname = (EditText) findViewById(R.id.nickname);
         phone_num = (EditText) findViewById(R.id.phone_num);
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
@@ -126,8 +125,8 @@ public class SignUpActivity extends AppCompatActivity {
                     restaurant_name.setVisibility(View.VISIBLE);//가게 이름 나타나게
 
                     submit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                            @Override
+                            public void onClick(View v) {
                             User user_info = new User();
 
                             // 아이디 입력 확인
@@ -166,14 +165,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 password.setText("");
                                 password_check.setText("");
                                 password.requestFocus();
-                                return;
-                            }
-
-                            // 닉네임 조건 확인
-                            if (!ConfirmNickname(nickname.getText().toString())) {
-                                Toast.makeText(SignUpActivity.this, "2~8자 길이로 한글을 입력하세요!", Toast.LENGTH_SHORT).show();
-                                nickname.setText("");
-                                nickname.requestFocus();
                                 return;
                             }
 
@@ -258,14 +249,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            // 닉네임 조건 확인
-                            if (!ConfirmNickname(nickname.getText().toString())) {
-                                Toast.makeText(SignUpActivity.this, "2~8자 길이로 한글을 입력하세요!", Toast.LENGTH_SHORT).show();
-                                nickname.setText("");
-                                nickname.requestFocus();
-                                return;
-                            }
-
                             // 전화 번호 조건 확인
                             if( !ConfirmPhonenum(phone_num.getText().toString()) )
                             {
@@ -342,21 +325,6 @@ public class SignUpActivity extends AppCompatActivity {
         return result;
     }
 
-    public boolean ConfirmNickname(String input) {
-        boolean result = false;
-        //닉네임 조건은 2자리~8자리
-        //한글만 입력가능
-
-        String regExp_kor = "^[가-힣]*$";
-
-        if( input.matches(regExp_kor) && 2 <= input.length() && input.length() <= 8){
-            result = true;
-        }else {
-            result = false;
-        }
-
-        return result;
-    }
 
     public boolean ConfirmPhonenum(String input){
         boolean result = false;
