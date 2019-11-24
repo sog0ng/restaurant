@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Reservation2Activity extends AppCompatActivity {
+    Calendar minDate = Calendar.getInstance();
     int y=0,m=0,d=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,8 @@ public class Reservation2Activity extends AppCompatActivity {
                 textView_date.setText(y+"년"+m+"월"+d+"일");
             }
         },c.get(Calendar.YEAR), c.get(Calendar.MONTH), Calendar.DAY_OF_MONTH);
+
+        datePickerDialog.getDatePicker().setMinDate(minDate.getTime().getTime());
 
         datePickerDialog.show();
     }

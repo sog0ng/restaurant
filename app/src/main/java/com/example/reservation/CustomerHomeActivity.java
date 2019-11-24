@@ -71,7 +71,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_info, R.id.nav_query,
-                R.id.nav_modification, R.id.nav_manage, R.id.nav_statistics)
+                R.id.nav_modification, R.id.nav_statistics)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -90,21 +90,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
-                    String key=childSnapshot.getKey();
-                    User user_each=childSnapshot.getValue(User.class);
-                    // list.add(user_each.getRestaurant_name());
-                    if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
-                        Log.i("가게이름:", user_each.getRestaurant_name());
-                        Log.i("이름", key);
-                        list.add(user_each.getRestaurant_name());
-
-                    }else {
-                        continue;
-                    }
-
-                }
+                update_list(dataSnapshot);
             }
 
             @Override
@@ -128,10 +114,27 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
     }
 
+    private void update_list(@NonNull DataSnapshot dataSnapshot) {
+        for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
+            String key=childSnapshot.getKey();
+            User user_each=childSnapshot.getValue(User.class);
+            // list.add(user_each.getRestaurant_name());
+            if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
+                Log.i("가게이름:", user_each.getRestaurant_name());
+                Log.i("이름", key);
+                list.add(user_each.getRestaurant_name());
+
+            }else {
+                continue;
+            }
+
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
