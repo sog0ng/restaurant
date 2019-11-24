@@ -7,10 +7,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_weight="1"
         android:orientation="vertical">
 
         <RadioGroup
@@ -24,21 +23,21 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="type" />
+                android:text="@string/u_type" />
 
             <RadioButton
                 android:id="@+id/customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="고객" />
+                android:text="@string/u_customer" />
 
             <RadioButton
                 android:id="@+id/owner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="사장" />
+                android:text="@string/u_owner" />
 
         </RadioGroup>
 
@@ -54,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="id" />
+                android:text="@string/u_id" />
 
             <EditText
                 android:id="@+id/id1"
@@ -85,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="pw" />
+                android:text="@string/u_pw" />
 
             <EditText
                 android:id="@+id/password"
@@ -108,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="check" />
+                android:text="@string/u_check" />
 
             <EditText
                 android:id="@+id/password_check"
@@ -131,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="phone" />
+                android:text="@string/u_phone" />
 
             <EditText
                 android:id="@+id/phone_num"
@@ -154,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:orientation="horizontal"
-                android:text="restaurant" />
+                android:text="@string/u_restaurant" />
 
             <EditText
                 android:id="@+id/restaurant_name"
