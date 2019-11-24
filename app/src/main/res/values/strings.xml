@@ -11,6 +11,7 @@
     <string name="menu_info">계정 정보</string>
     <string name="menu_query">모든 예약 조회</string>
     <string name="menu_modification">예약 변경</string>
-    <string name="menu_manage">식당 관리</string>
+    <string name="menu_manage">메뉴 관리</string>
+    <string name="menu_seat_manage">좌석 관리</string>
     <string name="menu_statistics">통계</string>
 </resources>

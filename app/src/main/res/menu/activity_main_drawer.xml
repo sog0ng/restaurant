@@ -18,18 +18,4 @@
             android:title="@string/menu_modification" />
     </group>
 
-    <item android:title="관리자 전용">
-        <menu>
-            <item
-                android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_manage" />
-            <item
-                android:id="@+id/nav_statistics"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_statistics" />
-
-        </menu>
-    </item>
-
 </menu>
