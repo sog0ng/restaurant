@@ -77,7 +77,9 @@ public class Reservation2Activity extends AppCompatActivity {
             }
         },c.get(Calendar.YEAR), c.get(Calendar.MONTH), Calendar.DAY_OF_MONTH);
 
+
         datePickerDialog.getDatePicker().setMinDate(minDate.getTime().getTime());
+
 
         datePickerDialog.show();
     }
