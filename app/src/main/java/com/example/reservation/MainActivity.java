@@ -8,10 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
     EditText editpw, editid;
     Button login, signUp;
     ValueEventListener mValueEventListener;
-    String userid, userpw;
+    private String userid, userpw, autoId, autoPW;
+    private CheckBox autoLogin;
+    private SharedPreferences setting;
+    private SharedPreferences.Editor editor;
+    private boolean autoLoginChecker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +48,32 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database.getReference("User_info/");
 
+        setting = getSharedPreferences("login", 0);
+        editor = setting.edit();
 
         editid = (EditText) findViewById(R.id.editid);
         editpw = (EditText) findViewById(R.id.editpw);
         login = (Button) findViewById(R.id.login);
         signUp = (Button) findViewById(R.id.signUp);
+        autoLogin = (CheckBox) findViewById(R.id.autoLogin);
 
         userid = editid.getText().toString().trim();
         userpw = editpw.getText().toString().trim();
         final String c_id, o_id;
 
+        autoId = setting.getString("ID", "");
+        autoPW = setting.getString("PW", "");
+
+        autoLogin.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (autoLogin.isChecked()) {
+                    autoLoginChecker = true;
+                } else {
+                    autoLoginChecker = false;
+                }
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
                                     owner.putExtra("key", key);
                                     owner.putExtra("id", editid.getText().toString());
+                                    saveForAutoLogin();
                                     startActivity(owner);
                                     editid.setText(null);
                                     editpw.setText(null);
@@ -81,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
                                     customer.putExtra("key", key);
                                     customer.putExtra("id", editid.getText().toString());
+                                    saveForAutoLogin();
                                     startActivity(customer);
                                     editid.setText(null);
                                     editpw.setText(null);
@@ -103,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,5 +139,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(sign);
             }
         });
+
+        if(!autoId.equals("") && !autoPW.equals("")) {
+            editid.setText(autoId);
+            editpw.setText(autoPW);
+            autoLogin.performClick();
+            login.performClick();
+        }
+    }
+
+    private void saveForAutoLogin() {
+        if (autoLoginChecker) {
+            editor.putString("ID", editid.getText().toString());
+            editor.putString("PW", editpw.getText().toString());
+            editor.commit();
+        } else {
+            editor.putString("ID", "");
+            editor.putString("PW", "");
+            editor.commit();
+        }
     }
 }
