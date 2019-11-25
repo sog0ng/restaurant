@@ -28,8 +28,7 @@ public class Reservation2Activity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private boolean mIgnoreEvent=false;
 
-    private int curYear, curMonth, curDay, curHour, curMin;
-    private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
+    int y=0,m=0,d=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +64,11 @@ public class Reservation2Activity extends AppCompatActivity {
                 SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                 SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
                 SimpleDateFormat minFormat = new SimpleDateFormat("mm");
-
-                curYear = Integer.parseInt(yearFormat.format(minDate.getTime().getTime()));
-                curMonth = Integer.parseInt(monthFormat.format(minDate.getTime().getTime()));
-                curDay = Integer.parseInt(dayFormat.format(minDate.getTime().getTime()));
-                curHour = Integer.parseInt(hourFormat.format(minDate.getTime().getTime()));
-                curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
-
-                rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
-                rsvMin = tp.getMinute();
+                int curYear = Integer.parseInt(yearFormat.format(minDate.getTime().getTime())),
+                        curMonth = Integer.parseInt(monthFormat.format(minDate.getTime().getTime())),
+                        curDay = Integer.parseInt(dayFormat.format(minDate.getTime().getTime())),
+                        curHour = Integer.parseInt(hourFormat.format(minDate.getTime().getTime())),
+                        curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
 
                 covers = (EditText) findViewById(R.id.covers);
                 nickname = (EditText) findViewById(R.id.nickname);
@@ -82,24 +77,22 @@ public class Reservation2Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "인원수를 입력해주세요", Toast.LENGTH_SHORT).show();
                     covers.requestFocus();
                 }
-                else if (rsvYear == 0 || rsvMonth == 0 || rsvDay == 0) {
+                else if (y == 0 || m == 0 || d == 0) {
                     Toast.makeText(getApplicationContext(), "예약 일자를 선택해주세요", Toast.LENGTH_SHORT).show();
                 }
-                else if (nickname.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "예약자 성명을 입력해주세요", Toast.LENGTH_SHORT).show();
-                    nickname.requestFocus();
-                }
                 //예약 가능 시간 확인
-                else if (rsvYear == curYear && rsvMonth == curMonth && rsvDay == curDay && (rsvHour < curHour + 1 || (rsvHour == curHour + 1 && rsvMin < curMin))) {
+                else if (y == curYear && m == curMonth && d == curDay && (tp.getHour() < curHour + 1 || (tp.getHour() == curHour + 1 && tp.getMinute() < curMin))) {
                     Toast.makeText(getApplicationContext(), "현재시간 1시간 이후부터 예약 가능합니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent result = new Intent(getApplicationContext(), ResultActivity.class);
                     result.putExtra("restaurant_name", restaurant_name.getText());
 
                     // 시간,id 전달
-                    result.putExtra("year", rsvYear);
-                    result.putExtra("month", rsvMonth);
-                    result.putExtra("day", rsvDay);
+                    result.putExtra("year", y);
+                    result.putExtra("month", m);
+                    result.putExtra("day", d);
+                    result.putExtra("hour",tp.getHour());
+                    result.putExtra("minute",tp.getMinute());
                     result.putExtra("covers", covers.getText().toString());
                     result.putExtra("nickname", nickname.getText().toString());
                     result.putExtra("id3",r_id);
@@ -113,16 +106,16 @@ public class Reservation2Activity extends AppCompatActivity {
     void showDate() {
         Calendar c = Calendar.getInstance();
 
-        datePickerDialog = new DatePickerDialog(this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             TextView textView_date = (TextView) findViewById(R.id.textView_date);
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                rsvYear = year;
-                rsvMonth = month+1;
-                rsvDay = dayOfMonth;
+                y = year;
+                m = month+1;
+                d = dayOfMonth;
 
-                textView_date.setText(rsvYear + "년" + rsvMonth + "월" + rsvDay + "일");
+                textView_date.setText(y+"년"+m+"월"+d+"일");
             }
         },c.get(Calendar.YEAR), c.get(Calendar.MONTH), Calendar.DAY_OF_MONTH);
 
@@ -130,7 +123,7 @@ public class Reservation2Activity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(minDate.getTime().getTime());
 
         datePickerDialog.show();
-}
+    }
 
     //타임피커 10분단위 설정
     private void setTimePickerInterval(TimePicker timePicker) {
