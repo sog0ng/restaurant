@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
                                     Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
                                     owner.putExtra("key", key);
                                     owner.putExtra("id", editid.getText().toString());
+                                    startActivity(owner);
                                     editid.setText(null);
                                     editpw.setText(null);
-                                    startActivity(owner);
                                 } else {//고객인 경우
                                     Log.i("id:", editid.getText().toString());//test용 log
                                     Log.i("pw:", editpw.getText().toString());//test용 log
@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
                                     Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
                                     customer.putExtra("key", key);
                                     customer.putExtra("id", editid.getText().toString());
+                                    startActivity(customer);
                                     editid.setText(null);
                                     editpw.setText(null);
-                                    startActivity(customer);
                                 }
                                 login_success = true;
                                 break;
@@ -110,8 +110,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(sign);
             }
         });
-
-
     }
-
 }

@@ -49,8 +49,6 @@ public class ResultActivity extends AppCompatActivity {
         covers.setText(str_covers+"명");
         r_nickname.setText(str_nickname);
 
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             EditText covers;
             @Override
@@ -68,12 +66,9 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setGtr("null");//손님님이 가게한테 주는 평점
                 reservation.setIs_owner("1");
                 myRef.child(reservation_key).setValue(reservation);
-                Intent home = new Intent(getApplicationContext(), CustomerHomeActivity.class);
-                startActivity(home);
+
+                finish();
             }
-
-
-
         });
 
     }
