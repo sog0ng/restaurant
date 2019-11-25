@@ -17,7 +17,7 @@
     <item android:title="관리자 전용">
         <menu>
             <item
-                android:id="@+id/nav_seat_manage"
+                android:id="@+id/nav_manage_restaurant"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/menu_restaurant_manage" />
             <item

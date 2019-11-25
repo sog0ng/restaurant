@@ -50,7 +50,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_info, R.id.nav_query,
-                R.id.nav_modification, R.id.nav_statistics)
+                R.id.nav_modification, R.id.nav_manage_restaurant, R.id.nav_statistics)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
