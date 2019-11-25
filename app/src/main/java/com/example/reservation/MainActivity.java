@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
                                     owner.putExtra("id", editid.getText().toString());
                                     saveForAutoLogin();
                                     startActivity(owner);
-                                    editid.setText(null);
-                                    editpw.setText(null);
                                 } else {//고객인 경우
                                     Log.i("id:", editid.getText().toString());//test용 log
                                     Log.i("pw:", editpw.getText().toString());//test용 log
@@ -110,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
                                     customer.putExtra("id", editid.getText().toString());
                                     saveForAutoLogin();
                                     startActivity(customer);
-                                    editid.setText(null);
-                                    editpw.setText(null);
                                 }
+                                editid.setText(null);
+                                editpw.setText(null);
                                 login_success = true;
                                 break;
                             }
@@ -130,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override

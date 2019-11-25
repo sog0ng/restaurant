@@ -45,6 +45,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
     //String[] list = {"리스트1", "리스트2", "리스트3", "리스트4", "리스트5", "리스트6", "리스트7", "리스트8", "리스트9", "리스트10", "리스트11", "리스트12", "리스트13", "리스트14", "리스트15", "리스트16"};
     private ListViewAdapter adapter;
 
+    private long backKeyPressTime;
+
     final ArrayList<String> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +188,13 @@ public class CustomerHomeActivity extends AppCompatActivity {
     //뒤로가기 버튼 disable
     @Override public void onBackPressed() {
         //super.onBackPressed();
+        if(System.currentTimeMillis() > backKeyPressTime + 2000){
+            backKeyPressTime = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
+        }
+        //2번째 백버튼 클릭 (종료)
+        else {
+            finishAffinity();
+        }
     }
-
 }
