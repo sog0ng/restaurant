@@ -26,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class OwnerHomeActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
-    private ListViewAdapter adapter;
+    //private ListViewAdapter adapter;
     private long backKeyPressTime;
 
     @Override
@@ -57,7 +57,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+/*
         // 임시 데이터
         ListView listview;
         adapter = new ListViewAdapter(this);
@@ -76,8 +76,11 @@ public class OwnerHomeActivity extends AppCompatActivity{
         adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "도착시간", 3);
+
+ */
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -119,7 +122,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
                 })
                 .show();
     }
-
+*/
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
