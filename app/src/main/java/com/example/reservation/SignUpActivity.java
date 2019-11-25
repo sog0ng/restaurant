@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("회원가입");
         setContentView(R.layout.signup);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
