@@ -190,8 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setPassword(s_password);
                             user_info.setOperation_hour("null");//나중에 추가
                             user_info.setIs_owner("0");//사장일 경우 0
-                            user_info.setConfirm("0");//
-                            user_info.setIs_accepted("null");
+
                             myRef.child(user_info_key).setValue(user_info);
 
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
@@ -273,8 +272,6 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setPhone_num(s_phone_num);
                             user_info.setOperation_hour("null");//손님일 경우 null
                             user_info.setIs_owner("1");//손님일 경우1
-                            user_info.setConfirm("null");//손님일 경우 null
-                            user_info.setIs_accepted("0");
                             myRef.child(user_info_key).setValue(user_info);
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(main);

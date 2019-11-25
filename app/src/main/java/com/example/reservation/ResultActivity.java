@@ -60,7 +60,12 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setSend_score(0);
 
                 myRef.child(reservation_key).setValue(reservation);
+                Intent home = new Intent(getApplicationContext(), CustomerHomeActivity.class);
+                startActivity(home);
             }
+
+
+
         });
 
     }
