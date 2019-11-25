@@ -36,6 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextView restaurant_TV;
     String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
 
+    private boolean sameIdChecker = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,11 +113,20 @@ public class SignUpActivity extends AppCompatActivity {
 
                             if (id1.getText().toString().equals(user_each.getId1())) {
                                 Toast.makeText(SignUpActivity.this, "이미 사용중이거나 탈퇴한 아이디입니다.", Toast.LENGTH_SHORT).show();
+                                sameIdChecker = false;
                                 id1.setText("");
                                 id1.requestFocus();
                                 break;
-                            } else {
+                            } else if (id1.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
+                                sameIdChecker = false;
+                                id1.requestFocus();
+                                break;
+                            }
+                            else {
                                 Toast.makeText(SignUpActivity.this, "사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
+                                sameIdChecker = true;
+                                password.requestFocus();
                             }
                         }
                     }
@@ -145,6 +156,12 @@ public class SignUpActivity extends AppCompatActivity {
                             // 아이디 입력 확인
                             if (id1.getText().toString().length() == 0) {
                                 Toast.makeText(SignUpActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                id1.requestFocus();
+                                return;
+                            }
+
+                            if (!sameIdChecker) {
+                                Toast.makeText(getApplicationContext(), "아이디 중복체크를 해주세요",  Toast.LENGTH_SHORT).show();
                                 id1.requestFocus();
                                 return;
                             }
@@ -227,6 +244,12 @@ public class SignUpActivity extends AppCompatActivity {
                             // 아이디 입력 확인
                             if (id1.getText().toString().length() == 0) {
                                 Toast.makeText(SignUpActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
+                                id1.requestFocus();
+                                return;
+                            }
+
+                            if (!sameIdChecker) {
+                                Toast.makeText(getApplicationContext(), "아이디 중복체크를 해주세요",  Toast.LENGTH_SHORT).show();
                                 id1.requestFocus();
                                 return;
                             }
