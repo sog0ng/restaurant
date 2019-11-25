@@ -12,13 +12,12 @@
         android:isScrollContainer="true">
 
         <Button
+            android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="627dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:text="확인"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,125 +26,112 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
-            android:id="@+id/textView"
+        <Button
+            android:id="@+id/change_time"
             android:layout_width="0dp"
-            android:layout_height="92dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="108dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="가게 설정"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="운영시간 변경"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/button" />
 
-        <TableLayout
-            android:layout_width="0dp"
-            android:layout_height="198dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="212dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="102dp">
-
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="136dp"
-                    android:layout_height="match_parent"
-                    android:text="메뉴" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="137dp"
-                    android:layout_height="match_parent"
-                    android:text="가격" />
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="58dp"
-                    android:layout_height="match_parent"
-                    android:text="수량" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/restaurant_name4"
-            android:layout_width="0dp"
-            android:layout_height="87dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+        <LinearLayout
+            android:id="@+id/l_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="가게 이름"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="180dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginLeft="52dp"
-            android:layout_marginTop="570dp"
-            android:text="좌석"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/text7"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:orientation="horizontal"
+                android:text="@string/u_restaurant" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="262dp"
-            android:layout_marginLeft="262dp"
-            android:layout_marginTop="570dp"
-            android:text="좌석 설정"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/restaurant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="restaurant_name"
+                android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/add_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="430dp"
-            android:text="추가"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/change_restaurant"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="가게 변경" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/l_open"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/l_restaurant">
+
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:orientation="horizontal"
+                android:text="open"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/open"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="104dp"
+                android:ems="10"
+                android:text="open"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/l_close"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/l_open"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
+
+            <TextView
+                android:id="@+id/text_2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:orientation="horizontal"
+                android:text="close"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+                android:layout_marginTop="280dp"
+                android:ems="10"
+                android:text="close"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="258dp"
-            android:layout_marginLeft="258dp"
-            android:layout_marginTop="431dp"
-            android:text="삭제"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

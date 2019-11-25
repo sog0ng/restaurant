@@ -19,14 +19,41 @@ public class SetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup);
 
-        Button add = (Button) findViewById(R.id.add_menu);
+        Button button = (Button) findViewById(R.id.button);
+        Button change_restaurant = (Button) findViewById(R.id.change_restaurant);
+        Button change_time = (Button) findViewById(R.id.change_time);
 
-        add.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show();
+                setUp();
             }
         });
+
+        change_restaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeRestaurant();
+            }
+        });
+
+        change_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeTime();
+            }
+        });
+
+    }
+
+    private void setUp(){
+
+    }
+    private void changeRestaurant(){
+
+    }
+    private void changeTime(){
+
     }
 
     private void show() {
