@@ -85,6 +85,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
         //ArrayAdapter<String> adapter;
         ListView listview = (ListView) findViewById(R.id.ListView);
+        listview.setVisibility(View.VISIBLE);
         adapter = new ListViewAdapter(this);
         listview.setAdapter(adapter);
 

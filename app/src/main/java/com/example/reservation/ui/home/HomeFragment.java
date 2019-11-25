@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
         adapter = new ListViewAdapter(getActivity());
 
 
-        listview = (ListView)root.findViewById(R.id.ListView);
+        listview = (ListView) root.findViewById(R.id.ListView);
         listview.setAdapter(adapter);
 
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
@@ -68,48 +69,4 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.logout:
-                btn_logout();
-                return true;
-            case R.id.refresh:
-                //리스트 업데이트 함수
-                adapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void btn_logout() {
-        new AlertDialog.Builder(getActivity())
-                .setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?")
-                .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent i = new Intent(getActivity(), MainActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(i);
-                    }
-                })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                    }
-                })
-                .show();
-    }
-
 }

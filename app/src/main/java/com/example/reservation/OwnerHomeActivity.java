@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,6 +35,9 @@ public class OwnerHomeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.owner_home);
+
+        ListView listview = (ListView) findViewById(R.id.ListView);
+        listview.setVisibility(View.GONE);
 
         // 네비게이션
         Toolbar toolbar = findViewById(R.id.toolbar);
