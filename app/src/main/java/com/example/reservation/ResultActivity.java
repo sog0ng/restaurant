@@ -32,6 +32,11 @@ public class ResultActivity extends AppCompatActivity {
         final String str_covers = getIntent().getStringExtra("covers");
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final String str_nickname=getIntent().getStringExtra("nickname");
+        String year2=String.valueOf(year);
+        String month2=String.valueOf(month);
+        String day2=String.valueOf(day);
+
+        final String date=year2+"년 "+month2+"월"+ day2+"일";
 
         TextView r_date = (TextView) findViewById(R.id.r_date);
         TextView covers = (TextView) findViewById(R.id.covers);
@@ -51,14 +56,17 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Reservation reservation = new Reservation();
+
                 reservation.setRestaurant_name(str_restaurantName);
-                reservation.setConfirm(0);
-                reservation.setIs_accepted(0);
+                reservation.setIs_confirm("1");
+                reservation.setIs_accepted("1");
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
-               // reservation.setR_date();//날짜,시간 추가해야함
-                reservation.setSend_score(0);
-
+                // reservation.setR_date();//시간 추가해야함,id값도
+                reservation.setR_date(date);
+                reservation.setGtc("null");//가게가 손님할때 주는 평점
+                reservation.setGtr("null");//손님님이 가게한테 주는 평점
+                reservation.setIs_owner("1");
                 myRef.child(reservation_key).setValue(reservation);
                 Intent home = new Intent(getApplicationContext(), CustomerHomeActivity.class);
                 startActivity(home);
