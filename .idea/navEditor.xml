@@ -20,6 +20,11 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="nav_home_customer">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="nav_info">
                     <value>
                       <LayoutPositions>

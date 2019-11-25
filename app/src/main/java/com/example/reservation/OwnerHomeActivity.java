@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -135,7 +136,10 @@ public class OwnerHomeActivity extends AppCompatActivity{
     //뒤로가기 버튼 disable
     @Override public void onBackPressed() {
         //super.onBackPressed();
-        if(System.currentTimeMillis() > backKeyPressTime + 2000){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if(System.currentTimeMillis() > backKeyPressTime + 2000){
             backKeyPressTime = System.currentTimeMillis();
             Toast.makeText(getApplicationContext(), "한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
         }
