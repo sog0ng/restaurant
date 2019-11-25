@@ -23,7 +23,7 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.result);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("user_reservation");
+        final DatabaseReference myRef = database.getReference("Reservation");
         final String reservation_key = myRef.push().getKey();//고유키
 
         int year = getIntent().getIntExtra("year",0);
