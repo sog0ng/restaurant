@@ -62,9 +62,14 @@ public class SignUpActivity extends AppCompatActivity {
         // 사용자 타입 선택 여부 검사
         // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
         // radioGroupListener 찾아봐야함
-        if ( !owner.isChecked() && !customer.isChecked() ) {
-            Toast.makeText(SignUpActivity.this, "회원가입 타입을 선택하세요!", Toast.LENGTH_SHORT).show();
-        }
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( !owner.isChecked() && !customer.isChecked() ) {
+                    Toast.makeText(SignUpActivity.this, "회원가입 타입을 선택하세요!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // 비밀번호 일치 검사
         password_check.addTextChangedListener(new TextWatcher() {
