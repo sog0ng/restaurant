@@ -36,11 +36,8 @@ public class OwnerHomeActivity extends AppCompatActivity{
 
         setContentView(R.layout.owner_home);
 
-        ListView listview = (ListView) findViewById(R.id.ListView);
-        listview.setVisibility(View.GONE);
-
         // 네비게이션
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.owner_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

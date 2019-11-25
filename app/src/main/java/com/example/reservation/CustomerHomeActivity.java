@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class CustomerHomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ListViewAdapter adapter;
+    // private ListViewAdapter adapter;
     private SearchView editsearch;
 
     private long backKeyPressTime;
@@ -53,11 +53,12 @@ public class CustomerHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
 
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef2 = database.getReference("User_info/");
 
         // 네비게이션
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.customer_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -72,15 +73,14 @@ public class CustomerHomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_info, R.id.nav_query,
-                R.id.nav_modification, R.id.nav_statistics)
+                R.id.nav_customer_home, R.id.nav_info, R.id.nav_query)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+/*
         // 리스트 검색 코드 작성
 
         //ArrayAdapter<String> adapter;
@@ -117,9 +117,10 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 startActivity(reservation2);
             }
         });
-
+*/
     }
 
+/*
     private void update_list(@NonNull DataSnapshot dataSnapshot) {
         for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
             String key=childSnapshot.getKey();
@@ -135,6 +136,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
         }
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,6 +145,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         return true;
     }
 
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -159,7 +162,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+*/
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -186,6 +189,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     //뒤로가기 버튼 disable
+
     @Override public void onBackPressed() {
         //super.onBackPressed();
         if(System.currentTimeMillis() > backKeyPressTime + 2000){
