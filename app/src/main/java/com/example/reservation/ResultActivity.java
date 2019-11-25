@@ -32,6 +32,7 @@ public class ResultActivity extends AppCompatActivity {
         final String str_covers = getIntent().getStringExtra("covers");
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final String str_nickname=getIntent().getStringExtra("nickname");
+        final String id=getIntent().getStringExtra("id3");
         String year2=String.valueOf(year);
         String month2=String.valueOf(month);
         String day2=String.valueOf(day);
@@ -61,6 +62,7 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
                 // reservation.setR_date();//시간 추가해야함,id값도
+                reservation.setR_id(id);
                 reservation.setR_date(date);
                 reservation.setGtc("null");//가게가 손님할때 주는 평점
                 reservation.setGtr("null");//손님님이 가게한테 주는 평점

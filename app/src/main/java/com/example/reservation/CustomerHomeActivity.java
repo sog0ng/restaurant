@@ -99,6 +99,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent2=getIntent();
+        final String id2= intent.getExtras().getString("id");
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
@@ -108,6 +110,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
                 Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
                 reservation2.putExtra("restaurant_name", list.get(position));
+                reservation2.putExtra("id", id2);
                 startActivity(reservation2);
             }
         });

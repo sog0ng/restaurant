@@ -38,6 +38,7 @@ public class Reservation2Activity extends AppCompatActivity {
 
         final TextView restaurant_name = (TextView) findViewById(R.id.restaurant_name);
         restaurant_name.setText(intent.getStringExtra("restaurant_name"));
+        final String r_id=intent.getExtras().getString("id");
 
 
         // 날짜 선택
@@ -85,12 +86,14 @@ public class Reservation2Activity extends AppCompatActivity {
                 } else {
                     Intent result = new Intent(getApplicationContext(), ResultActivity.class);
                     result.putExtra("restaurant_name", restaurant_name.getText());
-                    // 시간, 인원수 전달
+
+                    // 시간,id 전달
                     result.putExtra("year", y);
                     result.putExtra("month", m);
                     result.putExtra("day", d);
                     result.putExtra("covers", covers.getText().toString());
                     result.putExtra("nickname", nickname.getText().toString());
+                    result.putExtra("id3",r_id);
                     startActivity(result);
                     finish();
                 }
