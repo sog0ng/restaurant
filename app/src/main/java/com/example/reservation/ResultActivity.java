@@ -33,19 +33,26 @@ public class ResultActivity extends AppCompatActivity {
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final String str_nickname=getIntent().getStringExtra("nickname");
         final String id=getIntent().getStringExtra("id3");
+        int hour = getIntent().getIntExtra("hour",0);
+        int minute = getIntent().getIntExtra("minute",0);
+
+        String hour2=String.valueOf(hour);
+        String minute2=String.valueOf(minute);
         String year2=String.valueOf(year);
         String month2=String.valueOf(month);
         String day2=String.valueOf(day);
 
         final String date=year2+"년 "+month2+"월"+ day2+"일";
-
+        final String time=hour2+"시 " + minute2+"분" ;
         TextView r_date = (TextView) findViewById(R.id.r_date);
         TextView covers = (TextView) findViewById(R.id.covers);
         TextView restaurantName = (TextView) findViewById(R.id.restaurant_name);
         TextView r_nickname = (TextView) findViewById(R.id.r_nickname);
+        TextView r_time = (TextView) findViewById(R.id.r_time);
         Button submit = (Button) findViewById(R.id.submit);
 
         restaurantName.setText(str_restaurantName);
+        r_time.setText(time);
         r_date.setText(year+"년"+month+"월"+day+"일");
         covers.setText(str_covers+"명");
         r_nickname.setText(str_nickname);
@@ -62,6 +69,7 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
                 // reservation.setR_date();//시간 추가해야함,id값도
+                reservation.setTime(time);
                 reservation.setR_id(id);
                 reservation.setR_date(date);
                 reservation.setGtc("null");//가게가 손님할때 주는 평점

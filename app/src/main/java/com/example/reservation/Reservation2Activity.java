@@ -82,7 +82,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "인원수를 입력해주세요", Toast.LENGTH_SHORT).show();
                     covers.requestFocus();
                 }
-                else if (rsvYear == 0 || rsvMonth == 0 || rsvDay == 0) {
+                else if (rsvYear == 0 || rsvMonth == 0 || rsvDay == 0){
                     Toast.makeText(getApplicationContext(), "예약 일자를 선택해주세요", Toast.LENGTH_SHORT).show();
                 }
                 else if (nickname.getText().toString().equals("")) {
@@ -100,6 +100,8 @@ public class Reservation2Activity extends AppCompatActivity {
                     result.putExtra("year", rsvYear);
                     result.putExtra("month", rsvMonth);
                     result.putExtra("day", rsvDay);
+                    result.putExtra("hour",tp.getHour());
+                    result.putExtra("minute",tp.getMinute());
                     result.putExtra("covers", covers.getText().toString());
                     result.putExtra("nickname", nickname.getText().toString());
                     result.putExtra("id3",r_id);
@@ -130,7 +132,7 @@ public class Reservation2Activity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(minDate.getTime().getTime());
 
         datePickerDialog.show();
-}
+    }
 
     //타임피커 10분단위 설정
     private void setTimePickerInterval(TimePicker timePicker) {
