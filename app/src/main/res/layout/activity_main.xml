@@ -82,7 +82,7 @@
             android:layout_height="31dp"
             android:text="자동로그인"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="1dp" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

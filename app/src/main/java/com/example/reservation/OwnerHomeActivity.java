@@ -27,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 public class OwnerHomeActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
     private ListViewAdapter adapter;
+    private long backKeyPressTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,5 +130,13 @@ public class OwnerHomeActivity extends AppCompatActivity{
     //뒤로가기 버튼 disable
     @Override public void onBackPressed() {
         //super.onBackPressed();
+        if(System.currentTimeMillis() > backKeyPressTime + 2000){
+            backKeyPressTime = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
+        }
+        //2번째 백버튼 클릭 (종료)
+        else {
+            finishAffinity();
+        }
     }
 }
