@@ -6,69 +6,176 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <TextView
-        android:id="@+id/restaurant_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-
-        android:text="가게 이름"
-        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
         android:layout_gravity="center"
-         />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="left"
+        android:text="감사합니다.\n예약이 완료되었습니다."
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-
-        android:layout_marginTop="50dp"
-        android:text="예약 내역"
         android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:text="예약 내역"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/covers"
-        android:layout_width="wrap_content"
+        android:id="@+id/restaurant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="left"
+        android:text="가게 이름"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="성명"
+            android:textSize="18sp"
+            />
 
-        android:text="인원수" />
+        <TextView
+            android:id="@+id/r_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_gravity="center"
+            android:text="닉네임"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/r_date"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="시간"
-        android:layout_gravity="center" />
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="인원수"
+            android:textSize="18sp"
+            />
 
-    <TextView
-        android:id="@+id/r_nickname"
-        android:layout_width="75dp"
+        <TextView
+            android:id="@+id/covers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:text="인원수"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_gravity="center"
-        android:text="닉네임"/>
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="408dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:text="확인"
-        android:layout_gravity="center"
-        />
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:text="예약일자"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/r_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="예약일자"
+            android:textSize="18sp"
+            />
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:text="예약시간"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/r_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="예약시간"
+            android:textSize="18sp"
+            />
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:text="확인"
+            android:textColor="@android:color/white"
+            android:textSize="50px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
