@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,9 +42,8 @@ import java.util.ArrayList;
 public class CustomerHomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    // 가게 리스트 임시 데이터,,, db로부터 가져오는 코드 작성...
-    //String[] list = {"리스트1", "리스트2", "리스트3", "리스트4", "리스트5", "리스트6", "리스트7", "리스트8", "리스트9", "리스트10", "리스트11", "리스트12", "리스트13", "리스트14", "리스트15", "리스트16"};
     private ListViewAdapter adapter;
+    private SearchView editsearch;
 
     private long backKeyPressTime;
 
@@ -88,7 +88,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         adapter = new ListViewAdapter(this);
         listview.setAdapter(adapter);
 
-//리스트가 뜨는데 돋보기 눌러야뜸
+        //리스트가 뜨는데 돋보기 눌러야뜸
         myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -128,7 +128,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 Log.i("가게이름:", user_each.getRestaurant_name());
                 Log.i("이름", key);
                 list.add(user_each.getRestaurant_name());
-
             }else {
                 continue;
             }

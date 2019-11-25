@@ -80,7 +80,6 @@ public class OwnerHomeActivity extends AppCompatActivity{
  */
     }
 
-    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,7 +96,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
                 return true;
             case R.id.refresh:
                 //리스트 업데이트 함수
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -122,7 +121,6 @@ public class OwnerHomeActivity extends AppCompatActivity{
                 })
                 .show();
     }
-*/
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
