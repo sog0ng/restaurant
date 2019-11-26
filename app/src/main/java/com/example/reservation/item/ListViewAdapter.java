@@ -76,7 +76,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView nickname = (TextView) convertView.findViewById(R.id.nickname);
         TextView r_date = (TextView) convertView.findViewById(R.id.r_date);
-        TextView arrival_time = (TextView) convertView.findViewById(R.id.time);
+        //TextView arrival_time = (TextView) convertView.findViewById(R.id.time);
         TextView covers = (TextView) convertView.findViewById(R.id.covers);
         TextView dDay = (TextView) convertView.findViewById(R.id.dDay);
         Button accept = (Button) convertView.findViewById(R.id.accept);
@@ -87,7 +87,7 @@ public class ListViewAdapter extends BaseAdapter {
             title.setText("과거 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
-            arrival_time.setText(listViewItem.getArrival_time());
+            //arrival_time.setText(listViewItem.getArrival_time());
             covers.setText(listViewItem.getCovers() + "명");
             Button submit = (Button) convertView.findViewById(R.id.submit);
 
@@ -182,14 +182,14 @@ public class ListViewAdapter extends BaseAdapter {
 
 
 
-    public void addItem(String nickname, int year, int month, int day, int hour,int minute, String arrival_time, int covers){
+    public void addItem(String nickname, int year, int month, int day, int hour,int minute, int covers){
         ListViewItem item = new ListViewItem();
 
         item.setNickname(nickname);
         item.setYear(year);
         item.setMonth(month);
         item.setDay(day);
-        item.setArrival_time(arrival_time);
+        //item.setArrival_time(arrival_time);
         item.setCovers(covers);
         item.setR_date(month + "월" + day + "일" + hour + "시" + minute + "분");
 
