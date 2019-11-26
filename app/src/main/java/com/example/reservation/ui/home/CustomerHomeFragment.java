@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CustomerHomeFragment extends Fragment {
-
+    private SearchView searchView;
     private HomeViewModel homeViewModel;
     private ListViewAdapter adapter;
     ArrayList<String> list;
@@ -81,7 +81,6 @@ public class CustomerHomeFragment extends Fragment {
         listview.setAdapter(adapter);
 
 
-
         Intent intent=getActivity().getIntent();
         final String id2= intent.getExtras().getString("id");
 
@@ -97,7 +96,6 @@ public class CustomerHomeFragment extends Fragment {
                 startActivity(reservation2);
             }
         });
-
 
         return root;
     }

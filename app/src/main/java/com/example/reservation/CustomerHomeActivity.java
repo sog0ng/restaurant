@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -40,10 +41,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class CustomerHomeActivity extends AppCompatActivity {
-
+    private SearchView searchView;
     private AppBarConfiguration mAppBarConfiguration;
     // private ListViewAdapter adapter;
     private SearchView editsearch;
+    private InputMethodManager imm;
 
     private long backKeyPressTime;
 
@@ -80,6 +82,11 @@ public class CustomerHomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
 /*
         // 리스트 검색 코드 작성
 
