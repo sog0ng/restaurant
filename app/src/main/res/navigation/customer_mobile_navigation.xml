@@ -9,7 +9,7 @@
         android:id="@+id/nav_customer_home"
         android:name="com.example.reservation.ui.home.CustomerHomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_customer_home" />
 
     <fragment
         android:id="@+id/nav_info"
@@ -21,16 +21,8 @@
         android:id="@+id/nav_query"
         android:name="com.example.reservation.ui.query.QueryFragment"
         android:label="@string/menu_query"
-        tools:layout="@layout/fragment_query" />
+        tools:layout="@layout/fragment_query">
 
-    <fragment
-        android:id="@+id/nav_modification"
-        android:name="com.example.reservation.ui.modification.ModificationFragment"
-        android:label="@string/menu_modification"
-        tools:layout="@layout/fragment_modification" >
-        <action
-            android:id="@+id/action_nav_modification_self"
-            app:destination="@id/nav_modification" />
     </fragment>
 
 </navigation>

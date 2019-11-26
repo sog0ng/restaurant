@@ -22,8 +22,8 @@ public class ManageFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
         shareViewModel =
                 ViewModelProviders.of(this).get(ManageViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_manage_restaurant, container, false);
-        final TextView textView = root.findViewById(R.id.text_manage_restaurant);
+        View root = inflater.inflate(R.layout.fragment_manage, container, false);
+        final TextView textView = root.findViewById(R.id.text_manage);
         shareViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

@@ -53,7 +53,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_info, R.id.nav_query,
-                R.id.nav_modification, R.id.nav_manage_restaurant, R.id.nav_statistics)
+                R.id.nav_statistics)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -95,11 +95,6 @@ public class OwnerHomeActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case R.id.logout:
                 btn_logout();
-                return true;
-            case R.id.refresh:
-                //리스트 업데이트 함수
-                //adapter.notifyDataSetChanged();
-                Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

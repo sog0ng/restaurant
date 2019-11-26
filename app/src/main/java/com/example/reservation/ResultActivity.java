@@ -26,15 +26,15 @@ public class ResultActivity extends AppCompatActivity {
         final DatabaseReference myRef = database.getReference("Reservation");
         final String reservation_key = myRef.push().getKey();//고유키
 
-        int year = getIntent().getIntExtra("year",0);
-        int month = getIntent().getIntExtra("month",0);
-        int day = getIntent().getIntExtra("day",0);
+        final int year = getIntent().getIntExtra("year",0);
+        final int month = getIntent().getIntExtra("month",0);
+        final int day = getIntent().getIntExtra("day",0);
         final String str_covers = getIntent().getStringExtra("covers");
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final String str_nickname=getIntent().getStringExtra("nickname");
         final String id=getIntent().getStringExtra("id3");
-        int hour = getIntent().getIntExtra("hour",0);
-        int minute = getIntent().getIntExtra("minute",0);
+        final int hour = getIntent().getIntExtra("hour",0);
+        final int minute = getIntent().getIntExtra("minute",0);
 
         String hour2=String.valueOf(hour);
         String minute2=String.valueOf(minute);
@@ -65,16 +65,20 @@ public class ResultActivity extends AppCompatActivity {
 
                 reservation.setRestaurant_name(str_restaurantName);
                 reservation.setIs_confirm("1");
-                reservation.setIs_accepted("1");
+                reservation.setIs_accepted("null");
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
                 // reservation.setR_date();//시간 추가해야함,id값도
-                reservation.setTime(time);
+                reservation.setYear(year);
+                reservation.setMonth(month);
+                reservation.setDay(day);
                 reservation.setR_id(id);
-                reservation.setR_date(date);
+                reservation.setHour(hour);
+                reservation.setMinute(minute);
                 reservation.setGtc("null");//가게가 손님할때 주는 평점
                 reservation.setGtr("null");//손님님이 가게한테 주는 평점
                 reservation.setIs_owner("1");
+
                 myRef.child(reservation_key).setValue(reservation);
 
                 finish();

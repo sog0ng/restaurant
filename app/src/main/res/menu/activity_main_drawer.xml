@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_customer_home"
             android:icon="@drawable/common_full_open_on_phone"
             android:title="홈 화면" />
         <item
@@ -16,10 +16,5 @@
             android:id="@+id/nav_query"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_query" />
-        <item
-            android:id="@+id/nav_modification"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_modification" />
     </group>
-
 </menu>
