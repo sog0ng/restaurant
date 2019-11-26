@@ -3,21 +3,25 @@ package com.example.reservation;
 import java.util.Date;
 
 public class Reservation {
-    String r_id;//아직 추가X
+    String r_id;
     String restaurant_name;
     String nickname;
     int covers;
     int year;
     int month;
     int day;
-    String is_accepted;//기본 값 0으로 거절
-    String is_confirm;//기본 값 1로 방문되어있음, 미방문시 0으로 바꿔주기
+    String is_accepted;
+    String is_confirm;
     String gtr;
     String gtc;
     String is_owner;
-
+    String owner_id;
     int hour;
     int minute;
+
+    public String getOwner_id() { return owner_id; }
+
+    public void setOwner_id(String owner_id) { this.owner_id = owner_id; }
 
     public String getR_id() { return r_id; }
     public void setR_id(String r_id) { this.r_id = r_id; }

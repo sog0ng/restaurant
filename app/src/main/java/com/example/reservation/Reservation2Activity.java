@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,7 +14,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,19 +36,45 @@ public class Reservation2Activity extends AppCompatActivity {
     private static final int TIME_PICKER_INTERVAL=10;
     private DatePickerDialog datePickerDialog;
     private boolean mIgnoreEvent=false;
-
+    String owner_id;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation2);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef3 = database.getReference("User_info");
 
         Intent intent = getIntent();
 
         final TextView restaurant_name = (TextView) findViewById(R.id.restaurant_name);
         restaurant_name.setText(intent.getStringExtra("restaurant_name"));
+        final String restaurant_name1=intent.getStringExtra("restaurant_name");
         final String r_id=intent.getExtras().getString("id");
+
+        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+                    User user_each = childSnapshot.getValue(User.class);
+                    if(user_each.getRestaurant_name().equals(restaurant_name1)){
+                        owner_id=user_each.getId1();
+                        Log.i("진짜",owner_id);
+                        break;
+                    }
+                    else{
+                        continue;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         // 날짜 선택
@@ -65,6 +100,8 @@ public class Reservation2Activity extends AppCompatActivity {
                 SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                 SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
                 SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+                SimpleDateFormat dayofweekFormat = new SimpleDateFormat("EEEE");
+
 
                 curYear = Integer.parseInt(yearFormat.format(minDate.getTime().getTime()));
                 curMonth = Integer.parseInt(monthFormat.format(minDate.getTime().getTime()));
@@ -77,6 +114,8 @@ public class Reservation2Activity extends AppCompatActivity {
 
                 covers = (EditText) findViewById(R.id.covers);
                 nickname = (EditText) findViewById(R.id.nickname);
+
+
 
                 if (covers.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "인원수를 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -95,8 +134,6 @@ public class Reservation2Activity extends AppCompatActivity {
                 } else {
                     Intent result = new Intent(getApplicationContext(), ResultActivity.class);
                     result.putExtra("restaurant_name", restaurant_name.getText());
-
-                    // 시간,id 전달
                     result.putExtra("year", rsvYear);
                     result.putExtra("month", rsvMonth);
                     result.putExtra("day", rsvDay);
@@ -105,6 +142,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     result.putExtra("covers", covers.getText().toString());
                     result.putExtra("nickname", nickname.getText().toString());
                     result.putExtra("id3",r_id);
+                    result.putExtra("owner_id",owner_id);
                     startActivity(result);
                     finish();
                 }
@@ -123,8 +161,8 @@ public class Reservation2Activity extends AppCompatActivity {
                 rsvYear = year;
                 rsvMonth = month+1;
                 rsvDay = dayOfMonth;
-
                 textView_date.setText(rsvYear + "년" + rsvMonth + "월" + rsvDay + "일");
+
             }
         },c.get(Calendar.YEAR), c.get(Calendar.MONTH), Calendar.DAY_OF_MONTH);
 
