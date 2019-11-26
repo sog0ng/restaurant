@@ -110,8 +110,9 @@ public class Reservation2Activity extends AppCompatActivity {
                 curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
 
                 rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
-                rsvMin = tp.getMinute();
+                rsvMin = tp.getMinute()*10;
 
+                Log.i("오ㅒ 잘려", String.valueOf(rsvMin));
                 covers = (EditText) findViewById(R.id.covers);
                 nickname = (EditText) findViewById(R.id.nickname);
 
@@ -138,7 +139,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     result.putExtra("month", rsvMonth);
                     result.putExtra("day", rsvDay);
                     result.putExtra("hour",tp.getHour());
-                    result.putExtra("minute",tp.getMinute());
+                    result.putExtra("minute",tp.getMinute()*10);
                     result.putExtra("covers", covers.getText().toString());
                     result.putExtra("nickname", nickname.getText().toString());
                     result.putExtra("id3",r_id);
@@ -178,7 +179,7 @@ public class Reservation2Activity extends AppCompatActivity {
             NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
                     "minute", "id", "android"));
             minutePicker.setMinValue(0);
-            minutePicker.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
+            minutePicker.setMaxValue((60/ TIME_PICKER_INTERVAL) - 1);
             List<String> displayedValues = new ArrayList<String>();
             for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
                 displayedValues.add(String.format("%02d", i));
