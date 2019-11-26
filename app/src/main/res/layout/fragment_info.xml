@@ -70,19 +70,12 @@
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="password"
                 android:inputType="textPassword"
-                tools:visibility="GONE" />
-
-            <Button
-                android:id="@+id/change_pw"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="PW 변경" />
+                android:enabled="false"/>
 
         </LinearLayout>
 
@@ -90,7 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/text4"
@@ -102,11 +96,12 @@
 
             <EditText
                 android:id="@+id/password_check"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="password_check"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:enabled="false"/>
         </LinearLayout>
 
         <LinearLayout
@@ -125,18 +120,13 @@
 
             <EditText
                 android:id="@+id/phone_num"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="phone number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:enabled="false"/>
 
-            <Button
-                android:id="@+id/change_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="번호 변경" />
         </LinearLayout>
 
         <LinearLayout
@@ -152,24 +142,16 @@
                 android:ems="10"
                 android:orientation="horizontal"
                 android:text="@string/u_restaurant"
-                tools:visibility="GONE" />
+                />
 
             <EditText
                 android:id="@+id/restaurant_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="restaurant_name"
                 android:inputType="textPersonName"
-                tools:visibility="GONE" />
-
-            <Button
-                android:id="@+id/change_restaurant"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="가게 변경"
-                tools:visibility="GONE" />
+                android:enabled="false"/>
 
         </LinearLayout>
 
