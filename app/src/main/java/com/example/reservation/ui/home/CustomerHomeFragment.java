@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +41,10 @@ import java.util.ArrayList;
 public class CustomerHomeFragment extends Fragment {
     private SearchView searchView;
     private HomeViewModel homeViewModel;
-    private ListViewAdapter adapter;
+    private Button refreshButton;
+    //private ListViewAdapter adapter;
     ArrayList<String> list;
+    public ArrayAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class CustomerHomeFragment extends Fragment {
 
         // 리스트 검색 코드 작성
         //리스트가 뜨는데 돋보기 눌러야뜸
-        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 update_list(dataSnapshot);
@@ -76,15 +80,15 @@ public class CustomerHomeFragment extends Fragment {
             }
         });
         //ArrayAdapter<String> adapter;
-        ListView listview = (ListView) root.findViewById(R.id.customer_listView);
-        adapter = new ListViewAdapter(getActivity());
-        listview.setAdapter(adapter);
+        final ListView listview = (ListView) root.findViewById(R.id.customer_listView);
+        //adapter = new ListViewAdapter(getActivity());
+        //listview.setAdapter(adapter);
 
 
         Intent intent=getActivity().getIntent();
         final String id2= intent.getExtras().getString("id");
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
@@ -97,10 +101,20 @@ public class CustomerHomeFragment extends Fragment {
             }
         });
 
+        refreshButton = (Button) root.findViewById(R.id.refreshButton);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 
-    private void update_list(@NonNull DataSnapshot dataSnapshot) {
+    public void update_list(@NonNull DataSnapshot dataSnapshot) {
+        list.clear();
         for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
             String key=childSnapshot.getKey();
             User user_each=childSnapshot.getValue(User.class);

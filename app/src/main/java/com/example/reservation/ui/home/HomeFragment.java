@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import com.example.reservation.R;
 import com.example.reservation.item.ListViewAdapter;
 
 public class HomeFragment extends Fragment {
-
+    private Button refreshButton;
     private HomeViewModel homeViewModel;
     private ListViewAdapter adapter;
 
@@ -67,6 +68,16 @@ public class HomeFragment extends Fragment {
 //                textView.setText(s);
             }
         });
+
+        refreshButton = (Button) root.findViewById(R.id.refreshButton);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 }

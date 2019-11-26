@@ -26,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.reservation.item.ListViewAdapter;
 import com.example.reservation.item.ListViewItem;
+import com.example.reservation.ui.home.CustomerHomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +56,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
 
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef2 = database.getReference("User_info/");
 
@@ -82,68 +82,15 @@ public class CustomerHomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        giveFocusToSearchView();
+    }
 
+    private void giveFocusToSearchView() {
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setFocusable(true);
         searchView.setIconified(false);
         searchView.requestFocusFromTouch();
-/*
-        // 리스트 검색 코드 작성
-
-        //ArrayAdapter<String> adapter;
-        ListView listview = (ListView) findViewById(R.id.ListView);
-        listview.setVisibility(View.VISIBLE);
-        adapter = new ListViewAdapter(this);
-        listview.setAdapter(adapter);
-
-        //리스트가 뜨는데 돋보기 눌러야뜸
-        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                update_list(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        Intent intent2=getIntent();
-        final String id2= intent.getExtras().getString("id");
-
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
-                Intent reservation2 = new Intent(getApplicationContext(), Reservation2Activity.class);
-                reservation2.putExtra("restaurant_name", list.get(position));
-                reservation2.putExtra("id", id2);
-                startActivity(reservation2);
-            }
-        });
-*/
     }
-
-/*
-    private void update_list(@NonNull DataSnapshot dataSnapshot) {
-        for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
-            String key=childSnapshot.getKey();
-            User user_each=childSnapshot.getValue(User.class);
-            // list.add(user_each.getRestaurant_name());
-            if(!user_each.getRestaurant_name().equals("null")) { //가게 이름이 null이 아니면 list에 추가
-                Log.i("가게이름:", user_each.getRestaurant_name());
-                Log.i("이름", key);
-                list.add(user_each.getRestaurant_name());
-            }else {
-                continue;
-            }
-
-        }
-    }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,17 +99,12 @@ public class CustomerHomeActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.logout:
                 btn_logout();
-                return true;
-            case R.id.refresh:
-                //리스트 업데이트 함수
-                Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -195,8 +137,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     //뒤로가기 버튼 disable
-
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         //super.onBackPressed();
         if(System.currentTimeMillis() > backKeyPressTime + 2000){
             backKeyPressTime = System.currentTimeMillis();

@@ -96,11 +96,6 @@ public class OwnerHomeActivity extends AppCompatActivity{
             case R.id.logout:
                 btn_logout();
                 return true;
-            case R.id.refresh:
-                //리스트 업데이트 함수
-                //adapter.notifyDataSetChanged();
-                Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
