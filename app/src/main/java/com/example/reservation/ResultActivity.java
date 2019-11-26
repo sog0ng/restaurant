@@ -65,7 +65,7 @@ public class ResultActivity extends AppCompatActivity {
 
                 reservation.setRestaurant_name(str_restaurantName);
                 reservation.setIs_confirm("1");
-                reservation.setIs_accepted("1");
+                reservation.setIs_accepted("null");
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
                 // reservation.setR_date();//시간 추가해야함,id값도
