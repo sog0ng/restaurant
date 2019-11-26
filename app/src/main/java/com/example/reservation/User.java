@@ -35,7 +35,7 @@ public class User {
 
     public String getIs_owner() { return is_owner; }
     public void setIs_owner(String is_owner) { this.is_owner = is_owner; }
-    
+
     public User() { }
 
     public User(String id1, String password, String phone_num, String restaurant_name, String is_owner, String open, String close) {

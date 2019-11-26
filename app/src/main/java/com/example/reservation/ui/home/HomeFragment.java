@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     private Button refreshButton;
     private HomeViewModel homeViewModel;
     private ListViewAdapter adapter;
-
+    private String restaurant1 ;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -56,9 +56,32 @@ public class HomeFragment extends Fragment {
         final DatabaseReference myRef2 = database1.getReference("Reservation/");
 
         Intent intent=getActivity().getIntent();
+
         final String id1= intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
-        final String restaurant1 = intent.getExtras().getString("restaurant_name");
+
+
+        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+                    User user_each = childSnapshot.getValue(User.class);
+                    if(user_each.getId1().equals(id1)){
+                        restaurant1 =user_each.getRestaurant_name();
+                        Log.i("가게이름", restaurant1);
+                        break;
+
+                    } else{
+                        continue;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // 임시 데이터
         ListView listview;
@@ -68,17 +91,17 @@ public class HomeFragment extends Fragment {
         listview.setAdapter(adapter);
 
 
-        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                view_my_list(dataSnapshot, restaurant1);//자신의 레스토랑 이름을 가지는 리스트 보여주도록
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                view_my_list(dataSnapshot, restaurant1[0]);//자신의 레스토랑 이름을 가지는 리스트 보여주도록
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
