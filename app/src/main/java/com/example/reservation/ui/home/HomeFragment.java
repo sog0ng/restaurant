@@ -60,19 +60,6 @@ public class HomeFragment extends Fragment {
         final String key1 = intent.getExtras().getString("key");
         final String restaurant1 = intent.getExtras().getString("restaurant_name");
 
-/*
-        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myRestaurant = find_myRestaurant(dataSnapshot,id1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-*/
         // 임시 데이터
         ListView listview;
         adapter = new ListViewAdapter(getActivity());
@@ -96,7 +83,7 @@ public class HomeFragment extends Fragment {
 
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
         // 닉네임 년 월 일 시간 분 도착시간 인원
-        /*
+
         adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
         adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
         adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
@@ -106,7 +93,7 @@ public class HomeFragment extends Fragment {
         adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
         adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
         adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
-        */
+
         final TextView textView = root.findViewById(R.id.text_home);
 
         homeViewModel.getText().observe(this, new Observer<String>() {
@@ -128,18 +115,6 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-/*
-    private String find_myRestaurant(@NonNull DataSnapshot dataSnapshot, String myKey) {//자기 자신의 레스토랑 이름
-        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {//전체 데이터 반복해서 확인
-            User user_each = childSnapshot.getValue(User.class);
-                if (user_each.getRestaurant_name().toString().equals(myKey.getRestaurant_name())) {
-                myRestaurant =
-            }
-
-        }
-        return myRestaurant;
-    }
-*/
 
     private void view_my_list(@NonNull DataSnapshot dataSnapshot, String restaurant) {//자기 자신의 레스토랑 이름
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
