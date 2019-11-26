@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.reservation">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -12,8 +13,8 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,12 +33,18 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".CustomerHomeActivity" android:theme="@style/AppTheme.NoActionBar">
+
+        <activity
+            android:name=".CustomerHomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".OwnerHomeActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".OwnerHomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
         <activity android:name=".ReservationActivity">
 
         </activity>
@@ -50,9 +57,6 @@
         </activity>
 
         <activity android:name=".ResultActivity">
-
-        </activity>
-        <activity android:name="SetupActivity">
 
         </activity>
     </application>

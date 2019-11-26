@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CustomerHomeFragment extends Fragment {
-    private SearchView searchView;
+    //private SearchView searchView;
     private HomeViewModel homeViewModel;
     private ListViewAdapter adapter;
     ArrayList<String> list;
