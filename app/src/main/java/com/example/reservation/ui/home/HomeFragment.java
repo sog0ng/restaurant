@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         final String id1= intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
 
-
+        //id값으로 가게이름 가져오기
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         // 임시 데이터
         ListView listview;
         adapter = new ListViewAdapter(getActivity());
@@ -91,31 +92,31 @@ public class HomeFragment extends Fragment {
         listview.setAdapter(adapter);
 
 
-//        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                view_my_list(dataSnapshot, restaurant1[0]);//자신의 레스토랑 이름을 가지는 리스트 보여주도록
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
         // 닉네임 년 월 일 시간 분 도착시간 인원
 
-        adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 13, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
-        adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 13, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
+//        adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
+
+
+        myRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                view_my_list(dataSnapshot, restaurant1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         final TextView textView = root.findViewById(R.id.text_home);
 
@@ -140,18 +141,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void view_my_list(@NonNull DataSnapshot dataSnapshot, String restaurant) {//자기 자신의 레스토랑 이름
+
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             //String key = childSnapshot.getKey();
-            Reservation res_each = childSnapshot.getValue(Reservation.class);
-            if (res_each.getRestaurant_name().equals(restaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
-                Log.i("닉네임:", res_each.getNickname());
-                Log.i("연도", Integer.toString(res_each.getYear()));
-                Log.i("월", Integer.toString(res_each.getMonth()));
-                Log.i("일", Integer.toString(res_each.getDay()));
-                Log.i("시", Integer.toString(res_each.getHour()));
-                Log.i("분", Integer.toString(res_each.getMinute()));
-                Log.i("인원", Integer.toString(res_each.getCovers()));
-                adapter.addItem(res_each.getNickname(), res_each.getYear(), res_each.getMonth(), res_each.getDay(), res_each.getHour(), res_each.getMinute(), res_each.getCovers());
+            Reservation reservation_each= childSnapshot.getValue(Reservation.class);
+            if (reservation_each.getRestaurant_name().equals(restaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
+                Log.i("닉네임:", reservation_each.getNickname());
+                Log.i("연도", Integer.toString(reservation_each.getYear()));
+
+                adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
             } else {
                 continue;
             }
