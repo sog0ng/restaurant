@@ -145,7 +145,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         return true;
     }
 
-    /*
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -155,14 +155,13 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 return true;
             case R.id.refresh:
                 //리스트 업데이트 함수
-                adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-*/
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
