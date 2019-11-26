@@ -20,7 +20,6 @@ public class Reservation {
     int minute;
 
     public String getOwner_id() { return owner_id; }
-
     public void setOwner_id(String owner_id) { this.owner_id = owner_id; }
 
     public String getR_id() { return r_id; }
