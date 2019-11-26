@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_customer_home">
+
+    <fragment
+        android:id="@+id/nav_customer_home"
+        android:name="com.example.reservation.ui.home.CustomerHomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.example.reservation.ui.info.InfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_info" />
+
+    <fragment
+        android:id="@+id/nav_query"
+        android:name="com.example.reservation.ui.query.QueryFragment"
+        android:label="@string/menu_query"
+        tools:layout="@layout/fragment_query" />
+
+    <fragment
+        android:id="@+id/nav_modification"
+        android:name="com.example.reservation.ui.modification.ModificationFragment"
+        android:label="@string/menu_modification"
+        tools:layout="@layout/fragment_modification" >
+        <action
+            android:id="@+id/action_nav_modification_self"
+            app:destination="@id/nav_modification" />
+    </fragment>
+
+</navigation>

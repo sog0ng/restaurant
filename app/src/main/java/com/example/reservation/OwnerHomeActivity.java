@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,7 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class OwnerHomeActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
-    private ListViewAdapter adapter;
+    //private ListViewAdapter adapter;
     private long backKeyPressTime;
 
     @Override
@@ -36,7 +38,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         setContentView(R.layout.owner_home);
 
         // 네비게이션
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.owner_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -57,7 +59,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+/*
         // 임시 데이터
         ListView listview;
         adapter = new ListViewAdapter(this);
@@ -76,6 +78,8 @@ public class OwnerHomeActivity extends AppCompatActivity{
         adapter.addItem("닉네임", 2019, 11, 15, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 16, 5, 7, "도착시간", 3);
         adapter.addItem("닉네임", 2019, 11, 17, 5, 7, "도착시간", 3);
+
+ */
     }
 
     @Override
@@ -94,7 +98,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
                 return true;
             case R.id.refresh:
                 //리스트 업데이트 함수
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -119,7 +123,6 @@ public class OwnerHomeActivity extends AppCompatActivity{
                 })
                 .show();
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -130,7 +133,10 @@ public class OwnerHomeActivity extends AppCompatActivity{
     //뒤로가기 버튼 disable
     @Override public void onBackPressed() {
         //super.onBackPressed();
-        if(System.currentTimeMillis() > backKeyPressTime + 2000){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if(System.currentTimeMillis() > backKeyPressTime + 2000){
             backKeyPressTime = System.currentTimeMillis();
             Toast.makeText(getApplicationContext(), "한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
         }

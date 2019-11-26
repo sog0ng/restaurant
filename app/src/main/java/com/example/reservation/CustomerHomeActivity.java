@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,11 +41,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class CustomerHomeActivity extends AppCompatActivity {
-
+    private SearchView searchView;
     private AppBarConfiguration mAppBarConfiguration;
-    // 가게 리스트 임시 데이터,,, db로부터 가져오는 코드 작성...
-    //String[] list = {"리스트1", "리스트2", "리스트3", "리스트4", "리스트5", "리스트6", "리스트7", "리스트8", "리스트9", "리스트10", "리스트11", "리스트12", "리스트13", "리스트14", "리스트15", "리스트16"};
-    private ListViewAdapter adapter;
+    // private ListViewAdapter adapter;
+    private SearchView editsearch;
+    private InputMethodManager imm;
 
     private long backKeyPressTime;
 
@@ -53,11 +55,12 @@ public class CustomerHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
 
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef2 = database.getReference("User_info/");
 
         // 네비게이션
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.customer_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -72,8 +75,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_info, R.id.nav_query,
-                R.id.nav_modification, R.id.nav_statistics)
+                R.id.nav_customer_home, R.id.nav_info, R.id.nav_query)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -81,14 +83,20 @@ public class CustomerHomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
+/*
         // 리스트 검색 코드 작성
 
         //ArrayAdapter<String> adapter;
         ListView listview = (ListView) findViewById(R.id.ListView);
+        listview.setVisibility(View.VISIBLE);
         adapter = new ListViewAdapter(this);
         listview.setAdapter(adapter);
 
-//리스트가 뜨는데 돋보기 눌러야뜸
+        //리스트가 뜨는데 돋보기 눌러야뜸
         myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -116,9 +124,10 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 startActivity(reservation2);
             }
         });
-
+*/
     }
 
+/*
     private void update_list(@NonNull DataSnapshot dataSnapshot) {
         for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
             String key=childSnapshot.getKey();
@@ -128,13 +137,13 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 Log.i("가게이름:", user_each.getRestaurant_name());
                 Log.i("이름", key);
                 list.add(user_each.getRestaurant_name());
-
             }else {
                 continue;
             }
 
         }
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,6 +151,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -152,7 +162,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 return true;
             case R.id.refresh:
                 //리스트 업데이트 함수
-                adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -186,6 +195,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     //뒤로가기 버튼 disable
+
     @Override public void onBackPressed() {
         //super.onBackPressed();
         if(System.currentTimeMillis() > backKeyPressTime + 2000){

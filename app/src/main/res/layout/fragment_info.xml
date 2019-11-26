@@ -49,7 +49,8 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="각 유저의 아이디가 나와야함"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:enabled="false"/>
 
         </LinearLayout>
 
