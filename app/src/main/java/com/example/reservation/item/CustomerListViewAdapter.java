@@ -66,22 +66,23 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
 
 
-        TextView nickname = (TextView) convertView.findViewById(R.id.restaurant_name);
+        TextView restName = (TextView) convertView.findViewById(R.id.restaurant_name);
         TextView r_date = (TextView) convertView.findViewById(R.id.r_date);
         TextView covers = (TextView) convertView.findViewById(R.id.covers);
 
 
-        nickname.setText(listViewItem.getNickname());
+        restName.setText(listViewItem.getRestaurant_name());
         r_date.setText(listViewItem.getR_date());
         covers.setText(listViewItem.getCovers() + "명");
 
         return convertView;
     }
 
-    public void addItem(String nickname, int year,
+    public void addItem(String restaurantName ,String nickname, int year,
                         int month, int day, int hour, int minute, int covers) {
         ListViewItem item = new ListViewItem();
 
+        item.setRestaurant_name(restaurantName);
         item.setNickname(nickname);
         item.setYear(year);
         item.setMonth(month);
