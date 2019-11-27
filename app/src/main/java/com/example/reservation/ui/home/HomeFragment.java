@@ -39,9 +39,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
     private Button refreshButton;
@@ -54,6 +56,8 @@ public class HomeFragment extends Fragment {
     public ArrayAdapter adapter;
     private ListViewAdapter l_adapter;
     ListView listview;
+
+    Calendar today;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -105,13 +109,15 @@ public class HomeFragment extends Fragment {
         //final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(l_adapter);//어댑터 지정해주고
 
+        today = Calendar.getInstance(Locale.KOREA);//오늘 날짜 갱신
 
         //레스토랑 이름으로 자신의 리스트 addItem
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //viewMyList(dataSnapshot, restaurant1);//이건 전체 다 보여주는 경우
                 while (flag) {}
-                viewMyList(dataSnapshot, restaurant1);
+                viewTodayList(dataSnapshot, restaurant1);//오늘에 대한 예약만 불러온다
                 flag = true;
             }
 
@@ -120,20 +126,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        // adapter.addItem 으로 db 에 있는 예약 내역 저장
-        // 닉네임 년 월 일 시간 분 도착시간 인원
-
-        //l_adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 13, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
-        //l_adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
-
 
         refreshButton = (Button) root.findViewById(R.id.refreshButton);
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +138,6 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-
 
     private void getMyRestaurant(@NonNull DataSnapshot dataSnapshot, String myId) {
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
@@ -177,9 +168,39 @@ public class HomeFragment extends Fragment {
                 continue;
             }
         }
-        l_adapter.sort();
-        l_adapter.notifyDataSetChanged();
+        l_adapter.sort();//시간순 정렬
+        l_adapter.notifyDataSetChanged();//새로고침
     }
+
+    private void viewTodayList(@NonNull DataSnapshot dataSnapshot, String myRestaurant){
+        l_adapter.clear();
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            Reservation reservation_each = childSnapshot.getValue(Reservation.class);
+            if (reservation_each.getRestaurant_name().equals(myRestaurant) && checkToday(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
+                Log.i("닉네임:", reservation_each.getNickname());
+                Log.i("연도", Integer.toString(reservation_each.getYear()));
+                l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
+            } else {
+                continue;
+            }
+        }
+        if(l_adapter.isEmpty())
+        {
+            Toast.makeText(getContext(), "당일 예약 내역이 존재하지 않습니다.",Toast.LENGTH_LONG).show();
+        }
+        l_adapter.sort();//시간순 정렬
+        l_adapter.notifyDataSetChanged();//새로고침
+
+    }
+
+    private boolean checkToday(Reservation reservation){
+        boolean result=false;
+        if(reservation.getYear()==today.get(Calendar.YEAR)&&(reservation.getMonth()==today.get(Calendar.MONTH)+1)&&(reservation.getDay()==today.get(Calendar.DATE))){
+            result = true;
+        }
+        return result;
+    };
 
 
 
