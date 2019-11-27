@@ -82,7 +82,7 @@ public class CustomerHomeFragment extends Fragment {
         });
 
         final ListView listview = (ListView) root.findViewById(R.id.customer_listView);
-        final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
         Intent intent=getActivity().getIntent();

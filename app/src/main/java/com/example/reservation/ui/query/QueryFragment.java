@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,10 +26,13 @@ import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.reservation.DetailsOfRSRV;
 import com.example.reservation.R;
 import com.example.reservation.Reservation;
+import com.example.reservation.Reservation2Activity;
 import com.example.reservation.User;
 import com.example.reservation.item.ListViewAdapter;
+import com.example.reservation.item.ListViewItem;
 import com.example.reservation.ui.home.HomeViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +48,9 @@ public class QueryFragment extends Fragment {
     private Button refreshButton;
     private QueryViewModel queryViewModel;
     private ListViewAdapter l_adapter;
-    String restaurant1;
+    String restaurant1 = "";
     ListView listview;
+    boolean isCustomer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +84,7 @@ public class QueryFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurant(dataSnapshot, id1);
+
             }
 
             @Override
@@ -121,6 +127,17 @@ public class QueryFragment extends Fragment {
             }
         });
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent detailsOfRSRV= new Intent(getActivity(), DetailsOfRSRV.class);
+                detailsOfRSRV.putExtra("id", id1);
+                //detailsOfRSRV.putExtra("restaurantName", l_adapter.getItem(position));
+                ListViewItem lvi = (ListViewItem) l_adapter.getItem(position);
+                System.out.println(lvi.getNickname());
+            }
+        });
+
         return root;
     }
 
@@ -135,6 +152,10 @@ public class QueryFragment extends Fragment {
             } else {
                 continue;
             }
+        }
+        if (restaurant1.equals("null")) {
+            isCustomer = true;
+            System.out.println("고객입니다~");
         }
     }
 

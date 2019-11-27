@@ -30,8 +30,9 @@
                 android:stackFromBottom="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/test"
-                tools:layout_editor_absoluteX="0dp" />
+                tools:layout_editor_absoluteX="-88dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
