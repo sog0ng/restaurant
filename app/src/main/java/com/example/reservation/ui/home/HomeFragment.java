@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
         final DatabaseReference myRef1 = database1.getReference("User_info/");
 
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef2 = database1.getReference("Reservation/");
+        final DatabaseReference myRef2 = database2.getReference("Reservation/");
 
         Intent intent = getActivity().getIntent();
 
