@@ -166,15 +166,15 @@ public class QueryFragment extends Fragment {
             if (reservation_each.getRestaurant_name().equals(myRestaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
-                l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                l_adapter.addItem(childSnapshot.getKey(),reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
                 //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {
                 continue;
             }
         }
         //과거 예약내역 조회를 위한 임시데이터
-        l_adapter.addItem("징징이",2000,1,1,1,00,3);
-        l_adapter.addItem("집게사장",2000,5,5,5,50,2);
+        l_adapter.addItem("key1", "징징이",2000,1,1,1,00,3);
+        l_adapter.addItem("key2", "집게사장",2000,5,5,5,50,2);
         if(l_adapter.isEmpty())
         {
             Toast.makeText(getContext(), "예약 내역이 존재하지 않습니다.",Toast.LENGTH_LONG).show();

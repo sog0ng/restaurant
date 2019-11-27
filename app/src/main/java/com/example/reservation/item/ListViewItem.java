@@ -26,23 +26,34 @@ public class ListViewItem {
     private String restaurant_name;
     private String is_accepted = null;//기본값 null
     private String is_confirm = "0";//기본값 0
+
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     /*
-        public boolean isAccept() {
-            return accept;
-        }
+            public boolean isAccept() {
+                return accept;
+            }
 
-        public void setAccept(boolean accept) {
-            this.accept = accept;
-        }
+            public void setAccept(boolean accept) {
+                this.accept = accept;
+            }
 
-        public boolean isReject() {
-            return reject;
-        }
+            public boolean isReject() {
+                return reject;
+            }
 
-        public void setReject(boolean reject) {
-            this.reject = reject;
-        }
-    */
+            public void setReject(boolean reject) {
+                this.reject = reject;
+            }
+        */
     public String getNickname() {
         return nickname;
     }
