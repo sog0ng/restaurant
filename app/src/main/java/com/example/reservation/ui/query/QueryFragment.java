@@ -73,7 +73,7 @@ public class QueryFragment extends Fragment {
         final DatabaseReference myRef1 = database1.getReference("User_info/");
 
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef2 = database1.getReference("Reservation/");
+        final DatabaseReference myRef2 = database2.getReference("Reservation/");
 
         Intent intent = getActivity().getIntent();
         final String id1 = intent.getExtras().getString("id");
@@ -98,7 +98,6 @@ public class QueryFragment extends Fragment {
         Log.i("키야 나와라",key1);
         //Log.i("restaurant_name나와라",restaurant1);
 
-        // 임시 데이터
         listview = (ListView) root.findViewById(R.id.ListView); //fragment_home.xml의 리스트뷰
         l_adapter = new ListViewAdapter(getActivity());
 
@@ -117,6 +116,7 @@ public class QueryFragment extends Fragment {
 
             }
         });
+
 
         refreshButton = (Button) root.findViewById(R.id.refreshButton);
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +172,9 @@ public class QueryFragment extends Fragment {
                 continue;
             }
         }
+        //과거 예약내역 조회를 위한 임시데이터
+        l_adapter.addItem("징징이",2000,1,1,1,00,3);
+        l_adapter.addItem("집게사장",2000,5,5,5,50,2);
         if(l_adapter.isEmpty())
         {
             Toast.makeText(getContext(), "예약 내역이 존재하지 않습니다.",Toast.LENGTH_LONG).show();

@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.reservation.CustomerHomeActivity;
@@ -19,6 +21,11 @@ import com.example.reservation.R;
 import com.example.reservation.User;
 import com.example.reservation.Reservation;
 import com.example.reservation.ui.home.HomeFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +36,11 @@ import java.util.Comparator;
 
 public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
-
     Activity activity;
+
+    //Adapter에서 이러는건 아닌것 같지만 일단은 이전에 사용한것과 동일한 방식으로 접근
+    FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef2 = database2.getReference("Reservation/");
 
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
@@ -68,14 +78,15 @@ public class ListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
+        final ListViewItem listViewItem = listViewItemList.get(position);
 
-        ListViewItem listViewItem = listViewItemList.get(position);
         int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 ///        if (convertView == null) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (iDday < 0) {
             convertView = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
-        } else if (listViewItem.isAccept()) {
+        } else if (listViewItem.getIs_accepted() != null) {
             convertView = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
         } else {
             convertView = inflater.inflate(R.layout.owner_unaccepted_listview_item, parent, false);
@@ -86,47 +97,97 @@ public class ListViewAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView nickname = (TextView) convertView.findViewById(R.id.nickname);
         TextView r_date = (TextView) convertView.findViewById(R.id.r_date);
-        //TextView arrival_time = (TextView) convertView.findViewById(R.id.time);
         TextView covers = (TextView) convertView.findViewById(R.id.covers);
         TextView dDay = (TextView) convertView.findViewById(R.id.dDay);
-        Button accept = (Button) convertView.findViewById(R.id.accept);
-        Button reject = (Button) convertView.findViewById(R.id.reject);
+        Button accept = (Button) convertView.findViewById(R.id.accept);//예약 승인
+        Button reject = (Button) convertView.findViewById(R.id.reject);//예약 거절
+        Button confirm = (Button) convertView.findViewById(R.id.confirm);//방문 확인
+        Button noshow = (Button) convertView.findViewById(R.id.noshow);//방문 미확인
+        final EditText score = (EditText) convertView.findViewById(R.id.score);//평점 숫자
+        Button submit = (Button) convertView.findViewById(R.id.submit);//확인(평점 등록할때)
 
-        if (iDday < 0) {
+
+        myRef2.addValueEventListener(new ValueEventListener() {
+            //이거 위치 모르겠음 find에 listviewitem을 넘겨주려면 여기여야하는것같고,,,,
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Reservation matchingReservation = find(dataSnapshot, listViewItem);
+                //데이터베이스 내부를 반복해서 돌면서 listViewItem과 일치하는 Reservation을 리턴
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        if (iDday < 0 && listViewItem.getIs_accepted() == null) { //과거 내역 방문확인을 해야함
             // past
+            title.setText("과거 내역");
+            nickname.setText(listViewItem.getNickname());
+            r_date.setText(listViewItem.getR_date());
+            covers.setText(listViewItem.getCovers() + "명");
+
+            //방문확인부터 먼저
+            confirm.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View v) {
+                    // 방문 확인 팝업 띄움
+                    showConfirmPopup();
+                }
+            });
+
+            noshow.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View v) {
+                    // 미방문 확인 팝업 띄움
+                    showNoshowPopup();
+
+                }
+            });
+        } else if (iDday < 0 && listViewItem.getIs_accepted() != null) {//과거 내역 방문확인을 했으니 평점을 줄 수 있다
             title.setText("과거 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
             //arrival_time.setText(listViewItem.getArrival_time());
             covers.setText(listViewItem.getCovers() + "명");
-            Button submit = (Button) convertView.findViewById(R.id.submit);
 
             submit.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // db 에 평점 전달.
+
+/*
+                    if(matchingReservation.getIs_owner()==1){//사장인 경우
+                        matchingReservation.setGtc(score);//Edittext의 값을 givetocustomer에 넣는것
+
+                    }else{
+                        matchingReservation.setGtr(score);//Edittext의 값을 givetorestaurant에 넣는것
+                    }
+*/
                 }
             });
 
-        } else if (listViewItem.isAccept()) {
+        } else if (listViewItem.getIs_accepted() != null) {
             // accepted
-            title.setText("승인 예약");
+            title.setText("예약 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
             covers.setText(listViewItem.getCovers() + "명");
             dDay.setText(Integer.toString(iDday));
         } else {
             // unaccepted
-            title.setText("미승인 예약");
+            title.setText("미승인 예약 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
             covers.setText(listViewItem.getCovers() + "명");
-            accept.setText("승인");
+            accept.setText("승인");//버튼 자체의 글씨를 쓰는것
             reject.setText("거절");
 
             accept.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // 승인 팝업 띄움
                     showAcceptPopup();
+                    //팝업 내부에서 reservation 값을 변경시키는 방법을 모르겠음
+                    //해당 Reservation의 변수값을 변경시켜주어야하는데 이걸 어떻게 하지
+
+
                 }
             });
 
@@ -136,14 +197,60 @@ public class ListViewAdapter extends BaseAdapter {
                     showRejectPopup();
                 }
             });
-
-
         }
 
         return convertView;
     }
 
-    void showAcceptPopup() {
+
+    public void showConfirmPopup() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        alert.setTitle("방문 확인");
+        alert.setMessage("방문을 확인하시겠습니까?");
+
+        alert.setView(layout);
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // db에 방문 확인 변수 변경 is_confirm->1
+            }
+        });
+        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.show();
+    }
+
+    public void showNoshowPopup() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        alert.setTitle("미방문 확인");
+        alert.setMessage("미방문을 확인하시겠습니까?");
+
+        alert.setView(layout);
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // db에 방문 확인 변수 변경 is_confirm->0
+            }
+        });
+        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.show();
+    }
+
+    public void showAcceptPopup() {
+
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -155,7 +262,8 @@ public class ListViewAdapter extends BaseAdapter {
         alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-                // db에 승인된 예약 추가
+                // db에 거절된 예약 추가 is_accepted -> 1
+
             }
         });
         alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -166,7 +274,7 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    void showRejectPopup() {
+    public void showRejectPopup() {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -178,23 +286,44 @@ public class ListViewAdapter extends BaseAdapter {
         alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-                // db에 거절된 예약 추가
+                // db에 거절된 예약 추가 is_accepted -> 0
             }
         });
         alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-
             }
         });
         alert.show();
     }
 
+
+    public Reservation find(@NonNull DataSnapshot dataSnapshot, ListViewItem listViewItem) {
+        Reservation result = null;
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            Reservation reservation_each = childSnapshot.getValue(Reservation.class);
+            if (reservation_each.getRestaurant_name().equals(listViewItem.getRestaurant_name())
+                    && reservation_each.getNickname().equals(listViewItem.getNickname())
+                    && reservation_each.getYear() == listViewItem.getYear()
+                    && reservation_each.getMonth() == listViewItem.getMonth()
+                    && reservation_each.getDay() == listViewItem.getDay()
+                    && reservation_each.getHour() == listViewItem.getHour()
+                    && reservation_each.getMinute() == listViewItem.getMinute()
+                    && reservation_each.getCovers() == listViewItem.getCovers()
+            ) {
+                result = reservation_each;
+                break;
+            } else {
+                continue;
+            }
+        }
+        return result;
+    }
+
+
     public void addItem(String nickname, int year,
 
-    int month, int day, int hour, int minute, int covers)
-
-    {
+                        int month, int day, int hour, int minute, int covers) {
         ListViewItem item = new ListViewItem();
 
         item.setNickname(nickname);
