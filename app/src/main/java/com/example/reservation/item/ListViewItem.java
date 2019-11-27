@@ -2,6 +2,9 @@ package com.example.reservation.item;
 
 import android.widget.Button;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class ListViewItem {
     //손님이 예앾
     private int type;
@@ -115,5 +118,5 @@ public class ListViewItem {
         this.r_date = r_date;
     }
 
-
 }
+

@@ -23,6 +23,9 @@ import com.example.reservation.ui.home.HomeFragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
@@ -32,10 +35,13 @@ public class ListViewAdapter extends BaseAdapter {
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
     }
+
     public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<User> list) {
 
     }
-    public ListViewAdapter(OwnerHomeActivity ownerHomeActivity, int simple_list_item_1, ArrayList<Reservation> list){}
+
+    public ListViewAdapter(OwnerHomeActivity ownerHomeActivity, int simple_list_item_1, ArrayList<Reservation> list) {
+    }
 
 
     @Override
@@ -66,14 +72,14 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem listViewItem = listViewItemList.get(position);
         int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 ///        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if(iDday < 0 ) {
-                convertView = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
-            } else if(listViewItem.isAccept()) {
-                convertView = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
-            } else {
-                convertView = inflater.inflate(R.layout.owner_unaccepted_listview_item, parent, false);
-            }
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (iDday < 0) {
+            convertView = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
+        } else if (listViewItem.isAccept()) {
+            convertView = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
+        } else {
+            convertView = inflater.inflate(R.layout.owner_unaccepted_listview_item, parent, false);
+        }
 
 //        }
 
@@ -86,8 +92,8 @@ public class ListViewAdapter extends BaseAdapter {
         Button accept = (Button) convertView.findViewById(R.id.accept);
         Button reject = (Button) convertView.findViewById(R.id.reject);
 
-        if(iDday < 0) {
-            // paste
+        if (iDday < 0) {
+            // past
             title.setText("과거 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
@@ -96,12 +102,12 @@ public class ListViewAdapter extends BaseAdapter {
             Button submit = (Button) convertView.findViewById(R.id.submit);
 
             submit.setOnClickListener(new Button.OnClickListener() {
-               public void onClick(View v) {
-                   // db 에 평점 전달.
-               }
+                public void onClick(View v) {
+                    // db 에 평점 전달.
+                }
             });
 
-        } else if(listViewItem.isAccept()) {
+        } else if (listViewItem.isAccept()) {
             // accepted
             title.setText("승인 예약");
             nickname.setText(listViewItem.getNickname());
@@ -137,7 +143,7 @@ public class ListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    void showAcceptPopup(){
+    void showAcceptPopup() {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -184,9 +190,11 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
+    public void addItem(String nickname, int year,
 
+    int month, int day, int hour, int minute, int covers)
 
-    public void addItem(String nickname, int year, int month, int day, int hour,int minute, int covers){
+    {
         ListViewItem item = new ListViewItem();
 
         item.setNickname(nickname);
@@ -209,8 +217,8 @@ public class ListViewAdapter extends BaseAdapter {
         mmonth -= 1;
         ddayCal.set(myear, mmonth, mday);
 
-        long today = todaCal.getTimeInMillis()/86400000;
-        long dday = ddayCal.getTimeInMillis()/86400000;
+        long today = todaCal.getTimeInMillis() / 86400000;
+        long dday = ddayCal.getTimeInMillis() / 86400000;
 
         long count = dday - today;
 
@@ -220,4 +228,48 @@ public class ListViewAdapter extends BaseAdapter {
     public void clear() {
         listViewItemList.clear();
     }
+
+    public void sort() {
+        Collections.sort(listViewItemList, new Comparator<ListViewItem>() {
+            @Override
+            public int compare(ListViewItem o1, ListViewItem o2) {
+                int ret = 0;
+
+                if (o1.getYear() < o2.getYear()) {
+                    ret = -1;
+                } else if (o1.getYear() == o2.getYear()) {
+                    if (o1.getMonth() < o2.getMonth()) {
+                        ret = -1;
+                    } else if (o1.getMonth() == o2.getMonth()) {
+                        if (o1.getDay() < o2.getDay()) {
+                            ret = -1;
+                        } else if (o1.getDay() == o2.getDay()) {
+                            if (o1.getHour() < o2.getHour()) {
+                                ret = -1;
+                            } else if (o1.getHour() == o2.getHour()) {
+                                if (o1.getMinute() < o2.getMinute()) {
+                                    ret = -1;
+                                } else if (o1.getMinute() == o2.getMinute()) {
+                                    ret = 0;
+                                } else {
+                                    ret = 1;
+                                }
+                            } else {
+                                ret = 1;
+                            }
+                        } else {
+                            ret = 1;
+                        }
+                    } else {
+                        ret = 1;
+                    }
+                } else {
+                    ret = 1;
+                }
+                return ret;
+            }
+        });
+    }
+
+
 }

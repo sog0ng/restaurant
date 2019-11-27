@@ -31,6 +31,7 @@ import com.example.reservation.R;
 import com.example.reservation.Reservation;
 import com.example.reservation.User;
 import com.example.reservation.item.ListViewAdapter;
+import com.example.reservation.item.ListViewItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HomeFragment extends Fragment {
     private Button refreshButton;
@@ -73,16 +77,16 @@ public class HomeFragment extends Fragment {
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef2 = database1.getReference("Reservation/");
 
-        Intent intent=getActivity().getIntent();
+        Intent intent = getActivity().getIntent();
 
-        final String id1= intent.getExtras().getString("id");
+        final String id1 = intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
 
         //id값으로 가게이름 가져오기
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                get_my_restaurant(dataSnapshot,id1);
+                getMyRestaurant(dataSnapshot, id1);
             }
 
             @Override
@@ -103,9 +107,7 @@ public class HomeFragment extends Fragment {
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                view_my_list(dataSnapshot, restaurant1);
-                //자신의 리스트랑 일치하는 거 addItem하면 왜 안되냐고 왜 아니 토스트메시지 정상으로보내면서 차별하는거봐
-                //addItem 내부에서 list.add 실행하게 된다
+                viewMyList(dataSnapshot, restaurant1);
             }
 
             @Override
@@ -117,7 +119,7 @@ public class HomeFragment extends Fragment {
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
         // 닉네임 년 월 일 시간 분 도착시간 인원
 
-        l_adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
+        //l_adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, 3);
@@ -125,10 +127,7 @@ public class HomeFragment extends Fragment {
 //        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
-        l_adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
-
-        //임의로 넣은 설정한 두개의 예약은 정상적으로 나온다
-
+        //l_adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
 
 
         refreshButton = (Button) root.findViewById(R.id.refreshButton);
@@ -144,35 +143,35 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void get_my_restaurant(@NonNull DataSnapshot dataSnapshot, String myId){
-        for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+    private void getMyRestaurant(@NonNull DataSnapshot dataSnapshot, String myId) {
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             User user_each = childSnapshot.getValue(User.class);
-            if(user_each.getId1().equals(myId)){//intent로 받은 값이랑 반복문을 통해서 확인한 아이디 값이랑 같으면
-                restaurant1 =user_each.getRestaurant_name();//어플 사용하는 사장님의 가게 이름이다
+            if (user_each.getId1().equals(myId)) {//intent로 받은 값이랑 반복문을 통해서 확인한 아이디 값이랑 같으면
+                restaurant1 = user_each.getRestaurant_name();//어플 사용하는 사장님의 가게 이름이다
                 Log.i("가게이름", restaurant1);
                 //Toast.makeText(getContext(), id1+"\n"+key1+"\nrestaurant1: "+restaurant1,Toast.LENGTH_LONG).show();
                 break;
-            } else{
+            } else {
                 continue;
             }
         }
     }
 
-    private void view_my_list(@NonNull DataSnapshot dataSnapshot, String myRestaurant) {//자기 자신의 레스토랑 이름
+    private void viewMyList(@NonNull DataSnapshot dataSnapshot, String myRestaurant) {//자기 자신의 레스토랑 이름
         l_adapter.clear();
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-            //String key = childSnapshot.getKey();
-            Reservation reservation_each= childSnapshot.getValue(Reservation.class);
+            Reservation reservation_each = childSnapshot.getValue(Reservation.class);
             if (reservation_each.getRestaurant_name().equals(myRestaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
                 l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
-                Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
-                //토스트메시지로는 정상적으로 잘 불러오는거 확인함
+                //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {
                 continue;
             }
         }
+        l_adapter.sort();
+        l_adapter.notifyDataSetChanged();
     }
 
 
