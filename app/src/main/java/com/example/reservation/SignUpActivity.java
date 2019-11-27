@@ -30,13 +30,13 @@ import java.util.regex.Matcher;
 import java.lang.Object;
 
 public class SignUpActivity extends AppCompatActivity {
-    Button submit, same_id_check;
+    Button submit, same_id_check, same_rsrt_check;
     RadioButton owner, customer;
     EditText restaurant_name, id1, password, password_check, phone_num;
     TextView restaurant_TV;
     String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
 
-    private boolean sameIdChecker = false;
+    private boolean sameIdChecker = false, sameRSRTChecker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         phone_num = (EditText) findViewById(R.id.phone_num);
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
+        same_rsrt_check = (Button) findViewById(R.id.same_rsrt_check);
 
         restaurant_TV = (TextView)findViewById(R.id.text7);
 
@@ -138,6 +139,43 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //가게이름 중복확인
+        same_rsrt_check.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            String key = childSnapshot.getKey();
+                            User user_each = childSnapshot.getValue(User.class);
+
+                            if (restaurant_name.getText().toString().equals(user_each.getRestaurant_name())) {
+                                Toast.makeText(SignUpActivity.this, "이미 사용중인 가게명입니다.", Toast.LENGTH_SHORT).show();
+                                sameRSRTChecker = false;
+                                restaurant_name.setText("");
+                                restaurant_name.requestFocus();
+                                break;
+                            } else if (restaurant_name.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "가게명를 입력하세요", Toast.LENGTH_SHORT).show();
+                                sameRSRTChecker = false;
+                                restaurant_name.requestFocus();
+                                break;
+                            }
+                            else {
+                                Toast.makeText(SignUpActivity.this, "사용 가능한 가게명입니다.", Toast.LENGTH_SHORT).show();
+                                sameRSRTChecker = true;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+        });
+
         //전화번호 입력시 -입력
         phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -204,6 +242,19 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this,"올바른 번호를 입력하세요!",Toast.LENGTH_SHORT).show();
                                 phone_num.setText("");
                                 phone_num.requestFocus();
+                                return;
+                            }
+
+                            // 아이디 입력 확인
+                            if (restaurant_name.getText().toString().length() == 0) {
+                               Toast.makeText(SignUpActivity.this, "가게명을 입력하세요!", Toast.LENGTH_SHORT).show();
+                               restaurant_name.requestFocus();
+                               return;
+                            }
+
+                            if (!sameRSRTChecker) {
+                                Toast.makeText(getApplicationContext(), "가게명 중복체크를 해주세요",  Toast.LENGTH_SHORT).show();
+                                restaurant_name.requestFocus();
                                 return;
                             }
 
@@ -315,6 +366,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     public void GetDataFromEditText() {

@@ -174,13 +174,21 @@
 
             <EditText
                 android:id="@+id/restaurant_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_weight="6"
                 android:ems="10"
                 android:hint="가게 이름"
                 android:inputType="textPersonName"
                 tools:visibility="GONE" />
+
+            <Button
+                android:id="@+id/same_rsrt_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="중복확인" />
         </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
