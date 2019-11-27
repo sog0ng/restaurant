@@ -164,7 +164,7 @@ public class StatisticsFragment extends Fragment {
             Reservation reservation_each = childSnapshot.getValue(Reservation.class);
             week = reservation_each.getWeek();
 
-            if (reservation_each.getRestaurant_name().equals(myRestaurant) && checkInMonth(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
+            if (week != null && reservation_each.getRestaurant_name().equals(myRestaurant) && checkInMonth(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
 
                 switch(week) {
                     case "Sunday" :
