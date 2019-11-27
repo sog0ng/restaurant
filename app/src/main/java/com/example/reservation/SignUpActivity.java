@@ -187,8 +187,8 @@ public class SignUpActivity extends AppCompatActivity {
                     restaurant_TV.setVisibility(View.VISIBLE);
 
                     submit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                        @Override
+                        public void onClick(View v) {
                             User user_info = new User();
 
                             // 아이디 입력 확인
@@ -247,9 +247,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                             // 아이디 입력 확인
                             if (restaurant_name.getText().toString().length() == 0) {
-                               Toast.makeText(SignUpActivity.this, "가게명을 입력하세요!", Toast.LENGTH_SHORT).show();
-                               restaurant_name.requestFocus();
-                               return;
+                                Toast.makeText(SignUpActivity.this, "가게명을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                restaurant_name.requestFocus();
+                                return;
                             }
 
                             if (!sameRSRTChecker) {
@@ -264,8 +264,10 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setId1(s_id1);
                             user_info.setPhone_num(s_phone_num);
                             user_info.setPassword(s_password);
-                            user_info.setOpen("null");
-                            user_info.setClose("null");
+                            user_info.setOpen_hour("null");
+                            user_info.setOpen_minute("null");
+                            user_info.setClose_hour("null");
+                            user_info.setClose_minute("null");
                             user_info.setIs_owner("0");//사장일 경우 0
 
                             myRef.child(user_info_key).setValue(user_info);
@@ -353,8 +355,10 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setId1(s_id1);
                             user_info.setPassword(s_password);
                             user_info.setPhone_num(s_phone_num);
-                            user_info.setOpen("null");
-                            user_info.setClose("null");
+                            user_info.setOpen_hour("null");
+                            user_info.setOpen_minute("null");
+                            user_info.setClose_hour("null");
+                            user_info.setClose_minute("null");
                             user_info.setIs_owner("1");//손님일 경우1
                             myRef.child(user_info_key).setValue(user_info);
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
