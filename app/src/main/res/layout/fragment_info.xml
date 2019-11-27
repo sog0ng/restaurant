@@ -48,9 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="각 유저의 아이디가 나와야함"
+                android:hint="User's ID"
                 android:inputType="textPersonName"
-                android:enabled="false"/>
+                android:enabled="false"
+                />
 
         </LinearLayout>
 
@@ -58,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <TextView
                 android:id="@+id/text3"
@@ -75,7 +77,8 @@
                 android:ems="10"
                 android:hint="password"
                 android:inputType="textPassword"
-                android:enabled="true"/>
+                android:enabled="true"
+                />
 
         </LinearLayout>
 
@@ -84,7 +87,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:visibility="visible">
+            >
 
             <TextView
                 android:id="@+id/text4"
@@ -101,14 +104,16 @@
                 android:ems="10"
                 android:hint="password_check"
                 android:inputType="textPassword"
-                android:enabled="true"/>
+                android:enabled='true'
+               />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/text6"
@@ -125,34 +130,8 @@
                 android:ems="10"
                 android:hint="phone number"
                 android:inputType="phone"
-                android:enabled="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text7"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:orientation="horizontal"
-                android:text="@string/u_restaurant"
+                android:enabled='true'
                 />
-
-            <EditText
-                android:id="@+id/restaurant_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:hint="restaurant_name"
-                android:inputType="textPersonName"
-                android:enabled="false"
-                tools:visibility="GONE" />
 
         </LinearLayout>
 

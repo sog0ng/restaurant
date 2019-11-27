@@ -45,13 +45,13 @@
 
                 <TextView
                     android:id="@+id/text0"
-                    android:layout_width="60dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:ems="10"
                     android:orientation="horizontal"
                     android:text="@string/u_restaurant" />
 
-                <EditText
+                <TextView
                     android:id="@+id/restaurant_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -69,22 +69,24 @@
 
                 <TextView
                     android:id="@+id/text_1"
-                    android:layout_width="60dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:ems="10"
                     android:orientation="horizontal"
                     android:text="open" />
 
-                <TimePicker
-                    android:id="@+id/timePicker_open"
-                    android:layout_width="wrap_content"
+
+                <EditText
+                    android:id="@+id/edit_open"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:timePickerMode="spinner" />
+
+                    />
 
             </LinearLayout>
 
@@ -96,23 +98,22 @@
 
                 <TextView
                     android:id="@+id/text_2"
-                    android:layout_width="60dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:ems="10"
                     android:orientation="horizontal"
                     android:text="close" />
 
-                <TimePicker
-                    android:id="@+id/timePicker_close"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edit_close"
+                    android:layout_width="141dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:timePickerMode="spinner" />
-
+                    tools:ignore="DuplicateIds" />
             </LinearLayout>
 
             <Button
