@@ -48,6 +48,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private String restaurant1 = "";
 
+    boolean flag = true;
+
     ArrayList<String> list;
     public ArrayAdapter adapter;
     private ListViewAdapter l_adapter;
@@ -83,10 +85,11 @@ public class HomeFragment extends Fragment {
         final String key1 = intent.getExtras().getString("key");
 
         //id값으로 가게이름 가져오기
-        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurant(dataSnapshot, id1);
+                flag = false;
             }
 
             @Override
@@ -107,7 +110,9 @@ public class HomeFragment extends Fragment {
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                while (flag) {}
                 viewMyList(dataSnapshot, restaurant1);
+                flag = true;
             }
 
             @Override
@@ -164,7 +169,9 @@ public class HomeFragment extends Fragment {
             if (reservation_each.getRestaurant_name().equals(myRestaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
-                l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(),
+                        reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(),
+                        reservation_each.getMinute(), reservation_each.getCovers());
                 //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {
                 continue;
