@@ -10,6 +10,7 @@ public class Reservation {
     int year;
     int month;
     int day;
+    String week;
     String is_accepted;
     String is_confirm;
     String gtr;
@@ -89,6 +90,7 @@ public class Reservation {
         this.minute = minute;
     }
 
-
+    public void setWeek(String week) {this.week = week;}
+    public String getWeek() {return week;}
 
 }

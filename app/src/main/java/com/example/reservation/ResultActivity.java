@@ -38,7 +38,7 @@ public class ResultActivity extends AppCompatActivity {
         final int hour = getIntent().getIntExtra("hour",0);
         final int minute = getIntent().getIntExtra("minute",0);
         final String owner_id = intent.getExtras().getString("owner_id");
-
+        final String week = getIntent().getStringExtra("week");
 
 
         String hour2=String.valueOf(hour);
@@ -77,6 +77,7 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setYear(year);
                 reservation.setMonth(month);
                 reservation.setDay(day);
+                reservation.setWeek(week);
                 reservation.setR_id(id);
                 reservation.setHour(hour);
                 reservation.setMinute(minute);
