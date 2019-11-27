@@ -38,7 +38,7 @@ public class QueryFragment extends Fragment {
     private Button refreshButton;
     private QueryViewModel queryViewModel;
     private ListViewAdapter adapter;
-
+    String restaurant1;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -65,7 +65,25 @@ public class QueryFragment extends Fragment {
         Intent intent=getActivity().getIntent();
         final String id1= intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
-        final String restaurant1 = intent.getExtras().getString("restaurant_name");
+
+        //id값으로 가게이름 가져오기
+        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getMyRestaurant(dataSnapshot, id1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        // final String restaurant1 = intent.getExtras().getString("restaurant_name");
+        Log.i("id야 나와라",id1);
+        Log.i("키야 나와라",key1);
+        //Log.i("restaurant_name나와라",restaurant1);
 
         // 임시 데이터
         ListView listview;
@@ -112,6 +130,19 @@ public class QueryFragment extends Fragment {
         });
 
         return root;
+    }
+    private void getMyRestaurant(@NonNull DataSnapshot dataSnapshot, String myId) {
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            User user_each = childSnapshot.getValue(User.class);
+            if (user_each.getId1().equals(myId)) {//intent로 받은 값이랑 반복문을 통해서 확인한 아이디 값이랑 같으면
+                restaurant1 = user_each.getRestaurant_name();//어플 사용하는 사장님의 가게 이름이다
+                Log.i("가게이름", restaurant1);
+                //Toast.makeText(getContext(), id1+"\n"+key1+"\nrestaurant1: "+restaurant1,Toast.LENGTH_LONG).show();
+                break;
+            } else {
+                continue;
+            }
+        }
     }
 
     private void view_my_list(@NonNull DataSnapshot dataSnapshot, String restaurant) {//자기 자신의 레스토랑 이름
