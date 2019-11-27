@@ -167,27 +167,33 @@ public class StatisticsFragment extends Fragment {
             if (week != null && reservation_each.getRestaurant_name().equals(myRestaurant) && checkInMonth(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
 
                 switch(week) {
+                    case "일요일" :
                     case "Sunday" :
                         sun = sun + 1;
+                        break;
+                    case "월요일" :
                     case "Monday" :
                         mon = mon + 1;
                         break;
+                    case "화요일" :
                     case "Tuesday" :
                         tue = tue + 1;
                         break;
+                    case "수요일" :
                     case "Wednesday" :
                         wed = wed + 1;
                         break;
+                    case "목요일" :
                     case "Thursday" :
                         thu = thu + 1;
                         break;
+                    case "금요일" :
                     case "Friday":
                         fri = fri + 1;
                         break;
+                    case "토요일" :
                     case "Saturday" :
                         sat = sat + 1;
-                        break;
-                    default:
                         break;
                 }
             } else {
