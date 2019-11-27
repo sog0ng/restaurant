@@ -39,6 +39,7 @@ public class Reservation2Activity extends AppCompatActivity {
     String owner_id;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
+    private String rsvWeek;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +101,7 @@ public class Reservation2Activity extends AppCompatActivity {
                 SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                 SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
                 SimpleDateFormat minFormat = new SimpleDateFormat("mm");
-                SimpleDateFormat dayofweekFormat = new SimpleDateFormat("EEEE");
+                SimpleDateFormat weekFormat = new SimpleDateFormat("EEEE");
 
 
                 curYear = Integer.parseInt(yearFormat.format(minDate.getTime().getTime()));
@@ -108,7 +109,8 @@ public class Reservation2Activity extends AppCompatActivity {
                 curDay = Integer.parseInt(dayFormat.format(minDate.getTime().getTime()));
                 curHour = Integer.parseInt(hourFormat.format(minDate.getTime().getTime()));
                 curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
-
+                Date date = new Date(rsvYear, rsvMonth - 1, rsvDay - 1);
+                rsvWeek = weekFormat.format(date);
                 rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
                 rsvMin = tp.getMinute()*10;
 
@@ -138,6 +140,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     result.putExtra("year", rsvYear);
                     result.putExtra("month", rsvMonth);
                     result.putExtra("day", rsvDay);
+                    result.putExtra("week", rsvWeek);
                     result.putExtra("hour",tp.getHour());
                     result.putExtra("minute",tp.getMinute()*10);
                     result.putExtra("covers", covers.getText().toString());
