@@ -108,11 +108,6 @@ public class StatisticsFragment extends Fragment {
                 Log.i("last2_week: ", Integer.toString(last2_week));
                 Log.i("last3_week: ", Integer.toString(last3_week));
 
-
-
-
-
-
                 ArrayList<ArrayList<Integer>> dataList = new ArrayList<>();
                 dataList.add(al1);
 
@@ -131,10 +126,6 @@ public class StatisticsFragment extends Fragment {
 
             }
         });
-
-
-
-
 
         return root;
     }
