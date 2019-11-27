@@ -3,6 +3,7 @@ package com.example.reservation.item;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,14 +132,14 @@ public class ListViewAdapter extends BaseAdapter {
             confirm.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // 방문 확인 팝업 띄움
-                    showConfirmPopup();
+                    showConfirmPopup(listViewItem);
                 }
             });
 
             noshow.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // 미방문 확인 팝업 띄움
-                    showNoshowPopup();
+                    showNoshowPopup(listViewItem);
 
                 }
             });
@@ -183,7 +184,7 @@ public class ListViewAdapter extends BaseAdapter {
             accept.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // 승인 팝업 띄움
-                    showAcceptPopup();
+                    showAcceptPopup(listViewItem);
                     //팝업 내부에서 reservation 값을 변경시키는 방법을 모르겠음
                     //해당 Reservation의 변수값을 변경시켜주어야하는데 이걸 어떻게 하지
 
@@ -194,7 +195,7 @@ public class ListViewAdapter extends BaseAdapter {
             reject.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
                     // 거절 팝업 띄움
-                    showRejectPopup();
+                    showRejectPopup(listViewItem);
                 }
             });
         }
@@ -203,7 +204,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 
-    public void showConfirmPopup() {
+    public void showConfirmPopup(final ListViewItem item) {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -212,10 +213,13 @@ public class ListViewAdapter extends BaseAdapter {
         alert.setMessage("방문을 확인하시겠습니까?");
 
         alert.setView(layout);
+
         alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 // db에 방문 확인 변수 변경 is_confirm->1
+                setConfirm(item,"1");
             }
         });
         alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -226,7 +230,7 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    public void showNoshowPopup() {
+    public void showNoshowPopup(final ListViewItem item) {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -239,6 +243,8 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 // db에 방문 확인 변수 변경 is_confirm->0
+                setConfirm(item,"0");
+
             }
         });
         alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -249,7 +255,7 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    public void showAcceptPopup() {
+    public void showAcceptPopup(final ListViewItem item) {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
@@ -263,6 +269,7 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 // db에 거절된 예약 추가 is_accepted -> 1
+                setAccepted(item, "1");
 
             }
         });
@@ -274,7 +281,7 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    public void showRejectPopup() {
+    public void showRejectPopup(final ListViewItem item) {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -287,6 +294,7 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 // db에 거절된 예약 추가 is_accepted -> 0
+                setAccepted(item, "0");
             }
         });
         alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -321,11 +329,11 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 
-    public void addItem(String nickname, int year,
+    public void addItem(String key, String nickname, int year,
 
                         int month, int day, int hour, int minute, int covers) {
         ListViewItem item = new ListViewItem();
-
+        item.setKey(key);
         item.setNickname(nickname);
         item.setYear(year);
         item.setMonth(month);
@@ -401,4 +409,15 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 
+    private void setConfirm(ListViewItem item,String value) {
+        // item의 키값을 받아와서 reservation의 키값이랑 같은 곳에 setValue
+        Log.i("set Confirm item 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("is_confirm").setValue(value);
+    }
+
+    private void setAccepted(ListViewItem item, String value) {
+        Log.i("set Accepted item 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("is_accepted").setValue(value);
+    }
 }
+
