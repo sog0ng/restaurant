@@ -59,6 +59,10 @@
         <activity android:name=".ResultActivity">
 
         </activity>
+
+        <activity android:name=".DetailsOfRSRV">
+
+        </activity>
     </application>
 
 </manifest>

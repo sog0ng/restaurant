@@ -92,11 +92,18 @@ public class CustomerQueryFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListViewItem item = (ListViewItem) adapter.getItem(position);
                 Intent detailsOfRSRV= new Intent(getActivity(), DetailsOfRSRV.class);
                 detailsOfRSRV.putExtra("id", id);
-                //detailsOfRSRV.putExtra("restaurantName", l_adapter.getItem(position));
-                ListViewItem lvi = (ListViewItem) adapter.getItem(position);
-                System.out.println(lvi.getNickname());
+                detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
+                detailsOfRSRV.putExtra("year", item.getYear());
+                detailsOfRSRV.putExtra("month", item.getMonth());
+                detailsOfRSRV.putExtra("day", item.getDay());
+                detailsOfRSRV.putExtra("hour", item.getHour());
+                detailsOfRSRV.putExtra("minute", item.getMinute());
+                detailsOfRSRV.putExtra("covers", item.getCovers());
+                detailsOfRSRV.putExtra("nickname", item.getNickname());
+                startActivity(detailsOfRSRV);
             }
         });
 
@@ -108,9 +115,9 @@ public class CustomerQueryFragment extends Fragment {
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             Reservation reservation_each = childSnapshot.getValue(Reservation.class);
             if (reservation_each.getR_id().equals(myId)) {
-                adapter.addItem(reservation_each.getRestaurant_name(), reservation_each.getYear(),
-                        reservation_each.getMonth(), reservation_each.getDay(),
-                        reservation_each.getHour(), reservation_each.getMinute(),
+                adapter.addItem(reservation_each.getRestaurant_name(), reservation_each.getNickname(),
+                        reservation_each.getYear(), reservation_each.getMonth(),
+                        reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(),
                         reservation_each.getCovers());
             } else {
                 continue;
