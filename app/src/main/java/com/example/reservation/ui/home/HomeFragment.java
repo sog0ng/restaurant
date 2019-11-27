@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void view_my_list(@NonNull DataSnapshot dataSnapshot, String myRestaurant) {//자기 자신의 레스토랑 이름
-
+        l_adapter.clear();
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             //String key = childSnapshot.getKey();
             Reservation reservation_each= childSnapshot.getValue(Reservation.class);
@@ -168,8 +168,6 @@ public class HomeFragment extends Fragment {
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
                 l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
                 Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
-                l_adapter.notifyDataSetChanged();//넣어줄때마다 새로고침 자동으로 하는것과 같은 효과
-
                 //토스트메시지로는 정상적으로 잘 불러오는거 확인함
             } else {
                 continue;

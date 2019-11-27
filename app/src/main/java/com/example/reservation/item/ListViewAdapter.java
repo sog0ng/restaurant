@@ -216,4 +216,8 @@ public class ListViewAdapter extends BaseAdapter {
 
         return (int) count;
     }
+
+    public void clear() {
+        listViewItemList.clear();
+    }
 }
