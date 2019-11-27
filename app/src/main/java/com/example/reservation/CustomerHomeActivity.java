@@ -42,7 +42,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class CustomerHomeActivity extends AppCompatActivity {
-    private SearchView searchView;
     private AppBarConfiguration mAppBarConfiguration;
     // private ListViewAdapter adapter;
     private SearchView editsearch;
@@ -81,15 +80,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        giveFocusToSearchView();
-    }
-
-    private void giveFocusToSearchView() {
-        searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setFocusable(true);
-        searchView.setIconified(false);
-        searchView.requestFocusFromTouch();
     }
 
     @Override

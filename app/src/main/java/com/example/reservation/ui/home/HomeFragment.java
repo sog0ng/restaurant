@@ -50,12 +50,12 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private String restaurant1 = "";
 
-    boolean flag = true;
-
     ArrayList<String> list;
     public ArrayAdapter adapter;
     private ListViewAdapter l_adapter;
     ListView listview;
+
+    boolean loadFirstToday = true, loadFirstAll = true;
 
     Calendar today;
 
@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurant(dataSnapshot, id1);
-                flag = false;
             }
 
             @Override
@@ -116,9 +115,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //viewMyList(dataSnapshot, restaurant1);//이건 전체 다 보여주는 경우
-                while (flag) {}
                 viewTodayList(dataSnapshot, restaurant1);//오늘에 대한 예약만 불러온다
-                flag = true;
             }
 
             @Override
@@ -169,7 +166,10 @@ public class HomeFragment extends Fragment {
             }
         }
         l_adapter.sort();//시간순 정렬
-        l_adapter.notifyDataSetChanged();//새로고침
+        if (loadFirstAll) {
+            l_adapter.notifyDataSetChanged();//새로고침
+            loadFirstAll = false;
+        }
     }
 
     private void viewTodayList(@NonNull DataSnapshot dataSnapshot, String myRestaurant){
@@ -190,8 +190,10 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), "당일 예약 내역이 존재하지 않습니다.",Toast.LENGTH_LONG).show();
         }
         l_adapter.sort();//시간순 정렬
-        l_adapter.notifyDataSetChanged();//새로고침
-
+        if(loadFirstToday) {
+            l_adapter.notifyDataSetChanged();//새로고침
+            loadFirstToday = false;
+        }
     }
 
     private boolean checkToday(Reservation reservation){

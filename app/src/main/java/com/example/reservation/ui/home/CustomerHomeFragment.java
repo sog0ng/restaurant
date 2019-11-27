@@ -42,6 +42,7 @@ public class CustomerHomeFragment extends Fragment {
     //private SearchView searchView;
     private HomeViewModel homeViewModel;
     private Button refreshButton;
+    private SearchView searchView;
     ArrayList<String> list;
     public ArrayAdapter adapter;
 
@@ -106,7 +107,16 @@ public class CustomerHomeFragment extends Fragment {
             }
         });
 
+        giveFocusToSearchView(root);
+
         return root;
+    }
+
+    private void giveFocusToSearchView(View root) {
+        searchView = (SearchView) root.findViewById(R.id.searchView);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
     }
 
     public void update_list(@NonNull DataSnapshot dataSnapshot) {
