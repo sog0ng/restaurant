@@ -52,7 +52,7 @@ public class OwnerHomeActivity extends AppCompatActivity{
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_info, R.id.nav_query,
+                R.id.nav_home, R.id.nav_info, R.id.nav_query, R.id.nav_help,
                 R.id.nav_manage, R.id.nav_statistics)
                 .setDrawerLayout(drawer)
                 .build();
