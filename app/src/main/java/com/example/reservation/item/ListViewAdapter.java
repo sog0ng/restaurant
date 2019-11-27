@@ -14,8 +14,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.reservation.CustomerHomeActivity;
+import com.example.reservation.OwnerHomeActivity;
 import com.example.reservation.R;
 import com.example.reservation.User;
+import com.example.reservation.Reservation;
+import com.example.reservation.ui.home.HomeFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class ListViewAdapter extends BaseAdapter {
     public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<User> list) {
 
     }
+    public ListViewAdapter(OwnerHomeActivity ownerHomeActivity, int simple_list_item_1, ArrayList<Reservation> list){}
 
 
     @Override

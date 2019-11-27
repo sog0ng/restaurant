@@ -5,18 +5,19 @@ import android.widget.Button;
 public class ListViewItem {
     //손님이 예앾
     private int type;
-    private String nickname;
     private String r_date;
-    private String arrival_time;
 
     private boolean accept;
-    private boolean reject
-            ;
-    private int covers;
+    private boolean reject;
     private int score;
+
+    private String nickname;
     private int year;
     private int month;
     private int day;
+    private int hour;
+    private int minute;
+    private int covers;
 
     public boolean isAccept() {
         return accept;
@@ -32,6 +33,14 @@ public class ListViewItem {
 
     public void setReject(boolean reject) {
         this.reject = reject;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public int getYear() {
@@ -58,6 +67,30 @@ public class ListViewItem {
         this.day = day;
     }
 
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public int getCovers() {
+        return covers;
+    }
+
+    public void setCovers(int covers) {
+        this.covers = covers;
+    }
+
     public int getScore() {
         return score;
     }
@@ -74,36 +107,12 @@ public class ListViewItem {
         this.type = type;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getR_date() {
         return r_date;
     }
 
     public void setR_date(String r_date) {
         this.r_date = r_date;
-    }
-
-    public String getArrival_time() {
-        return arrival_time;
-    }
-
-    public void setArrival_time(String arrival_time) {
-        this.arrival_time = arrival_time;
-    }
-
-    public int getCovers() {
-        return covers;
-    }
-
-    public void setCovers(int covers) {
-        this.covers = covers;
     }
 
 

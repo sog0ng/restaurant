@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,11 +37,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment {
     private Button refreshButton;
     private HomeViewModel homeViewModel;
-    private ListViewAdapter adapter;
-    private String restaurant1 ;
+    private String restaurant1 = "";
+
+    ArrayList<String> list;
+    public ArrayAdapter adapter;
+    private ListViewAdapter l_adapter;
+    ListView listview;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -48,6 +56,16 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        final TextView textView = root.findViewById(R.id.text_home);
+
+        homeViewModel.getText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+            }
+        });
+
+        list = new ArrayList<>();
 
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
@@ -64,17 +82,7 @@ public class HomeFragment extends Fragment {
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-                    User user_each = childSnapshot.getValue(User.class);
-                    if(user_each.getId1().equals(id1)){
-                        restaurant1 =user_each.getRestaurant_name();
-                        Log.i("가게이름", restaurant1);
-                        break;
-
-                    } else{
-                        continue;
-                    }
-                }
+                get_my_restaurant(dataSnapshot,id1);
             }
 
             @Override
@@ -83,19 +91,33 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         // 임시 데이터
-        ListView listview;
-        adapter = new ListViewAdapter(getActivity());
+        listview = (ListView) root.findViewById(R.id.ListView); //fragment_home.xml의 리스트뷰
+        l_adapter = new ListViewAdapter(getActivity());
 
-        listview = (ListView) root.findViewById(R.id.ListView);
-        listview.setAdapter(adapter);
+        //final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(l_adapter);//어댑터 지정해주고
 
+
+        //레스토랑 이름으로 자신의 리스트 addItem
+        myRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                view_my_list(dataSnapshot, restaurant1);
+                //자신의 리스트랑 일치하는 거 addItem하면 왜 안되냐고 왜 아니 토스트메시지 정상으로보내면서 차별하는거봐
+                //addItem 내부에서 list.add 실행하게 된다
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // adapter.addItem 으로 db 에 있는 예약 내역 저장
         // 닉네임 년 월 일 시간 분 도착시간 인원
 
-//        adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
+        l_adapter.addItem("닉네임", 2019, 11, 9, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 10, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 11, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 12, 5, 7, 3);
@@ -103,36 +125,17 @@ public class HomeFragment extends Fragment {
 //        adapter.addItem("닉네임", 2019, 11, 14, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 15, 5, 7, 3);
 //        adapter.addItem("닉네임", 2019, 11, 16, 5, 7, 3);
-//        adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
+        l_adapter.addItem("닉네임", 2019, 11, 27, 5, 7, 3);
 
+        //임의로 넣은 설정한 두개의 예약은 정상적으로 나온다
 
-        myRef2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                view_my_list(dataSnapshot, restaurant1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        final TextView textView = root.findViewById(R.id.text_home);
-
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-            }
-        });
 
 
         refreshButton = (Button) root.findViewById(R.id.refreshButton);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.notifyDataSetChanged();
+                l_adapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -140,19 +143,40 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void view_my_list(@NonNull DataSnapshot dataSnapshot, String restaurant) {//자기 자신의 레스토랑 이름
+
+    private void get_my_restaurant(@NonNull DataSnapshot dataSnapshot, String myId){
+        for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+            User user_each = childSnapshot.getValue(User.class);
+            if(user_each.getId1().equals(myId)){//intent로 받은 값이랑 반복문을 통해서 확인한 아이디 값이랑 같으면
+                restaurant1 =user_each.getRestaurant_name();//어플 사용하는 사장님의 가게 이름이다
+                Log.i("가게이름", restaurant1);
+                //Toast.makeText(getContext(), id1+"\n"+key1+"\nrestaurant1: "+restaurant1,Toast.LENGTH_LONG).show();
+                break;
+            } else{
+                continue;
+            }
+        }
+    }
+
+    private void view_my_list(@NonNull DataSnapshot dataSnapshot, String myRestaurant) {//자기 자신의 레스토랑 이름
 
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             //String key = childSnapshot.getKey();
             Reservation reservation_each= childSnapshot.getValue(Reservation.class);
-            if (reservation_each.getRestaurant_name().equals(restaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
+            if (reservation_each.getRestaurant_name().equals(myRestaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
+                l_adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
+                l_adapter.notifyDataSetChanged();//넣어줄때마다 새로고침 자동으로 하는것과 같은 효과
 
-                adapter.addItem(reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                //토스트메시지로는 정상적으로 잘 불러오는거 확인함
             } else {
                 continue;
             }
         }
     }
+
+
+
 }

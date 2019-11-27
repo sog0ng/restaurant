@@ -42,7 +42,6 @@ public class CustomerHomeFragment extends Fragment {
     //private SearchView searchView;
     private HomeViewModel homeViewModel;
     private Button refreshButton;
-    //private ListViewAdapter adapter;
     ArrayList<String> list;
     public ArrayAdapter adapter;
 
@@ -57,6 +56,7 @@ public class CustomerHomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_customer_home, container, false);
+
         final TextView textView = root.findViewById(R.id.text_home);
 
         homeViewModel.getText().observe(this, new Observer<String>() {
@@ -79,17 +79,13 @@ public class CustomerHomeFragment extends Fragment {
 
             }
         });
-        //ArrayAdapter<String> adapter;
-        final ListView listview = (ListView) root.findViewById(R.id.customer_listView);
-        //adapter = new ListViewAdapter(getActivity());
-        //listview.setAdapter(adapter);
 
+        final ListView listview = (ListView) root.findViewById(R.id.customer_listView);
+        final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
 
         Intent intent=getActivity().getIntent();
         final String id2= intent.getExtras().getString("id");
-
-        final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){//리스트 클릭시
             @Override
