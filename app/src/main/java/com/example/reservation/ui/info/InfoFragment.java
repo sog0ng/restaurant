@@ -1,12 +1,17 @@
 package com.example.reservation.ui.info;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,15 +28,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class InfoFragment extends Fragment {
-
+    private Context context;
     private InfoViewModel infoViewModel;
-    private String restaurant1 = "";
-    private String phone="";
-    private String password="";
-
+    private String restaurant1;
+    private String phone;
+    private String password;
+    private String is_owner;
+    EditText editpw, editid1,editpassword_check,editphone_num,editrestaurant_name;
+    TextView textrestaurant_name;
+    Button editsubmit;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        context=container.getContext();
         infoViewModel =
                 ViewModelProviders.of(this).get(InfoViewModel.class);
 
@@ -42,7 +50,7 @@ public class InfoFragment extends Fragment {
         infoViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                // textView.setText(s);
+                textView.setText(s);
             }
         });
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
@@ -57,17 +65,67 @@ public class InfoFragment extends Fragment {
         Log.i("info_id",id1);
         Log.i("info_key",key1);
         //id값으로 가게이름 가져오기
+
+        editid1 = (EditText) root.findViewById(R.id.id1);
+        editpw = (EditText) root.findViewById(R.id.password);
+        editpassword_check = (EditText) root.findViewById(R.id.password_check);
+        editphone_num = (EditText) root.findViewById(R.id.phone_num);
+        editrestaurant_name = (EditText) root.findViewById(R.id.restaurant_name);
+        textrestaurant_name = (TextView) root.findViewById(R.id.text7);
+        editsubmit = (Button) root.findViewById(R.id.submit);
+
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurantInfo(dataSnapshot, id1);
-            }
+                if(is_owner.equals("0")){
+                    editrestaurant_name.setVisibility(View.VISIBLE);
+                    editid1.setHint(id1);
+                    editpw.setText(password);
+                    editpassword_check.setText(password);
+                    editphone_num.setText(phone);
+                    editrestaurant_name.setHint(restaurant1);
 
+
+                    editsubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myRef1.child(key1).child("password").setValue(editpw.getText().toString());//비밀번호 변경
+                            myRef1.child(key1).child("phone_num").setValue(editphone_num.getText().toString());//번호 변경
+                            Toast.makeText(context, "변경사항이 수정되었습니다.", Toast.LENGTH_LONG).show();
+
+
+                        }
+                    });
+                }
+                else{
+                    editrestaurant_name.setVisibility(View.GONE);
+                    textrestaurant_name.setVisibility(View.GONE);
+
+
+                    editid1.setHint(id1);
+                    editpw.setText((password));
+                    editpassword_check.setText(password);
+                    editphone_num.setText((phone));
+
+                    editsubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myRef1.child(key1).child("password").setValue(editpw.getText().toString());//비밀번호 변경
+                            myRef1.child(key1).child("phone_num").setValue(editphone_num.getText().toString());//번호 변경
+                            Toast.makeText(context, "변경사항이 수정되었습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
+
+
 
 
 
@@ -84,11 +142,13 @@ public class InfoFragment extends Fragment {
             if (user_each.getId1().equals(myId)) {//intent로 받은 값이랑 반복문을 통해서 확인한 아이디 값이랑 같으면
                 restaurant1 = user_each.getRestaurant_name();//어플 사용하는 사장님의 가게 이름이다
                 password=user_each.getPassword();
-                phone=user_each.getPassword();
+                phone=user_each.getPhone_num();
+                is_owner=user_each.getIs_owner();
                 Log.i("가게이름", restaurant1);
-                Log.i("비밃번호", password);
+                Log.i("비밀번호", password);
                 Log.i("핸드폰 번호", phone);
-                //Toast.makeText(getContext(), id1+"\n"+key1+"\nrestaurant1: "+restaurant1,Toast.LENGTH_LONG).show();
+                Log.i("사장이니?", is_owner);//사장이면 0
+
                 break;
             } else {
                 continue;
