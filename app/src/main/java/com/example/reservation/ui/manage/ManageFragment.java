@@ -1,5 +1,6 @@
 package com.example.reservation.ui.manage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManageFragment extends Fragment {
-
+    private Context context;
     private ManageViewModel shareViewModel;
     private String restaurant1 = "";
     private String open_hour="";
@@ -40,10 +42,13 @@ public class ManageFragment extends Fragment {
     private String close_minute="";
     EditText editrestaurant_name;
     TimePicker open_tp, close_tp;
+    int openhour, openminute,closehour, closeminute;
     private static final int TIME_PICKER_INTERVAL=30;
     Button editcheck;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        context=container.getContext();
         shareViewModel =
                 ViewModelProviders.of(this).get(ManageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_manage, container, false);
@@ -79,6 +84,22 @@ public class ManageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurantManage(dataSnapshot, id1);
                 editrestaurant_name.setText(restaurant1);
+                openhour = open_tp.getHour();
+                openminute=open_tp.getMinute();
+                closehour=close_tp.getHour();
+                closeminute=close_tp.getMinute();
+
+                editcheck.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myRef1.child(key1).child("open_hour").setValue(String.valueOf(openhour));//시간 변경
+                        myRef1.child(key1).child("open_minute").setValue(String.valueOf(openminute*30));
+                        myRef1.child(key1).child("close_hour").setValue(String.valueOf(closehour));
+                        myRef1.child(key1).child("close_minute").setValue(String.valueOf(closeminute*30));
+                        Toast.makeText(context, "운영시간이 변경되었습니다.", Toast.LENGTH_LONG).show();
+                    }
+                });
+
 
 
             }
