@@ -5,125 +5,140 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:isScrollContainer="true">
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_manage"
+        <LinearLayout
+            android:id="@+id/l_restaurant"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/text0"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="가게명"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/restaurant_name"
+                android:layout_width="272dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="restaurant_name"
+                android:inputType="textPersonName"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_manage"
-            >
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/l_restaurant"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="개점시간"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/edit_open"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="개점시간"
+                android:textSize="20sp"
+                />
+
+            <Button
+                android:id="@+id/open_time_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="시간 선택" />
 
-                <TextView
-                    android:id="@+id/text0"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:orientation="horizontal"
-                    android:text="@string/u_restaurant" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/restaurant_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:hint="restaurant_name"
-                    android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_2"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="폐점시간"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/edit_close"
+                android:layout_width="141dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="폐점시간"
+                tools:ignore="DuplicateIds"
+                android:textSize="20sp"
+                />
+
+            <Button
+                android:id="@+id/close_time_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="시간 선택" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/text_1"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:orientation="horizontal"
-                    android:text="open" />
-
-
-                <EditText
-                    android:id="@+id/edit_open"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:cursorVisible="false"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/text_2"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:orientation="horizontal"
-                    android:text="close" />
-
-                <EditText
-                    android:id="@+id/edit_close"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="DuplicateIds"
-                    android:cursorVisible="false"
-                    />
-            </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp">
 
             <Button
                 android:id="@+id/check"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="확인" />
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:background="@color/colorPrimary"
+                android:text="확인"
+                android:textColor="@android:color/white"
+                android:textSize="50px"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </ScrollView>

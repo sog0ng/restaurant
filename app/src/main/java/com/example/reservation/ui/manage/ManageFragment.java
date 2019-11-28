@@ -41,10 +41,11 @@ public class ManageFragment extends Fragment {
     private String restaurant1 = "";
     private String open_hour="";
     private String close_hour="";
-    EditText edit_close,edit_open;
+    private static final int TIME_PICKER_INTERVAL=10;
+    TextView edit_close,edit_open;
     TextView editrestaurant_name;
     String open,close;
-    Button editcheck;
+    Button editcheck, closeTimeButton, openTimeButton;
     TimePickerDialog timePickerDialog;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
@@ -52,13 +53,6 @@ public class ManageFragment extends Fragment {
         shareViewModel =
                 ViewModelProviders.of(this).get(ManageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_manage, container, false);
-        final TextView textView = root.findViewById(R.id.text_manage);
-        shareViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                // textView.setText(s);
-            }
-        });
 
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
@@ -72,9 +66,11 @@ public class ManageFragment extends Fragment {
         final String key1 = intent.getExtras().getString("key");
 
         editrestaurant_name = (TextView) root.findViewById(R.id.restaurant_name);
-        edit_close=(EditText)root.findViewById(R.id.edit_close);
-        edit_open=(EditText)root.findViewById(R.id.edit_open);
+        edit_close=(TextView) root.findViewById(R.id.edit_close);
+        edit_open=(TextView) root.findViewById(R.id.edit_open);
         editcheck = (Button) root.findViewById(R.id.check);
+        openTimeButton = (Button) root.findViewById(R.id.open_time_button);
+        closeTimeButton = (Button) root.findViewById(R.id.close_time_button);
 
 
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {//id값으로 정보를 찾음
@@ -85,7 +81,7 @@ public class ManageFragment extends Fragment {
                 edit_open.setText(open);//현재 오픈시간
                 edit_close.setText(close);//현재 마감시간
 
-                edit_open.setOnClickListener(new View.OnClickListener() {
+                openTimeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         timePickerDialog = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog,new OnTimeSetListener() {
@@ -96,9 +92,10 @@ public class ManageFragment extends Fragment {
                             }
                         }, 15,24, false);
                         timePickerDialog.show();
+                        setTimePickerInterval(timePickerDialog);
                     }
                 });
-                edit_close.setOnClickListener(new View.OnClickListener() {
+                closeTimeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         timePickerDialog = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog, new OnTimeSetListener() {
@@ -108,6 +105,7 @@ public class ManageFragment extends Fragment {
                             }
                         }, 15,24, false);
                         timePickerDialog.show();
+                        setTimePickerInterval(timePickerDialog);
                     }
                 });
 
@@ -147,6 +145,22 @@ public class ManageFragment extends Fragment {
             } else {
                 continue;
             }
+        }
+    }
+
+    private void setTimePickerInterval(TimePickerDialog timePicker) {
+        try {
+            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
+                    "minute", "id", "android"));
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue((60/ TIME_PICKER_INTERVAL) - 1);
+            List<String> displayedValues = new ArrayList<String>();
+            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+                displayedValues.add(String.format("%02d", i));
+            }
+            minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
