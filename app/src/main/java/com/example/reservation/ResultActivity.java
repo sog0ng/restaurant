@@ -71,7 +71,7 @@ public class ResultActivity extends AppCompatActivity {
 
                 reservation.setRestaurant_name(str_restaurantName);
                 reservation.setIs_confirm("null");
-                reservation.setIs_accepted("null");
+                reservation.setIs_accepted("0");//미방문이였다가 예약일자 지나고 나서 null로 바꿔야함
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
                 reservation.setYear(year);

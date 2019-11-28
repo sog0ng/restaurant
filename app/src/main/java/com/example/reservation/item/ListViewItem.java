@@ -24,8 +24,8 @@ public class ListViewItem {
     private int covers;
 
     private String restaurant_name;
-    private String is_accepted = null;//기본값 null
-    private String is_confirm = "0";//기본값 0
+    private String is_accepted;//기본값 null
+    private String is_confirm;//기본값 0
 
     private String key;
 

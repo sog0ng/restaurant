@@ -28,12 +28,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class StatisticsFragment extends Fragment {
     private LineView lineView;
     private StatisticsViewModel sendViewModel;
     private String restaurant1 = "";
+
     int this_week;
     int last_week;
     int last2_week;
@@ -47,6 +49,7 @@ public class StatisticsFragment extends Fragment {
     int sat;
     Calendar today;
     ArrayList<Integer> al1;
+    //ArrayList<Integer> ydata;
     ArrayList<String> bTL;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,7 +57,7 @@ public class StatisticsFragment extends Fragment {
 
         today = Calendar.getInstance(Locale.KOREA);
 
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
 
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
@@ -119,10 +122,9 @@ public class StatisticsFragment extends Fragment {
 
                 System.out.println(bTL.size());
                 System.out.println(dataList.size());
-
-                lineView.setDrawDotLine(true);
-                lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
-                lineView.setColorArray(new int[] {Color.GRAY, Color.RED, Color.BLUE});
+                lineView.setDrawDotLine(false);
+                lineView.setShowPopup(LineView.SHOW_POPUPS_MAXMIN_ONLY);
+                lineView.setColorArray(new int[] {Color.BLUE});
                 lineView.setBottomTextList(bTL);
                 lineView.setDataList(dataList);
             }

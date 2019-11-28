@@ -4,18 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <!--
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="70dp"
-        android:layout_height="match_parent"
-         />
-         -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="예약 내역"
+            />
 
         <TextView
             android:id="@+id/restaurant_name"
@@ -62,31 +60,9 @@
             android:id="@+id/accept"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="-처리중"/>
+            android:text="-처리 중"
+            android:visibility="visible"/>
 
-        <TextView
-            android:id="@+id/confirm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:text="-미확인"/>
-
-        <EditText
-            android:id="@+id/score"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="평점"
-            android:inputType="number"
-            android:visibility="invisible"/>
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="확인"
-            android:visibility="invisible"/>
 
 
     </LinearLayout>
