@@ -5,7 +5,7 @@ import java.util.Date;
 public class Reservation {
     String r_id;
     String nickname;
-    String restaurant_name;
+    String restaurant_name="null";
 
     int year;
     int month;

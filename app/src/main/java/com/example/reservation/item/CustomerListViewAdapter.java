@@ -70,15 +70,15 @@ public class CustomerListViewAdapter extends BaseAdapter {
         View v = convertView;
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-/*
+
             if (iDday < 0) {
                 v = inflater.inflate(R.layout.customer_past_listview_item, parent, false);
 
             } else {
                 v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
-            }*/
+            }
 
-            v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
+            //v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
             ViewHolder holder = new ViewHolder(v);
 
             v.setTag(holder);
@@ -98,8 +98,9 @@ public class CustomerListViewAdapter extends BaseAdapter {
                     holder.confirm.setText("<미확인>");
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
                     holder.confirm.setText("<방문>");
-                    holder.confirm.setVisibility(View.GONE);
-                    holder.score.setVisibility(View.VISIBLE);
+                    //holder.confirm.setVisibility(v.GONE);
+                    holder.score.setVisibility(v.VISIBLE);
+                    holder.submit.setVisibility(v.VISIBLE);
 
                     holder.submit.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View v) {
@@ -133,7 +134,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
         //return convertView;
     }
 
-    public void addItem(String key, String restaurant_name, String nickname, int year,
+    public void addItemC(String key, String restaurant_name, String nickname, int year,
 
                         int month, int day, int hour, int minute, int covers) {
         ListViewItem item = new ListViewItem();

@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     private String restaurant1 = "";
 
     ArrayList<String> list;
-    public ArrayAdapter adapter;
+    //public ArrayAdapter adapter;
     private ListViewAdapter l_adapter;
     ListView listview;
 

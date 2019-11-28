@@ -60,7 +60,6 @@
             android:id="@+id/accept"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="-처리 중"
             android:visibility="visible"/>
 
 

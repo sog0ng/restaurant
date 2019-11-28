@@ -7,14 +7,13 @@ import java.util.List;
 
 public class ListViewItem {
     //손님이 예앾
+
     private int type;
     private String r_date;
 
-    //private boolean accept;
-    //private boolean reject;
-
     private int score;
 
+    private String key;
     private String nickname;
     private int year;
     private int month;
@@ -27,7 +26,6 @@ public class ListViewItem {
     private String is_accepted="null";//기본값 "null"
     private String is_confirm="0";//기본값 "0"
 
-    private String key;
 
     public String getKey() {
         return key;
@@ -37,23 +35,6 @@ public class ListViewItem {
         this.key = key;
     }
 
-    /*
-            public boolean isAccept() {
-                return accept;
-            }
-
-            public void setAccept(boolean accept) {
-                this.accept = accept;
-            }
-
-            public boolean isReject() {
-                return reject;
-            }
-
-            public void setReject(boolean reject) {
-                this.reject = reject;
-            }
-        */
     public String getNickname() {
         return nickname;
     }
@@ -148,7 +129,6 @@ public class ListViewItem {
 
     public void setIs_confirm(String is_confirm) {
         this.is_confirm = is_confirm;
-
     }
     public String getRestaurant_name() {
         return restaurant_name;

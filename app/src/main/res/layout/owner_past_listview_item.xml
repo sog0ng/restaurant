@@ -7,7 +7,8 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text = "과거 내역"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,14 +36,14 @@
             android:layout_height="match_parent" />
 
         <Button
-            android:id="@+id/confirm"
+            android:id="@+id/confirmB"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="방문" />
 
         <Button
-            android:id="@+id/noshow"
+            android:id="@+id/noshowB"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,6 +65,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="확인"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:visibility="invisible"/>
 
 

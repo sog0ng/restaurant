@@ -59,8 +59,6 @@ public class CustomerQueryFragment extends Fragment {
         Log.i("id야 나와라", id);
         Log.i("키야 나와라", key);
 
-
-
         listview = (ListView) root.findViewById(R.id.ListViewCustomer); //fragment_query_customer.xml의 리스트뷰
         adapter = new CustomerListViewAdapter(getActivity());//CustomerListViewAdapter 인스턴스인 adapter
         listview.setAdapter(adapter);//어댑터 지정해주고
@@ -121,7 +119,7 @@ public class CustomerQueryFragment extends Fragment {
             if (reservation_each.getR_id().equals(myId)) {
                 //아이템 하나하나를 넣어준다
 
-                adapter.addItem(childSnapshot.getKey(), reservation_each.getRestaurant_name(), reservation_each.getNickname(),
+                adapter.addItemC(childSnapshot.getKey(), reservation_each.getRestaurant_name(), reservation_each.getNickname(),
                         reservation_each.getYear(), reservation_each.getMonth(),
                         reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(),
                         reservation_each.getCovers());

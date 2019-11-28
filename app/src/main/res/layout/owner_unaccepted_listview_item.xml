@@ -11,15 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
-        />
+        android:text="미승인 예약 내역" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_gravity="center"
-        >
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +36,7 @@
                 tools:visibility="visible" />
 
             <TextView
+
                 android:id="@+id/r_date"
                 android:layout_width="70dp"
                 android:layout_height="match_parent" />
@@ -52,16 +52,24 @@
                 android:layout_height="match_parent" />
 
             <Button
+                android:id="@+id/acceptB"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="승인" />
+
+            <Button
+                android:id="@+id/rejectB"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="거절" />
+
+            <TextView
                 android:id="@+id/accept"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:text="승인"/>
+                android:visibility="invisible"/>
 
-            <Button
-                android:id="@+id/reject"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:text="거절"/>
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

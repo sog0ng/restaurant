@@ -68,8 +68,7 @@
                 android:id="@+id/confirm"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:text="-미확인"
-                android:visibility="visible"/>
+                />
 
             <EditText
                 android:id="@+id/score"
@@ -79,7 +78,7 @@
                 android:ems="10"
                 android:hint="1~5"
                 android:inputType="number"
-                android:visibility="invisible"/>
+                />
 
             <Button
                 android:id="@+id/submit"
@@ -87,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="확인"
-                android:visibility="invisible"/>
+                />
 
 
         </LinearLayout>
