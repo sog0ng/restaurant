@@ -88,7 +88,7 @@ public class ManageFragment extends Fragment {
                 edit_open.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        timePickerDialog = new TimePickerDialog(context, new OnTimeSetListener() {
+                        timePickerDialog = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog,new OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 edit_open.setText(hourOfDay+"시 "+minute+"분");//새 오픈시간
@@ -101,7 +101,7 @@ public class ManageFragment extends Fragment {
                 edit_close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        timePickerDialog = new TimePickerDialog(context, new OnTimeSetListener() {
+                        timePickerDialog = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog, new OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 edit_close.setText(hourOfDay+"시 "+minute+"분");//새 마감시간
