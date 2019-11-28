@@ -93,9 +93,9 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
             if (iDday < 0) {
                 //과거내역인 경우
-                if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "null") {
+                if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
                     holder.accept.setText("<미확인>");
-                } else if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "1") {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
                     holder.confirm.setText("<방문>");
                     holder.confirm.setVisibility(View.GONE);
                     holder.score.setVisibility(View.VISIBLE);
@@ -106,18 +106,18 @@ public class CustomerListViewAdapter extends BaseAdapter {
                             //평점 넣어주어야함 gtr DB에 넣어주어야함
                         }
                     });
-                } else if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "0") {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
                     holder.accept.setText("<미방문>");
                 } else {
                     holder.accept.setText("<거절>");
                 }
             } else {
                 //미래에 대한 것
-                if (listViewItem.getIs_accepted() == "null") {
+                if (listViewItem.getIs_accepted().equals("null")) {
                     holder.accept.setText("<처리중>");
-                } else if (listViewItem.getIs_accepted() == "1") {
+                } else if (listViewItem.getIs_accepted().equals("1")) {
                     holder.accept.setText("<승인>");
-                } else if (listViewItem.getIs_accepted() == "0") {
+                } else if (listViewItem.getIs_accepted().equals("0")) {
                     holder.accept.setText("<거절>");
                 }
             }

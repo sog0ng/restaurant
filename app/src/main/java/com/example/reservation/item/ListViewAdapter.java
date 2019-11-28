@@ -121,7 +121,7 @@ public class ListViewAdapter extends BaseAdapter {
             }
         });
 
-        if (iDday < 0 && listViewItem.getIs_accepted() == "null") { //과거 내역 방문확인을 해야함
+        if ((iDday < 0) && (listViewItem.getIs_accepted().equals("null"))) { //과거 내역 방문확인을 해야함
             // past
             title.setText("과거 내역");
             nickname.setText(listViewItem.getNickname());
@@ -143,7 +143,7 @@ public class ListViewAdapter extends BaseAdapter {
 
                 }
             });
-        } else if (iDday < 0 && listViewItem.getIs_accepted() != "null") {//과거 내역 방문확인을 했으니 평점을 줄 수 있다
+        } else if ((iDday < 0) && !(listViewItem.getIs_accepted().equals("null"))) {//과거 내역 방문확인을 했으니 평점을 줄 수 있다
             title.setText("과거 내역");
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
@@ -165,7 +165,7 @@ public class ListViewAdapter extends BaseAdapter {
                 }
             });
 
-        } else if (listViewItem.getIs_accepted() != "null") {
+        } else if (!listViewItem.getIs_accepted().equals("null")) {
             // accepted
             title.setText("예약 내역");
             nickname.setText(listViewItem.getNickname());

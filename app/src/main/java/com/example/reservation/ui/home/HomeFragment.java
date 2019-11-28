@@ -150,28 +150,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void viewMyList(@NonNull DataSnapshot dataSnapshot, String myRestaurant) {//자기 자신의 레스토랑 이름
-        l_adapter.clear();
-        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-            Reservation reservation_each = childSnapshot.getValue(Reservation.class);
-            if (reservation_each.getRestaurant_name().equals(myRestaurant)) { //자신의 레스토랑 이름과 일치하면 addItem
-                Log.i("닉네임:", reservation_each.getNickname());
-                Log.i("연도", Integer.toString(reservation_each.getYear()));
-                l_adapter.addItem(childSnapshot.getKey(), reservation_each.getNickname(), reservation_each.getYear(),
-                        reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(),
-                        reservation_each.getMinute(), reservation_each.getCovers());
-                //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
-            } else {
-                continue;
-            }
-        }
-        l_adapter.sort();//시간순 정렬
-        if (loadFirstAll) {
-            l_adapter.notifyDataSetChanged();//새로고침
-            loadFirstAll = false;
-        }
-    }
-
     private void viewTodayList(@NonNull DataSnapshot dataSnapshot, String myRestaurant){
         l_adapter.clear();
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {

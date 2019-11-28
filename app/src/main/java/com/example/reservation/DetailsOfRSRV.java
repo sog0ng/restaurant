@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,8 @@ public class DetailsOfRSRV extends AppCompatActivity {
         final String is_accepted = getIntent().getStringExtra("is_accepted");
         final String is_confirm = getIntent().getStringExtra("is_confirm");
 
+        int iDday = countDday(year, month, day);
+
         TextView r_date = (TextView) findViewById(R.id.r_date);
         TextView covers = (TextView) findViewById(R.id.covers);
         TextView restaurantName = (TextView) findViewById(R.id.restaurant_name);
@@ -55,23 +58,26 @@ public class DetailsOfRSRV extends AppCompatActivity {
         covers.setText(cover + "명");
         r_nickname.setText(str_nickname);
 
-        //신청한 예약에 대해 어떤 상태인지
-        if(is_accepted==null){
-            status.setText("예약 처리 중");
-        }else if(is_accepted=="1"){
-            status.setText("예약 승인");
-        }else{
-            status.setText("예약 거절");
-        }
-
-        //방문했는지 확인해야
-        //다시 is_confirm 은 기본값 0이였다가 -> 예약 한 날짜가 지나면 null로 바뀌는것으로 되어야함
-        if(is_confirm==null){
-            status.setText("방문 확인 중");
-        }else if(is_confirm=="1"){
-            status.setText("방문");
-        }else{
-            status.setText("미방문");
+        if (iDday < 0) {
+            //과거내역인 경우
+            if (is_accepted.equals("1") && is_confirm.equals("null")) {
+                status.setText("방문 확인 중");
+            } else if (is_accepted.equals("1") && is_confirm.equals("1")) {
+                status.setText("방문");
+            } else if (is_accepted.equals("1") && is_confirm.equals("0")) {
+                status.setText("미방문");
+            } else {
+                status.setText("예약 거절");
+            }
+        } else {
+            //미래에 대한 것
+            if (is_accepted.equals("null")) {
+                status.setText("예약 처리 중");
+            } else if (is_accepted.equals("1")) {
+                status.setText("예약 승인");
+            } else if (is_accepted.equals("0")) {
+                status.setText("예약 거절");
+            }
         }
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +98,23 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
 //취소 버튼 만들어야함
 
+    }
+
+    public int countDday(int myear, int mmonth, int mday) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar todaCal = Calendar.getInstance();
+        Calendar ddayCal = Calendar.getInstance();
+
+        mmonth -= 1;
+        ddayCal.set(myear, mmonth, mday);
+
+        long today = todaCal.getTimeInMillis() / 86400000;
+        long dday = ddayCal.getTimeInMillis() / 86400000;
+
+        long count = dday - today;
+
+        return (int) count;
     }
 
 
