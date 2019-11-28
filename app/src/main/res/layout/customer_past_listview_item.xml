@@ -20,7 +20,8 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="과거 내역"/>
 
         <TextView
             android:id="@+id/restaurant_name"

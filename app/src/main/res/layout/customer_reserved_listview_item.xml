@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +11,9 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="예약 내역"
+            />
 
         <TextView
             android:id="@+id/restaurant_name"
@@ -60,7 +60,7 @@
             android:id="@+id/accept"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="-처리중"
+            android:text="-처리 중"
             android:visibility="visible"/>
 
 

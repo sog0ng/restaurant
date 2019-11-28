@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reservation.CustomerHomeActivity;
 import com.example.reservation.OwnerHomeActivity;
@@ -26,8 +27,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
+
 public class CustomerListViewAdapter extends BaseAdapter {
     Activity activity;
+
+
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     public CustomerListViewAdapter(Activity activity) {
@@ -58,46 +62,71 @@ public class CustomerListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
-
         ListViewItem listViewItem = listViewItemList.get(position);
+        int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        TextView restName = (TextView) convertView.findViewById(R.id.restaurant_name);
-        TextView r_date = (TextView) convertView.findViewById(R.id.r_date);
-        TextView covers = (TextView) convertView.findViewById(R.id.covers);
-        TextView accept = (TextView) convertView.findViewById(R.id.accept);
-        TextView confirm = (TextView) convertView.findViewById(R.id.confirm);
+            if (iDday < 0) {
+                v = inflater.inflate(R.layout.customer_past_listview_item, parent, false);
 
-        EditText score = (EditText) convertView.findViewById(R.id.score);
-        Button submit = (Button) convertView.findViewById(R.id.submit);
-
-
-        restName.setText(listViewItem.getRestaurant_name());
-        r_date.setText(listViewItem.getR_date());
-        covers.setText(listViewItem.getCovers() + "명");
-
-        if (listViewItem.getIs_accepted() == "1") {
-            accept.setText("<승인>");
-        } if(listViewItem.getIs_accepted() == "0"){
-            accept.setText("<거절>");
-        }
-        if (listViewItem.getIs_confirm() == "1") {
-            confirm.setText("<방문>");
-        } if (listViewItem.getIs_confirm() == "0"){
-            confirm.setText("<미방문>");
-        }
-
-        submit.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                //평점 입력
-                //score.setText();
+            } else {
+                v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
             }
-        });
+
+            //v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
+            ViewHolder holder = new ViewHolder(v);
+
+            v.setTag(holder);
+
+        }
 
 
-        return convertView;
+        if (listViewItem != null) {
+            final ViewHolder holder = (ViewHolder) v.getTag();
+            holder.restName.setText(listViewItem.getRestaurant_name());
+            holder.r_date.setText(listViewItem.getR_date());
+            holder.covers.setText(listViewItem.getCovers() + "명");
+
+
+            if (iDday < 0) {
+                //과거내역인 경우
+                if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "null") {
+                    holder.accept.setText("<미확인>");
+                } else if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "1") {
+                    holder.confirm.setText("<방문>");
+                    holder.confirm.setVisibility(View.GONE);
+                    holder.score.setVisibility(View.VISIBLE);
+
+                    holder.submit.setOnClickListener(new Button.OnClickListener() {
+                        public void onClick(View v) {
+                            holder.score.setHint("평점");
+                            //평점 넣어주어야함 gtr DB에 넣어주어야함
+                        }
+                    });
+                } else if (listViewItem.getIs_accepted() == "1" && listViewItem.getIs_confirm() == "0") {
+                    holder.accept.setText("<미방문>");
+                } else {
+                    holder.accept.setText("<거절>");
+                }
+            } else {
+                //미래에 대한 것
+                if (listViewItem.getIs_accepted() == "null") {
+                    holder.accept.setText("<처리중>");
+                } else if (listViewItem.getIs_accepted() == "1") {
+                    holder.accept.setText("<승인>");
+                } else if (listViewItem.getIs_accepted() == "0") {
+                    holder.accept.setText("<거절>");
+                }
+            }
+
+
+        }
+
+        return v;
+        //return convertView;
     }
 
     public void addItem(String key, String restaurant_name, String nickname, int year,
@@ -161,6 +190,44 @@ public class CustomerListViewAdapter extends BaseAdapter {
                 return ret;
             }
         });
+    }
+
+    public int countDday(int myear, int mmonth, int mday) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar todaCal = Calendar.getInstance();
+        Calendar ddayCal = Calendar.getInstance();
+
+        mmonth -= 1;
+        ddayCal.set(myear, mmonth, mday);
+
+        long today = todaCal.getTimeInMillis() / 86400000;
+        long dday = ddayCal.getTimeInMillis() / 86400000;
+
+        long count = dday - today;
+
+        return (int) count;
+    }
+
+    public class ViewHolder {
+        final TextView restName;
+        final TextView r_date;
+        final TextView covers;
+        final TextView accept;
+        final TextView confirm;
+        final EditText score;
+        final Button submit;
+
+        public ViewHolder(View root) {
+            restName = (TextView) root.findViewById(R.id.restaurant_name);
+            r_date = (TextView) root.findViewById(R.id.r_date);
+            covers = (TextView) root.findViewById(R.id.covers);
+
+            accept = (TextView) root.findViewById(R.id.accept);
+            confirm = (TextView) root.findViewById(R.id.confirm);
+            score = (EditText) root.findViewById(R.id.score);
+            submit = (Button) root.findViewById(R.id.submit);
+        }
     }
 
 }
