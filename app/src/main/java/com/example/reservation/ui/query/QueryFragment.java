@@ -98,7 +98,7 @@ public class QueryFragment extends Fragment {
         Log.i("키야 나와라",key1);
         //Log.i("restaurant_name나와라",restaurant1);
 
-        listview = (ListView) root.findViewById(R.id.ListView); //fragment_home.xml의 리스트뷰
+        listview = (ListView) root.findViewById(R.id.ListView); //fragment_query.xml의 리스트뷰
         l_adapter = new ListViewAdapter(getActivity());
 
         //final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);

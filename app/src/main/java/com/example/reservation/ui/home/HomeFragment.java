@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);//fragment_home.xml
 
         final TextView textView = root.findViewById(R.id.text_home);
 
@@ -88,6 +88,9 @@ public class HomeFragment extends Fragment {
         final String id1 = intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
 
+        Log.i("id야 나와라", id1);
+        Log.i("키야 나와라", key1);
+
         //id값으로 가게이름 가져오기
         myRef1.addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,11 +104,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // 임시 데이터
+
         listview = (ListView) root.findViewById(R.id.ListView); //fragment_home.xml의 리스트뷰
         l_adapter = new ListViewAdapter(getActivity());
-
-        //final ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(l_adapter);//어댑터 지정해주고
 
         today = Calendar.getInstance(Locale.KOREA);//오늘 날짜 갱신
@@ -114,7 +115,6 @@ public class HomeFragment extends Fragment {
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //viewMyList(dataSnapshot, restaurant1);//이건 전체 다 보여주는 경우
                 viewTodayList(dataSnapshot, restaurant1);//오늘에 대한 예약만 불러온다
             }
 

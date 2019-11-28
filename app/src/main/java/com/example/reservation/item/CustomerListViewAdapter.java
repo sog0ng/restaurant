@@ -3,6 +3,7 @@ package com.example.reservation.item;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,15 +70,15 @@ public class CustomerListViewAdapter extends BaseAdapter {
         View v = convertView;
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+/*
             if (iDday < 0) {
                 v = inflater.inflate(R.layout.customer_past_listview_item, parent, false);
 
             } else {
                 v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
-            }
+            }*/
 
-            //v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
+            v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
             ViewHolder holder = new ViewHolder(v);
 
             v.setTag(holder);
@@ -84,17 +86,16 @@ public class CustomerListViewAdapter extends BaseAdapter {
         }
 
 
-        if (listViewItem != null) {
+        if (listViewItem != null) {//리스트뷰아이템에 뭐라도 있으면 값을 설정해서 보이도록
             final ViewHolder holder = (ViewHolder) v.getTag();
             holder.restName.setText(listViewItem.getRestaurant_name());
             holder.r_date.setText(listViewItem.getR_date());
             holder.covers.setText(listViewItem.getCovers() + "명");
 
-
             if (iDday < 0) {
                 //과거내역인 경우
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
-                    holder.accept.setText("<미확인>");
+                    holder.confirm.setText("<미확인>");
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
                     holder.confirm.setText("<방문>");
                     holder.confirm.setVisibility(View.GONE);
@@ -107,22 +108,25 @@ public class CustomerListViewAdapter extends BaseAdapter {
                         }
                     });
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
-                    holder.accept.setText("<미방문>");
-                } else {
-                    holder.accept.setText("<거절>");
+                    holder.confirm.setText("<미방문>");
+                } else if(listViewItem.getIs_accepted().equals("0")){
+                    holder.confirm.setText("<예약 거절>");
+                }else if(listViewItem.getIs_accepted().equals("-1")){
+                    holder.confirm.setText("<예약 취소>");
                 }
             } else {
-                //미래에 대한 것
+                //미래, 오늘 당일 예약
                 if (listViewItem.getIs_accepted().equals("null")) {
-                    holder.accept.setText("<처리중>");
+                    holder.accept.setText("<처리 중>");
                 } else if (listViewItem.getIs_accepted().equals("1")) {
                     holder.accept.setText("<승인>");
                 } else if (listViewItem.getIs_accepted().equals("0")) {
                     holder.accept.setText("<거절>");
+                } else if(listViewItem.getIs_accepted().equals("-1")){
+                    holder.accept.setText("<취소>");
                 }
             }
-
-
+            v.setTag(holder);
         }
 
         return v;
@@ -139,6 +143,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
         item.setYear(year);
         item.setMonth(month);
         item.setDay(day);
+        item.setHour(hour);
+        item.setMinute(minute);
         //item.setArrival_time(arrival_time);
         item.setCovers(covers);
         item.setR_date(month + "월" + day + "일" + hour + "시" + minute + "분");

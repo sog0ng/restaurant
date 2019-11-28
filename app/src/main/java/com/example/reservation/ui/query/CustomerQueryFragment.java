@@ -45,7 +45,7 @@ public class CustomerQueryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         queryViewModel =
                 ViewModelProviders.of(this).get(QueryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_query_customer, container, false);
+        View root = inflater.inflate(R.layout.fragment_query_customer, container, false);//fragment_query_customer.xml
 
         list = new ArrayList<>();
 
@@ -56,22 +56,21 @@ public class CustomerQueryFragment extends Fragment {
         final String id = intent.getExtras().getString("id");
         final String key = intent.getExtras().getString("key");
 
-
-        // final String restaurant1 = intent.getExtras().getString("restaurant_name");
         Log.i("id야 나와라", id);
         Log.i("키야 나와라", key);
-        //Log.i("restaurant_name나와라",restaurant1);
 
 
-        listview = (ListView) root.findViewById(R.id.ListViewCustomer); //fragment_home.xml의 리스트뷰
-        adapter = new CustomerListViewAdapter(getActivity());
-        listview.setAdapter(adapter);
+
+        listview = (ListView) root.findViewById(R.id.ListViewCustomer); //fragment_query_customer.xml의 리스트뷰
+        adapter = new CustomerListViewAdapter(getActivity());//CustomerListViewAdapter 인스턴스인 adapter
+        listview.setAdapter(adapter);//어댑터 지정해주고
 
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 viewMyReserve(dataSnapshot, id);
+
             }
 
             @Override
@@ -95,14 +94,19 @@ public class CustomerQueryFragment extends Fragment {
                 ListViewItem item = (ListViewItem) adapter.getItem(position);
                 Intent detailsOfRSRV = new Intent(getActivity(), DetailsOfRSRV.class);
                 detailsOfRSRV.putExtra("id", id);
+
+                detailsOfRSRV.putExtra("nickname", item.getNickname());
                 detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
+
                 detailsOfRSRV.putExtra("year", item.getYear());
                 detailsOfRSRV.putExtra("month", item.getMonth());
                 detailsOfRSRV.putExtra("day", item.getDay());
                 detailsOfRSRV.putExtra("hour", item.getHour());
                 detailsOfRSRV.putExtra("minute", item.getMinute());
                 detailsOfRSRV.putExtra("covers", item.getCovers());
-                detailsOfRSRV.putExtra("nickname", item.getNickname());
+
+                detailsOfRSRV.putExtra("is_accepted",item.getIs_accepted());//예약 승인 여부
+                detailsOfRSRV.putExtra("is_confirm",item.getIs_confirm());//방문 여부
                 startActivity(detailsOfRSRV);
             }
         });
@@ -115,6 +119,8 @@ public class CustomerQueryFragment extends Fragment {
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             Reservation reservation_each = childSnapshot.getValue(Reservation.class);
             if (reservation_each.getR_id().equals(myId)) {
+                //아이템 하나하나를 넣어준다
+
                 adapter.addItem(childSnapshot.getKey(), reservation_each.getRestaurant_name(), reservation_each.getNickname(),
                         reservation_each.getYear(), reservation_each.getMonth(),
                         reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(),
@@ -126,7 +132,10 @@ public class CustomerQueryFragment extends Fragment {
         if (adapter.isEmpty()) {
             Toast.makeText(getContext(), "예약 내역이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
         }
-        adapter.sort();
+        adapter.sort();//정렬
         adapter.notifyDataSetChanged();//새로고침
     }
+
+
+
 }
