@@ -70,7 +70,7 @@ public class ResultActivity extends AppCompatActivity {
                 Reservation reservation = new Reservation();
 
                 reservation.setRestaurant_name(str_restaurantName);
-                reservation.setIs_confirm("0");//방문x가 기본
+                reservation.setIs_confirm("null");
                 reservation.setIs_accepted("null");
                 reservation.setNickname(str_nickname);
                 reservation.setCovers(Integer.parseInt(str_covers));
