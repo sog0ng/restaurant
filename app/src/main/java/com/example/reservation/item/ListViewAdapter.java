@@ -178,8 +178,6 @@ public class ListViewAdapter extends BaseAdapter {
             nickname.setText(listViewItem.getNickname());
             r_date.setText(listViewItem.getR_date());
             covers.setText(listViewItem.getCovers() + "명");
-            accept.setText("승인");//버튼 자체의 글씨를 쓰는것
-            reject.setText("거절");
 
             accept.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {

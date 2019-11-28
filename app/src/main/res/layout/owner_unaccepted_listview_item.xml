@@ -54,12 +54,14 @@
             <Button
                 android:id="@+id/accept"
                 android:layout_width="50dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:text="승인"/>
 
             <Button
                 android:id="@+id/reject"
                 android:layout_width="50dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:text="거절"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
