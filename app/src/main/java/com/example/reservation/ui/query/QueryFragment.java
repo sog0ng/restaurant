@@ -45,12 +45,12 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class QueryFragment extends Fragment {
-    private Button refreshButton;
-    private QueryViewModel queryViewModel;
-    private ListViewAdapter l_adapter;
     String restaurant1 = "null";
     ListView listview;
     boolean isCustomer;
+    private Button refreshButton;
+    private QueryViewModel queryViewModel;
+    private ListViewAdapter l_adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -141,8 +141,8 @@ public class QueryFragment extends Fragment {
                 detailsOfRSRV.putExtra("minute", item.getMinute());
                 detailsOfRSRV.putExtra("covers", item.getCovers());
 
-                detailsOfRSRV.putExtra("is_accepted",item.getIs_accepted());//예약 승인 여부
-                detailsOfRSRV.putExtra("is_confirm",item.getIs_confirm());//방문 여부
+                detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
+                detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
 
                 System.out.println(item.getNickname());
                 startActivity(detailsOfRSRV);
@@ -169,8 +169,8 @@ public class QueryFragment extends Fragment {
             }
         }
         //과거 예약내역 조회를 위한 임시데이터
-        l_adapter.addItem("key1", "징징이", 2000, 1, 1, 1, 00, 3);
-        l_adapter.addItem("key2", "집게사장", 2000, 5, 5, 5, 50, 2);
+        //l_adapter.addItem("key1", "징징이", 2000, 1, 1, 1, 00, 3);
+        //l_adapter.addItem("key2", "집게사장", 2000, 5, 5, 5, 50, 2);
         if (l_adapter.isEmpty()) {
             Toast.makeText(getContext(), "예약 내역이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
         }
