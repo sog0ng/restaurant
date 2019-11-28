@@ -85,7 +85,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-
+                    android:cursorVisible="false"
                     />
 
             </LinearLayout>
@@ -113,7 +113,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    tools:ignore="DuplicateIds" />
+                    tools:ignore="DuplicateIds"
+                    android:cursorVisible="false"
+                    />
             </LinearLayout>
 
             <Button
