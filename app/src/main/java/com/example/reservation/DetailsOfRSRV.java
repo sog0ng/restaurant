@@ -16,6 +16,8 @@ import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
 public class DetailsOfRSRV extends AppCompatActivity {
 
     @Override
@@ -34,12 +36,16 @@ public class DetailsOfRSRV extends AppCompatActivity {
         final String str_nickname=getIntent().getStringExtra("nickname");
         final int hour = getIntent().getIntExtra("hour",0);
         final int minute = getIntent().getIntExtra("minute",0);
+        final String is_accepted = getIntent().getStringExtra("is_accepted");
+        final String is_confirm = getIntent().getStringExtra("is_confirm");
 
         TextView r_date = (TextView) findViewById(R.id.r_date);
         TextView covers = (TextView) findViewById(R.id.covers);
         TextView restaurantName = (TextView) findViewById(R.id.restaurant_name);
         TextView r_nickname = (TextView) findViewById(R.id.r_nickname);
         TextView r_time = (TextView) findViewById(R.id.r_time);
+
+        TextView status = (TextView) findViewById(R.id.status);
 
         Button submit = (Button) findViewById(R.id.submit);
 
@@ -48,6 +54,25 @@ public class DetailsOfRSRV extends AppCompatActivity {
         r_date.setText(year + "년" + month + "월" + day + "일");
         covers.setText(cover + "명");
         r_nickname.setText(str_nickname);
+
+        //신청한 예약에 대해 어떤 상태인지
+        if(is_accepted==null){
+            status.setText("예약 처리 중");
+        }else if(is_accepted=="1"){
+            status.setText("예약 승인");
+        }else{
+            status.setText("예약 거절");
+        }
+
+        //방문했는지 확인해야
+        //다시 is_confirm 은 기본값 0이였다가 -> 예약 한 날짜가 지나면 null로 바뀌는것으로 되어야함
+        if(is_confirm==null){
+            status.setText("방문 확인 중");
+        }else if(is_confirm=="1"){
+            status.setText("방문");
+        }else{
+            status.setText("미방문");
+        }
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +90,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
             }
         });
 
-
+//취소 버튼 만들어야함
 
     }
 
