@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +36,8 @@ import java.util.Comparator;
 public class CustomerListViewAdapter extends BaseAdapter {
     Activity activity;
 
-
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
+    private int selectedScore;
 
     public CustomerListViewAdapter(Activity activity) {
         this.activity = activity;
@@ -67,18 +70,16 @@ public class CustomerListViewAdapter extends BaseAdapter {
         ListViewItem listViewItem = listViewItemList.get(position);
         int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 
+        final ArrayList<Integer> scoreList = new ArrayList<>();
+        for (int i = 1; i < 6; i++)
+            scoreList.add(i);
+
         View v = convertView;
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (iDday < 0 && listViewItem.getIs_confirm() == "1") {
-                v = inflater.inflate(R.layout.customer_past_listview_item, parent, false);
+            v = inflater.inflate(R.layout.customer_listview_item, parent, false);
 
-            } else {
-                v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
-            }
-
-            //v = inflater.inflate(R.layout.customer_reserved_listview_item, parent, false);
             ViewHolder holder = new ViewHolder(v);
 
             v.setTag(holder);
@@ -95,25 +96,39 @@ public class CustomerListViewAdapter extends BaseAdapter {
             if (iDday < 0) {
                 //과거내역인 경우
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
-                    holder.confirm.setText("<미확인>");
+                    holder.status.setText("<미확인>");
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
-                    holder.confirm.setText("<방문>");
+                    holder.status.setText("<방문>");
+                    holder.status.setVisibility(View.GONE);
                     //holder.confirm.setVisibility(v.GONE);
                     holder.score.setVisibility(v.VISIBLE);
                     holder.submit.setVisibility(v.VISIBLE);
 
+                    ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, scoreList);
+                    holder.score.setAdapter(arrayAdapter);
+                    holder.score.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedScore = scoreList.get(i);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+
                     holder.submit.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View v) {
-                            holder.score.setHint("평점");
+
                             //평점 넣어주어야함 gtr DB에 넣어주어야함
                         }
                     });
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
-                    holder.accept.setText("<미방문>");
-                } else if(listViewItem.getIs_accepted().equals("0")){
-                    holder.accept.setText("<예약 거절>");
-                }else if(listViewItem.getIs_accepted().equals("-1")){
-                    holder.accept.setText("<예약 취소>");
+                    holder.status.setText("<미방문>");
+                } else if (listViewItem.getIs_accepted().equals("0")) {
+                    holder.status.setText("<예약 거절>");
+                } else if (listViewItem.getIs_accepted().equals("-1")) {
+                    holder.status.setText("<예약 취소>");
                 }
 
                /* } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
@@ -127,13 +142,13 @@ public class CustomerListViewAdapter extends BaseAdapter {
             } else {
                 //미래, 오늘 당일 예약
                 if (listViewItem.getIs_accepted().equals("null")) {
-                    holder.accept.setText("<처리중>");
+                    holder.status.setText("<처리중>");
                 } else if (listViewItem.getIs_accepted().equals("1")) {
-                    holder.accept.setText("<승인>");
+                    holder.status.setText("<승인>");
                 } else if (listViewItem.getIs_accepted().equals("0")) {
-                    holder.accept.setText("<거절>");
-                } else if(listViewItem.getIs_accepted().equals("-1")){
-                    holder.accept.setText("<취소>");
+                    holder.status.setText("<거절>");
+                } else if (listViewItem.getIs_accepted().equals("-1")) {
+                    holder.status.setText("<취소>");
                 }
             }
             v.setTag(holder);
@@ -145,7 +160,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
     public void addItemC(String key, String restaurant_name, String nickname, int year,
 
-                        int month, int day, int hour, int minute, int covers,
+                         int month, int day, int hour, int minute, int covers,
                          String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
@@ -232,9 +247,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
         final TextView restName;
         final TextView r_date;
         final TextView covers;
-        final TextView accept;
-        final TextView confirm;
-        final EditText score;
+        final TextView status;
+        final Spinner score;
         final Button submit;
 
         public ViewHolder(View root) {
@@ -242,9 +256,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
             r_date = (TextView) root.findViewById(R.id.r_date);
             covers = (TextView) root.findViewById(R.id.covers);
 
-            accept = (TextView) root.findViewById(R.id.accept);
-            confirm = (TextView) root.findViewById(R.id.confirm);
-            score = (EditText) root.findViewById(R.id.score);
+            status = (TextView) root.findViewById(R.id.status);
+            score = (Spinner) root.findViewById(R.id.score_spinner);
             submit = (Button) root.findViewById(R.id.submit);
         }
     }

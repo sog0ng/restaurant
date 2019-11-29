@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class CustomerHomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private Button refreshButton;
     private SearchView searchView;
+    private ListView listview;
     ArrayList<String> list;
 
     public ArrayAdapter adapter;
@@ -75,6 +77,7 @@ public class CustomerHomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 update_list(dataSnapshot);
+                setListViewHeightBasedOnChildren(listview);
             }
 
             @Override
@@ -83,7 +86,7 @@ public class CustomerHomeFragment extends Fragment {
             }
         });
 
-        final ListView listview = (ListView) root.findViewById(R.id.customer_listView);
+        listview = (ListView) root.findViewById(R.id.customer_listView);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
@@ -136,5 +139,27 @@ public class CustomerHomeFragment extends Fragment {
                 continue;
             }
         }
+    }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) { // Get list adpter of listview;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) return;
+        int numberOfItems = listAdapter.getCount();
+        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int height = listView.getMeasuredHeight();
+        int totalItemsHeight = 0;
+        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+            View item = listAdapter.getView(itemPos, null, listView);
+            item.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            totalItemsHeight += item.getMeasuredHeightAndState();
+            // totalItemsHeight += height;
+        }
+        // Get total height of all item dividers.
+        int totalDividersHeight = listView.getDividerHeight() * (numberOfItems - 1);
+        // Set list height.
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalItemsHeight + totalDividersHeight;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }

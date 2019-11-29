@@ -2,16 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
     android:orientation="vertical">
-
-
-    <!--
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="70dp"
-        android:layout_height="match_parent"
-         />
-         -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +14,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
             android:text="과거 내역"/>
 
         <TextView
@@ -40,11 +34,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        >
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -64,30 +58,35 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/confirm"
-                android:layout_width="50dp"
+            <View
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                />
+                android:layout_weight="1" />
 
-            <EditText
-                android:id="@+id/score"
-                android:layout_width="30dp"
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="visible"/>
+
+            <Spinner
+                android:id="@+id/score_spinner"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="1~5"
+                android:layout_gravity="center"
+                android:hint="평점"
                 android:inputType="number"
+                android:visibility="gone"
+                android:gravity="center"
                 />
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="30dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="확인"
-                />
-
+                android:visibility="gone"/>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
