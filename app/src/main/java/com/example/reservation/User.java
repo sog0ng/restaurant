@@ -9,6 +9,8 @@ public class User {
     private String close;
     private String open;
 
+    private String type;
+
     public String getClose() {
         return close;
     }
@@ -26,9 +28,9 @@ public class User {
     }
 
 
+    public String getType() { return type; }
 
-
-
+    public void setType(String type) { this.type = type; }
 
     public String getId1() { return id1; }
     public void setId1(String id1) { this.id1 = id1; }

@@ -10,9 +10,7 @@ public class ListViewItem {
 
     private int type;
     private String r_date;
-
     private int score;
-
     private String key;
     private String nickname;
     private int year;
@@ -21,7 +19,6 @@ public class ListViewItem {
     private int hour;
     private int minute;
     private int covers;
-
     private String restaurant_name;
     private String is_accepted="null";//기본값 "null"
     private String is_confirm="0";//기본값 "0"

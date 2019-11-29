@@ -22,7 +22,10 @@ public class Reservation {
     String is_owner;
     String owner_id;
     String week;
+    String type;
 
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
     public String getR_id() {
         return r_id;
@@ -31,9 +34,7 @@ public class Reservation {
         this.r_id = r_id;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
+    public String getNickname() { return nickname; }
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -41,9 +42,7 @@ public class Reservation {
     public String getRestaurant_name() {
         return restaurant_name;
     }
-    public void setRestaurant_name(String restaurant_name) {
-        this.restaurant_name = restaurant_name;
-    }
+    public void setRestaurant_name(String restaurant_name) { this.restaurant_name = restaurant_name; }
 
     public int getYear() {
         return year;
@@ -51,30 +50,35 @@ public class Reservation {
     public void setYear(int year) {
         this.year = year;
     }
+
     public int getMonth() {
         return month;
     }
     public void setMonth(int month) {
         this.month = month;
     }
+
     public int getDay() {
         return day;
     }
     public void setDay(int day) {
         this.day = day;
     }
+
     public int getHour() {
         return hour;
     }
     public void setHour(int hour) {
         this.hour = hour;
     }
+
     public int getMinute() {
         return minute;
     }
     public void setMinute(int minute) {
         this.minute = minute;
     }
+
     public int getCovers() {
         return covers;
     }
@@ -88,18 +92,21 @@ public class Reservation {
     public void setIs_accepted(String is_accepted) {
         this.is_accepted = is_accepted;
     }
+
     public String getIs_confirm() {
         return is_confirm;
     }
     public void setIs_confirm(String is_confirm) {
         this.is_confirm = is_confirm;
     }
+
     public String getGtr() {
         return gtr;
     }
     public void setGtr(String gtr) {
         this.gtr = gtr;
     }
+
     public String getGtc() {
         return gtc;
     }
@@ -113,12 +120,14 @@ public class Reservation {
     public void setIs_owner(String is_owner) {
         this.is_owner = is_owner;
     }
+
     public String getOwner_id() {
         return owner_id;
     }
     public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
     }
+
     public String getWeek() {
         return week;
     }
