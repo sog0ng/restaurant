@@ -32,9 +32,9 @@ import java.lang.Object;
 public class SignUpActivity extends AppCompatActivity {
     Button submit, same_id_check, same_rsrt_check;
     RadioButton owner, customer;
-    EditText restaurant_name, id1, password, password_check, phone_num;
-    TextView restaurant_TV;
-    String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num;
+    EditText restaurant_name, id1, password, password_check, phone_num, type;
+    TextView restaurant_TV, type_TV;
+    String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num,s_type;
 
     private boolean sameIdChecker = false, sameRSRTChecker = false;
 
@@ -59,8 +59,9 @@ public class SignUpActivity extends AppCompatActivity {
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
         same_rsrt_check = (Button) findViewById(R.id.same_rsrt_check);
-
+        type = (EditText) findViewById(R.id.type);
         restaurant_TV = (TextView)findViewById(R.id.text7);
+        type_TV = (TextView)findViewById(R.id.text8);
 
         // 사용자 타입 선택 여부 검사
         // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
@@ -185,6 +186,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if (owner.isChecked()) {//오너클릭시
                     restaurant_name.setVisibility(View.VISIBLE);//가게 이름 나타나게
                     restaurant_TV.setVisibility(View.VISIBLE);
+                    type.setVisibility(View.VISIBLE);//업종나타나게
+                    type_TV.setVisibility(View.VISIBLE);
 
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -250,6 +253,13 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "가게명을 입력하세요!", Toast.LENGTH_SHORT).show();
                                 restaurant_name.requestFocus();
                                 return;
+
+                            }
+
+                            if (type.getText().toString().length() == 0) {
+                                Toast.makeText(SignUpActivity.this, "업종을 입력하세요!", Toast.LENGTH_SHORT).show();
+                                type.requestFocus();
+                                return;
                             }
 
                             if (!sameRSRTChecker) {
@@ -266,7 +276,7 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setPassword(s_password);
                             user_info.setOpen("null");
                             user_info.setClose("null");
-
+                            user_info.setType(s_type);
                             user_info.setIs_owner("0");//사장일 경우 0
 
                             myRef.child(user_info_key).setValue(user_info);
@@ -278,6 +288,8 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     restaurant_name.setVisibility(View.GONE);
                     restaurant_TV.setVisibility(View.GONE);
+                    type.setVisibility(View.GONE);
+                    type_TV.setVisibility(View.GONE);
                 }
             }
         });
@@ -288,6 +300,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if (customer.isChecked()) {//고객 클릭시
                     restaurant_name.setVisibility(View.GONE);  //가게 이름 나타나지않게
                     restaurant_TV.setVisibility(View.GONE);
+                    type.setVisibility(View.GONE);
+                    type_TV.setVisibility(View.GONE);
 
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -356,7 +370,7 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setPhone_num(s_phone_num);
                             user_info.setOpen("null");
                             user_info.setClose("null");
-
+                            user_info.setType("null");
                             user_info.setIs_owner("1");//손님일 경우1
                             myRef.child(user_info_key).setValue(user_info);
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
@@ -378,6 +392,7 @@ public class SignUpActivity extends AppCompatActivity {
         s_id1 = id1.getText().toString().trim();
         s_password = password.getText().toString().trim();
         s_phone_num = phone_num.getText().toString().trim();
+        s_type=type.getText().toString().trim();
     }
 
     public boolean ConfirmPassword(String input) {

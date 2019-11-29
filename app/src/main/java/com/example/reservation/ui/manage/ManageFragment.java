@@ -44,7 +44,7 @@ public class ManageFragment extends Fragment {
     private static final int TIME_PICKER_INTERVAL=10;
     TextView edit_close,edit_open;
     TextView editrestaurant_name;
-    String open,close;
+    String open,close,type;
     Button editcheck, closeTimeButton, openTimeButton;
     TimePickerDialog timePickerDialog;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,7 +77,7 @@ public class ManageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getMyRestaurantManage(dataSnapshot, id1);
-                editrestaurant_name.setText(restaurant1);
+                editrestaurant_name.setText(restaurant1+"("+ type+")");
                 edit_open.setText(open);//현재 오픈시간
                 edit_close.setText(close);//현재 마감시간
 
@@ -136,7 +136,7 @@ public class ManageFragment extends Fragment {
                 restaurant1 = user_each.getRestaurant_name();
                 open=user_each.getOpen();
                 close=user_each.getClose();
-
+                type=user_each.getType();
                 Log.i("가게이름", restaurant1);
                 Log.i("manage_open",open_hour);
                 Log.i("manage_close",close_hour);

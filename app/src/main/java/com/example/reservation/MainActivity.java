@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.i("id:", editid.getText().toString());
                                     Log.i("pw:", editpw.getText().toString());
                                     Log.i("누구냐:", user_each.getIs_owner());
+                                    Log.i("업종은?",user_each.getType());
                                     Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
                                     owner.putExtra("key", key);
                                     owner.putExtra("id", editid.getText().toString());

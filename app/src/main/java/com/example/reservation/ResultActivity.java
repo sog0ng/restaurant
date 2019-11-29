@@ -39,7 +39,9 @@ public class ResultActivity extends AppCompatActivity {
         final int minute = getIntent().getIntExtra("minute",0);
         final String owner_id = intent.getExtras().getString("owner_id");
         final String week = getIntent().getStringExtra("week");
+        final String type=getIntent().getStringExtra("type");
 
+        Log.i("type이 왜 이래",type);
 
         String hour2=String.valueOf(hour);
         String minute2=String.valueOf(minute);
@@ -57,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
 
         Button submit = (Button) findViewById(R.id.submit);
 
-        restaurantName.setText(str_restaurantName);
+        restaurantName.setText(str_restaurantName+"("+type+")");
         r_time.setText(time);
         r_date.setText(year+"년"+month+"월"+day+"일");
         covers.setText(str_covers+"명");
@@ -85,6 +87,7 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setGtr("null");//손님님이 가게한테 주는 평점
                 reservation.setIs_owner("1");
                 reservation.setOwner_id(owner_id);
+                reservation.setType(type);
 
                 myRef.child(reservation_key).setValue(reservation);
 

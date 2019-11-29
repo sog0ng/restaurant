@@ -44,6 +44,7 @@ public class CustomerHomeFragment extends Fragment {
     private Button refreshButton;
     private SearchView searchView;
     ArrayList<String> list;
+
     public ArrayAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +54,7 @@ public class CustomerHomeFragment extends Fragment {
         final DatabaseReference myRef2 = database.getReference("User_info/");
 
         list = new ArrayList<>();
+
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -129,6 +131,7 @@ public class CustomerHomeFragment extends Fragment {
                 Log.i("가게이름:", user_each.getRestaurant_name());
                 Log.i("이름", key);
                 list.add(user_each.getRestaurant_name());
+
             }else {
                 continue;
             }

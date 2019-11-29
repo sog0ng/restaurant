@@ -36,7 +36,7 @@ public class Reservation2Activity extends AppCompatActivity {
     private static final int TIME_PICKER_INTERVAL=10;
     private DatePickerDialog datePickerDialog;
     private boolean mIgnoreEvent=false;
-    String owner_id;
+    String owner_id,type;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
     private String rsvWeek;
@@ -51,6 +51,7 @@ public class Reservation2Activity extends AppCompatActivity {
 
         final TextView restaurant_name = (TextView) findViewById(R.id.restaurant_name);
         restaurant_name.setText(intent.getStringExtra("restaurant_name"));
+        final TextView type1 = (TextView) findViewById(R.id.type);
         final String restaurant_name1=intent.getStringExtra("restaurant_name");
         final String r_id=intent.getExtras().getString("id");
 
@@ -61,7 +62,10 @@ public class Reservation2Activity extends AppCompatActivity {
                     User user_each = childSnapshot.getValue(User.class);
                     if(user_each.getRestaurant_name().equals(restaurant_name1)){
                         owner_id=user_each.getId1();
-                        Log.i("진짜",owner_id);
+                        type=user_each.getType();
+                        Log.i("사장아이디",owner_id);
+                        Log.i("type",type);
+
                         break;
                     }
                     else{
@@ -114,7 +118,7 @@ public class Reservation2Activity extends AppCompatActivity {
                 rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
                 rsvMin = tp.getMinute()*10;
 
-                Log.i("오ㅒ 잘려", String.valueOf(rsvMin));
+
                 covers = (EditText) findViewById(R.id.covers);
                 nickname = (EditText) findViewById(R.id.nickname);
 
@@ -136,6 +140,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "현재시간 1시간 이후부터 예약 가능합니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent result = new Intent(getApplicationContext(), ResultActivity.class);
+                    result.putExtra("type",type);
                     result.putExtra("restaurant_name", restaurant_name.getText());
                     result.putExtra("year", rsvYear);
                     result.putExtra("month", rsvMonth);
