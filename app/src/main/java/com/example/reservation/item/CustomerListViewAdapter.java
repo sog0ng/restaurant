@@ -71,7 +71,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (iDday < 0) {
+            if (iDday < 0 && listViewItem.getIs_confirm() == "1") {
                 v = inflater.inflate(R.layout.customer_past_listview_item, parent, false);
 
             } else {
@@ -109,16 +109,25 @@ public class CustomerListViewAdapter extends BaseAdapter {
                         }
                     });
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
+                    holder.accept.setText("<미방문>");
+                } else if(listViewItem.getIs_accepted().equals("0")){
+                    holder.accept.setText("<예약 거절>");
+                }else if(listViewItem.getIs_accepted().equals("-1")){
+                    holder.accept.setText("<예약 취소>");
+                }
+
+               /* } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
                     holder.confirm.setText("<미방문>");
                 } else if(listViewItem.getIs_accepted().equals("0")){
                     holder.confirm.setText("<예약 거절>");
                 }else if(listViewItem.getIs_accepted().equals("-1")){
                     holder.confirm.setText("<예약 취소>");
-                }
+                }*/
+
             } else {
                 //미래, 오늘 당일 예약
                 if (listViewItem.getIs_accepted().equals("null")) {
-                    holder.accept.setText("<처리 중>");
+                    holder.accept.setText("<처리중>");
                 } else if (listViewItem.getIs_accepted().equals("1")) {
                     holder.accept.setText("<승인>");
                 } else if (listViewItem.getIs_accepted().equals("0")) {
@@ -136,7 +145,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
     public void addItemC(String key, String restaurant_name, String nickname, int year,
 
-                        int month, int day, int hour, int minute, int covers) {
+                        int month, int day, int hour, int minute, int covers,
+                         String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
         item.setRestaurant_name(restaurant_name);
@@ -148,6 +158,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
         item.setMinute(minute);
         //item.setArrival_time(arrival_time);
         item.setCovers(covers);
+        item.setIs_accepted(is_accepted);
+        item.setIs_confirm(is_confirm);
         item.setR_date(month + "월" + day + "일" + hour + "시" + minute + "분");
 
         listViewItemList.add(0, item);

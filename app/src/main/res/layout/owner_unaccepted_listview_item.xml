@@ -10,67 +10,63 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="미승인 예약 내역" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
+            tools:visibility="visible" />
 
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <TextView
 
-            <TextView
-                android:id="@+id/nickname"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                tools:visibility="visible" />
+            android:id="@+id/r_date"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
 
-            <TextView
+        <TextView
+            android:id="@+id/covers"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            />
 
-                android:id="@+id/r_date"
-                android:layout_width="70dp"
-                android:layout_height="match_parent" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="60dp"
-                android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/acceptB"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="승인" />
 
-            <TextView
-                android:id="@+id/covers"
-                android:layout_width="60dp"
-                android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/rejectB"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="거절" />
 
-            <Button
-                android:id="@+id/acceptB"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:text="승인" />
-
-            <Button
-                android:id="@+id/rejectB"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:text="거절" />
-
-            <TextView
-                android:id="@+id/accept"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/accept"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
 
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>
