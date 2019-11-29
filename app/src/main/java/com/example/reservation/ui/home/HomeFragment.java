@@ -154,10 +154,14 @@ public class HomeFragment extends Fragment {
         l_adapter.clear();
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
             Reservation reservation_each = childSnapshot.getValue(Reservation.class);
-            if (reservation_each.getRestaurant_name().equals(myRestaurant) && checkToday(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
+            if (reservation_each.getRestaurant_name().equals(myRestaurant)
+                    && checkToday(reservation_each)) { //레스토랑 이름 동일하고 오늘날짜에 해당하는 예약들에 대해서만 추가
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
-                l_adapter.addItem(childSnapshot.getKey(), reservation_each.getNickname(), reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers());
+                l_adapter.addItem(childSnapshot.getKey(), reservation_each.getNickname(),
+                        reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(),
+                        reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers(),
+                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm());
                 //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {
                 continue;

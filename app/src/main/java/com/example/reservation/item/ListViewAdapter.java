@@ -219,7 +219,6 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public void showAcceptPopup(final ListViewItem item) {
-
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -269,8 +268,8 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public void addItem(String key, String nickname, int year,
-
-                        int month, int day, int hour, int minute, int covers) {
+                        int month, int day, int hour, int minute, int covers,
+                        String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
         item.setNickname(nickname);
@@ -280,6 +279,8 @@ public class ListViewAdapter extends BaseAdapter {
         item.setHour(hour);
         item.setMinute(minute);
         item.setCovers(covers);
+        item.setIs_accepted(is_accepted);
+        item.setIs_confirm(is_confirm);
         item.setR_date(month + "월" + day + "일" + hour + "시" + minute + "분");
 
         listViewItemList.add(0, item);
