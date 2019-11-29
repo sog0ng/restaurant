@@ -52,6 +52,7 @@ public class Reservation2Activity extends AppCompatActivity {
         final TextView restaurant_name = (TextView) findViewById(R.id.restaurant_name);
         restaurant_name.setText(intent.getStringExtra("restaurant_name"));
         final TextView type1 = (TextView) findViewById(R.id.type);
+
         final String restaurant_name1=intent.getStringExtra("restaurant_name");
         final String r_id=intent.getExtras().getString("id");
 
@@ -63,6 +64,7 @@ public class Reservation2Activity extends AppCompatActivity {
                     if(user_each.getRestaurant_name().equals(restaurant_name1)){
                         owner_id=user_each.getId1();
                         type=user_each.getType();
+                        type1.setText(type);
                         Log.i("사장아이디",owner_id);
                         Log.i("type",type);
 
