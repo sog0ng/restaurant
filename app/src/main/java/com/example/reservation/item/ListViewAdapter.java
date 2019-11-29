@@ -169,8 +169,6 @@ public class ListViewAdapter extends BaseAdapter {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 selectedScore = scoreList.get(i);
-                                Toast.makeText(context, scoreList.get(i)+"가 선택되었습니다.",
-                                        Toast.LENGTH_SHORT).show();
                             }
                             @Override
                             public void onNothingSelected(AdapterView<?> adapterView) {

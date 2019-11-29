@@ -28,9 +28,15 @@ public class User {
     }
 
 
-    public String getType() { return type; }
+    public String getType() {
+        if (type == null)
+            return "";
+        return type;
+    }
 
-    public void setType(String type) { this.type = type; }
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getId1() { return id1; }
     public void setId1(String id1) { this.id1 = id1; }
