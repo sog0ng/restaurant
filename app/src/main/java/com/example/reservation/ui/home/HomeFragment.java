@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +117,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 viewTodayList(dataSnapshot, restaurant1);//오늘에 대한 예약만 불러온다
+                setListViewHeightBasedOnChildren(listview);
             }
 
             @Override
@@ -186,6 +188,26 @@ public class HomeFragment extends Fragment {
         return result;
     };
 
-
+    public void setListViewHeightBasedOnChildren(ListView listView) { // Get list adpter of listview;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) return;
+        int numberOfItems = listAdapter.getCount();
+        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int height = listView.getMeasuredHeight();
+        int totalItemsHeight = 0;
+        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+            View item = listAdapter.getView(itemPos, null, listView);
+            item.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            totalItemsHeight += item.getMeasuredHeightAndState();
+            // totalItemsHeight += height;
+        }
+        // Get total height of all item dividers.
+        int totalDividersHeight = listView.getDividerHeight() * (numberOfItems - 1);
+        // Set list height.
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalItemsHeight + totalDividersHeight;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 
 }

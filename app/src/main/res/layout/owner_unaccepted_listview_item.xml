@@ -54,16 +54,16 @@
         <Button
             android:id="@+id/rejectB"
             android:layout_width="65dp"
+            android:layout_marginRight="16dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="거절" />
 
         <TextView
             android:id="@+id/accept"
-            android:layout_width="50dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="gone"
             />
 
 

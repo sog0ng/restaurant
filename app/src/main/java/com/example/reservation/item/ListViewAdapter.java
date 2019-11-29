@@ -7,11 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -43,6 +47,7 @@ public class ListViewAdapter extends BaseAdapter {
     FirebaseDatabase database2 = FirebaseDatabase.getInstance();
     final DatabaseReference myRef2 = database2.getReference("Reservation/");
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
+    private int selectedScore;
 
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
@@ -83,16 +88,23 @@ public class ListViewAdapter extends BaseAdapter {
         final ListViewItem listViewItem = listViewItemList.get(position);
         int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 
+        final ArrayList<Integer> scoreList = new ArrayList<>();
+        for (int i = 1; i < 6; i++)
+            scoreList.add(i);
+
         View v = convertView;
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (iDday < 0) {
-                v = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
-            } else if (listViewItem.getIs_accepted().equals("null")) {
+
+            if (!listViewItem.getIs_accepted().equals("1")) {
                 v = inflater.inflate(R.layout.owner_unaccepted_listview_item, parent, false);
             } else {
-                v = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
+                if (iDday <= 0) {
+                    v = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
+                } else {
+                    v = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
+                }
             }
 
             ViewHolder holder = new ViewHolder(v);
@@ -101,50 +113,13 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         if (listViewItem != null) {//리스트뷰아이템에 뭐라도 있으면 값을 설정해서 보이도록
-
             final ViewHolder holder = (ViewHolder) v.getTag();
 
             holder.nickname.setText(listViewItem.getNickname());
             holder.r_date.setText(listViewItem.getR_date());
             holder.covers.setText(listViewItem.getCovers() + "명");
 
-            if ((iDday < 0) && (listViewItem.getIs_accepted().equals("null"))) { //과거 내역 방문확인을 해야함
-                //방문확인부터 먼저
-                holder.confirmButton.setOnClickListener(new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        // 방문 확인 팝업 띄움
-                        showConfirmPopup(listViewItem);
-                    }
-                });
-
-                holder.noshowButton.setOnClickListener(new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        // 미방문 확인 팝업 띄움
-                        showNoshowPopup(listViewItem);
-
-                    }
-                });
-            } else if ((iDday < 0) && (!listViewItem.getIs_accepted().equals("null"))) {//과거 내역 방문확인을 했으니 평점을 줄 수 있다
-                holder.submit.setOnClickListener(new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        // db 에 평점 전달.
-
-/*
-                    if(matchingReservation.getIs_owner()==1){//사장인 경우
-                        matchingReservation.setGtc(score);//Edittext의 값을 givetocustomer에 넣는것
-
-                    }else{
-                        matchingReservation.setGtr(score);//Edittext의 값을 givetorestaurant에 넣는것
-                    }
-*/
-                    }
-                });
-
-            } else if (!listViewItem.getIs_accepted().equals("null")) {
-                // accepted
-
-
-            } else {
+            if (listViewItem.getIs_accepted().equals("null")) {
                 // unaccepted
                 holder.acceptButton.setOnClickListener(new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -161,7 +136,70 @@ public class ListViewAdapter extends BaseAdapter {
                         showRejectPopup(listViewItem);
                     }
                 });
+            } else if (listViewItem.getIs_accepted().equals("0")) {
+                holder.acceptButton.setVisibility(View.GONE);
+                holder.rejectButton.setVisibility(View.GONE);
+            } else {
+                if(iDday <= 0) {
+                    if(listViewItem.getIs_confirm().equals("0")) {
+                        //방문확인부터 먼저
+                        holder.confirmButton.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                // 방문 확인 팝업 띄움
+                                showConfirmPopup(listViewItem);
+                            }
+                        });
+
+                        holder.noshowButton.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                // 미방문 확인 팝업 띄움
+                                showNoshowPopup(listViewItem);
+
+                            }
+                        });
+                    } else { ;
+                        holder.confirmButton.setVisibility(View.GONE);
+                        holder.noshowButton.setVisibility(View.GONE);
+                        holder.score.setVisibility(View.VISIBLE);
+                        holder.submit.setVisibility(View.VISIBLE);
+
+                        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, scoreList);
+                        holder.score.setAdapter(arrayAdapter);
+                        holder.score.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                selectedScore = scoreList.get(i);
+                                Toast.makeText(context, scoreList.get(i)+"가 선택되었습니다.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
+
+
+                        출처: https://bottlecok.tistory.com/63 [잡캐의 IT 꿀팁]
+
+                        holder.submit.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+
+                                // db 에 평점 전달.
+
+/*
+                    if(matchingReservation.getIs_owner()==1){//사장인 경우
+                        matchingReservation.setGtc(score);//Edittext의 값을 givetocustomer에 넣는것
+
+                    }else{
+                        matchingReservation.setGtr(score);//Edittext의 값을 givetorestaurant에 넣는것
+                    }
+*/
+                            }
+                        });
+
+                    }
+                }
             }
+
         }
         return v;
     }
@@ -375,7 +413,7 @@ public class ListViewAdapter extends BaseAdapter {
         final TextView accept;
         final TextView confirm;
 
-        final EditText score;
+        final Spinner score;
         final Button submit;
 
         public ViewHolder(View root) {
@@ -392,7 +430,7 @@ public class ListViewAdapter extends BaseAdapter {
             accept = (TextView) root.findViewById(R.id.accept);
             confirm = (TextView) root.findViewById(R.id.confirm);
 
-            score = (EditText) root.findViewById(R.id.score);
+            score = (Spinner) root.findViewById(R.id.score_spinner);
             submit = (Button) root.findViewById(R.id.submit);
         }
     }
