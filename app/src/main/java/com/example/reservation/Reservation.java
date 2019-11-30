@@ -16,8 +16,8 @@ public class Reservation {
 
     String is_accepted = "null";
     String is_confirm = "0";
-    String gtr = "null";
-    String gtc = "null";
+    String scoredByCustomer = "null";
+    String scoredByReservation = "null";
 
     String is_owner;
     String owner_id;
@@ -100,18 +100,18 @@ public class Reservation {
         this.is_confirm = is_confirm;
     }
 
-    public String getGtr() {
-        return gtr;
+    public String getScoredByCustomer() {
+        return scoredByCustomer;
     }
-    public void setGtr(String gtr) {
-        this.gtr = gtr;
+    public void setScoredByCustomer(String scoredByCustomer) {
+        this.scoredByCustomer = scoredByCustomer;
     }
 
-    public String getGtc() {
-        return gtc;
+    public String getScoredByReservation() {
+        return scoredByReservation;
     }
-    public void setGtc(String gtc) {
-        this.gtc = gtc;
+    public void setScoredByReservation(String scoredByReservation) {
+        this.scoredByReservation = scoredByReservation;
     }
 
     public String getIs_owner() {

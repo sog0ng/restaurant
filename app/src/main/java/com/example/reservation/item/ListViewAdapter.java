@@ -183,7 +183,7 @@ public class ListViewAdapter extends BaseAdapter {
                                         Toast.LENGTH_SHORT).show();
                                 holder.status.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
 
-                                //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
+                                //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 scoredByReservation
                                 myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -426,8 +426,8 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public void setScoreGtc(ListViewItem item, String value) {
-        Log.i("set GTC item 키값: ", item.getKey());
-        myRef2.child(item.getKey()).child("gtc").setValue(value);
+        Log.i("scoredByReservation 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("scoredByReservation").setValue(value);
     }
 
     public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {

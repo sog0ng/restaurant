@@ -129,7 +129,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
                     holder.submit.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View v) {
-                            //평점 DB에 넣어준다 고객이 레스토랑에 대한 평가하는거니까 gtr(give to restaurant)
+                            //평점 DB에 넣어준다 고객이 레스토랑에 대한 평가하는거니까 scoredByCustomer
                             Toast.makeText(context,
                                     "평점 " + selectedScore + "점 이 입력되었습니다.",
                                     Toast.LENGTH_SHORT).show();
@@ -271,8 +271,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
     }
 
     public void setScoreGtr(ListViewItem item, String value) {
-        Log.i("set GTR item 키값: ", item.getKey());
-        myRef2.child(item.getKey()).child("gtr").setValue(value);
+        Log.i("scoredByCustomer 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("scoredByCustomer").setValue(value);
     }
 
     public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {
