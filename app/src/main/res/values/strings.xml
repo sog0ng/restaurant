@@ -19,6 +19,7 @@
     <string name="u_customer">고객</string>
     <string name="u_owner">사장</string>
     <string name="u_id">id</string>
+    <string name="예약일">id</string>
     <string name="u_pw">pw</string>
     <string name="u_check">check</string>
     <string name="u_phone">phone</string>

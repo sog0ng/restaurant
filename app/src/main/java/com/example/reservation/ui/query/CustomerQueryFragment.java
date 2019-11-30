@@ -94,7 +94,7 @@ public class CustomerQueryFragment extends Fragment {
 
                 detailsOfRSRV.putExtra("nickname", item.getNickname());
                 detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
-
+                detailsOfRSRV.putExtra("key", item.getKey());
                 detailsOfRSRV.putExtra("year", item.getYear());
                 detailsOfRSRV.putExtra("month", item.getMonth());
                 detailsOfRSRV.putExtra("day", item.getDay());
