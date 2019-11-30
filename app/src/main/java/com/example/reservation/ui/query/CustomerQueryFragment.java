@@ -101,7 +101,7 @@ public class CustomerQueryFragment extends Fragment {
                 detailsOfRSRV.putExtra("hour", item.getHour());
                 detailsOfRSRV.putExtra("minute", item.getMinute());
                 detailsOfRSRV.putExtra("covers", item.getCovers());
-
+                detailsOfRSRV.putExtra("type", item.getType2());
                 detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
                 detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
                 startActivity(detailsOfRSRV);
@@ -123,7 +123,7 @@ public class CustomerQueryFragment extends Fragment {
                         reservation_each.getRestaurant_name(), reservation_each.getNickname(),
                         reservation_each.getYear(), reservation_each.getMonth(),
                         reservation_each.getDay(), reservation_each.getHour(), reservation_each.getMinute(),
-                        reservation_each.getCovers(), reservation_each.getIs_accepted(), reservation_each.getIs_confirm());
+                        reservation_each.getCovers(), reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType());
             } else {
                 continue;
             }

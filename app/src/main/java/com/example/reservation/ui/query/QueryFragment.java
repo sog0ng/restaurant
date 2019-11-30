@@ -142,7 +142,7 @@ public class QueryFragment extends Fragment {
                 detailsOfRSRV.putExtra("hour", item.getHour());
                 detailsOfRSRV.putExtra("minute", item.getMinute());
                 detailsOfRSRV.putExtra("covers", item.getCovers());
-
+                detailsOfRSRV.putExtra("type", item.getType2());
                 detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
                 detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
 
@@ -169,7 +169,7 @@ public class QueryFragment extends Fragment {
                         reservation_each.getYear(), reservation_each.getMonth(),
                         reservation_each.getDay(), reservation_each.getHour(),
                         reservation_each.getMinute(), reservation_each.getCovers(),
-                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm());
+                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType());
 
                 //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {

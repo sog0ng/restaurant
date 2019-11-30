@@ -26,6 +26,17 @@ public class ListViewItem {
     private String is_confirm = "null";//기본값 "null"
     private String gtr = "null";//기본값 "null"
     private String gtc = "null";//기본값 "null"
+    private String type2;
+
+    public String getPhone_num() { return phone_num; }
+    public void setPhone_num(String phone_num) { this.phone_num = phone_num; }
+
+    private String phone_num;
+    public String getType2() { return type2; }
+
+    public void setType2(String type2) { this.type2 = type2; }
+
+
 
     public String getR_id() {
         return r_id;

@@ -30,6 +30,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Reservation");
+
         final String str_nickname=getIntent().getStringExtra("nickname");
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final int year = getIntent().getIntExtra("year",0);
@@ -41,7 +42,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
         final String key=getIntent().getStringExtra("key");
         final String is_accepted = getIntent().getStringExtra("is_accepted");//예약 승인여부
         final String is_confirm = getIntent().getStringExtra("is_confirm");//방문 확인ㄴ 여부
-
+        final String type = getIntent().getStringExtra("type");
         int iDday = countDday(year, month, day);
 
         TextView r_nickname = (TextView) findViewById(R.id.r_nickname);
@@ -57,7 +58,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
         Button modify = (Button) findViewById(R.id.modify);
         cancel.setVisibility(View.GONE);
         modify.setVisibility(View.GONE);
-        restaurantName.setText(str_restaurantName);
+        restaurantName.setText(str_restaurantName+"("+type+")");
         r_nickname.setText(str_nickname);
 
         r_date.setText(year + "년" + month + "월" + day + "일");
@@ -127,6 +128,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
                 modify.putExtra("minute",minute);
                 modify.putExtra("covers",cover);
                 modify.putExtra("key",key);
+                modify.putExtra("type",type);
                 startActivity(modify);
             }
         });

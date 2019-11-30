@@ -56,6 +56,8 @@ public class ModifyActivity extends AppCompatActivity {
         final int minute = intent.getIntExtra("minute",0);
         final int covers = intent.getIntExtra("covers",0);
         final String key1 = getIntent().getStringExtra("key");
+        final String type= getIntent().getStringExtra("type");
+
         String hour1 = String.valueOf(hour);
         String minute1 = String.valueOf(minute);
         String year1 = String.valueOf(year);
@@ -65,7 +67,7 @@ public class ModifyActivity extends AppCompatActivity {
 
         final TextView restaurant_name1 = (TextView) findViewById(R.id.restaurant_name);
         final TextView nickname1 = (TextView) findViewById(R.id.nickname);
-        restaurant_name1.setText(restaurant_name);
+        restaurant_name1.setText(restaurant_name+"("+type+")");
 
         editcover = (EditText) findViewById(R.id.covers);
         editcover.setText(covers1);

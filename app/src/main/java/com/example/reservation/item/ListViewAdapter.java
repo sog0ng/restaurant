@@ -329,7 +329,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     public void addItem(String key, String r_id, String owner_id, String nickname, int year,
                         int month, int day, int hour, int minute, int covers,
-                        String is_accepted, String is_confirm) {
+                        String is_accepted, String is_confirm,String type2) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
         item.setR_id(r_id);
@@ -343,6 +343,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setCovers(covers);
         item.setIs_accepted(is_accepted);
         item.setIs_confirm(is_confirm);
+        item.setType2(type2);
 
         item.setR_date(month + "월" + day + "일\n" + hour + "시" + minute + "분");
 
