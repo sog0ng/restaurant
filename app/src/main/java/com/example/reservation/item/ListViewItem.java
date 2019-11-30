@@ -20,8 +20,10 @@ public class ListViewItem {
     private int minute;
     private int covers;
     private String restaurant_name;
-    private String is_accepted="null";//기본값 "null"
-    private String is_confirm="0";//기본값 "0"
+    private String is_accepted = "null";//기본값 "null"
+    private String is_confirm = "0";//기본값 "0"
+    private String gtr = "null";//기본값 "null"
+    private String gtc = "null";//기본값 "null"
 
 
     public String getKey() {
@@ -127,12 +129,29 @@ public class ListViewItem {
     public void setIs_confirm(String is_confirm) {
         this.is_confirm = is_confirm;
     }
+
     public String getRestaurant_name() {
         return restaurant_name;
     }
 
     public void setRestaurant_name(String restaurant_name) {
         this.restaurant_name = restaurant_name;
+    }
+
+    public String getGtr() {
+        return gtr;
+    }
+
+    public void setGtr(String gtr) {
+        this.gtr = gtr;
+    }
+
+    public String getGtc() {
+        return gtc;
+    }
+
+    public void setGtc(String gtr) {
+        this.gtc = gtc;
     }
 }
 
