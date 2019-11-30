@@ -1,5 +1,6 @@
 package com.example.reservation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
@@ -28,7 +30,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Reservation");
-
         final String str_nickname=getIntent().getStringExtra("nickname");
         final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
         final int year = getIntent().getIntExtra("year",0);
@@ -93,7 +94,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              finish();
+                finish();
             }
         });
 
@@ -111,7 +112,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
             modify.setVisibility(View.VISIBLE);
             cancel.setVisibility(View.VISIBLE);
         }
-
 
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,13 +131,30 @@ public class DetailsOfRSRV extends AppCompatActivity {
             }
         });
 
-//        cancel.setOnClickListener(new View.OnClickListener(){//
-//            @Override
-//            public void onClick(View v) {
-//                //need to implement
-//                //데이터베이스에서 해당 내용을 삭제하기보다는 상태를 취소로 하는게 좋을듯
-//            }
-//        });
+        cancel.setOnClickListener(new View.OnClickListener(){//
+            @Override
+            public void onClick(View v) {
+                //need to implement
+                //데이터베이스에서 해당 내용을 삭제하기보다는 상태를 취소로 하는게 좋을듯
+                AlertDialog.Builder alert;
+                alert = new AlertDialog.Builder(DetailsOfRSRV.this);
+                alert.setTitle("예약 삭제");
+                alert.setMessage("예약을 삭제하시겠습니까?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        myRef.child(key).child("is_accepted").setValue("-1");
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
 
     }
 

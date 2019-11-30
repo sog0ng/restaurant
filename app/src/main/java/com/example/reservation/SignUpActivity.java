@@ -178,7 +178,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         //전화번호 입력시 -입력
-        phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+    //    phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         owner.setOnClickListener(new RadioButton.OnClickListener() {//owner체크박스 클릭시
             @Override
