@@ -96,13 +96,13 @@ public class CustomerListViewAdapter extends BaseAdapter {
             if (iDday < 0) {
                 //과거내역인 경우
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
-                    holder.status.setText("<미확인>");
+                    holder.status.setText("<확인 중>");
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
                     holder.status.setText("<방문>");
                     holder.status.setVisibility(View.GONE);
                     //holder.confirm.setVisibility(v.GONE);
-                    holder.score.setVisibility(v.VISIBLE);
-                    holder.submit.setVisibility(v.VISIBLE);
+                    holder.score.setVisibility(View.VISIBLE);
+                    holder.submit.setVisibility(View.VISIBLE);
 
                     ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, scoreList);
                     holder.score.setAdapter(arrayAdapter);
@@ -131,24 +131,17 @@ public class CustomerListViewAdapter extends BaseAdapter {
                     holder.status.setText("<예약 취소>");
                 }
 
-               /* } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
-                    holder.confirm.setText("<미방문>");
-                } else if(listViewItem.getIs_accepted().equals("0")){
-                    holder.confirm.setText("<예약 거절>");
-                }else if(listViewItem.getIs_accepted().equals("-1")){
-                    holder.confirm.setText("<예약 취소>");
-                }*/
-
             } else {
                 //미래, 오늘 당일 예약
+                holder.title.setText("예약 내역");
                 if (listViewItem.getIs_accepted().equals("null")) {
-                    holder.status.setText("<처리중>");
+                    holder.status.setText("<처리 중>");
                 } else if (listViewItem.getIs_accepted().equals("1")) {
-                    holder.status.setText("<승인>");
+                    holder.status.setText("<예약 승인>");
                 } else if (listViewItem.getIs_accepted().equals("0")) {
-                    holder.status.setText("<거절>");
+                    holder.status.setText("<예약 거절>");
                 } else if (listViewItem.getIs_accepted().equals("-1")) {
-                    holder.status.setText("<취소>");
+                    holder.status.setText("<예약 취소>");
                 }
             }
             v.setTag(holder);
@@ -244,6 +237,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
+        final TextView title;
         final TextView restName;
         final TextView r_date;
         final TextView covers;
@@ -252,6 +246,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
         final Button submit;
 
         public ViewHolder(View root) {
+            title = (TextView) root.findViewById(R.id.title);
             restName = (TextView) root.findViewById(R.id.restaurant_name);
             r_date = (TextView) root.findViewById(R.id.r_date);
             covers = (TextView) root.findViewById(R.id.covers);

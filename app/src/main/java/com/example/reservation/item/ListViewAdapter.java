@@ -175,9 +175,6 @@ public class ListViewAdapter extends BaseAdapter {
                             }
                         });
 
-
-                        출처: https://bottlecok.tistory.com/63 [잡캐의 IT 꿀팁]
-
                         holder.submit.setOnClickListener(new Button.OnClickListener() {
                             public void onClick(View v) {
 

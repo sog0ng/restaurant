@@ -68,7 +68,6 @@ public class CustomerQueryFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 viewMyReserve(dataSnapshot, id);
-
             }
 
             @Override
