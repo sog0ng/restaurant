@@ -137,12 +137,17 @@ public class ModifyActivity extends AppCompatActivity {
                             myRef1.child(key1).child("week").setValue(rsvWeek);
                             myRef1.child(key1).child("hour").setValue(rsvHour);
                             myRef1.child(key1).child("minute").setValue(rsvMin);
+
+                            Toast.makeText(getApplicationContext(), "예약이 변경되었습니다.", Toast.LENGTH_LONG).show();
+
                         }
                     });
 
                     alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), "예약이 취소되었습니다.", Toast.LENGTH_LONG).show();
+
                         }
                     });
                     alert.show();
