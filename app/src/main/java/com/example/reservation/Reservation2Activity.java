@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +40,9 @@ public class Reservation2Activity extends AppCompatActivity {
     String owner_id,type;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
-    private String rsvWeek;
+    private String rsvWeek, openTimeString, closeTimeString;
+    Date openTime, closeTime, rsvTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,16 @@ public class Reservation2Activity extends AppCompatActivity {
 
         final String restaurant_name1=intent.getStringExtra("restaurant_name");
         final String r_id=intent.getExtras().getString("id");
+
+        openTimeString = intent.getStringExtra("openTime");
+        closeTimeString = intent.getStringExtra("closeTime");
+
+        try {
+            openTime = new SimpleDateFormat("HH시 mm분").parse(openTimeString);
+            closeTime = new SimpleDateFormat("HH시 mm분").parse(closeTimeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -117,14 +130,18 @@ public class Reservation2Activity extends AppCompatActivity {
                 curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
                 Date date = new Date(rsvYear, rsvMonth - 1, rsvDay - 1);
                 rsvWeek = weekFormat.format(date);
-                rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
+                rsvHour = tp.getHour();
                 rsvMin = tp.getMinute()*10;
 
 
                 covers = (EditText) findViewById(R.id.covers);
                 nickname = (EditText) findViewById(R.id.nickname);
 
-
+                try {
+                    rsvTime = new SimpleDateFormat("HH시 mm분").parse(rsvHour + "시 " + rsvMin + "분");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 if (covers.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "인원수를 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -136,6 +153,8 @@ public class Reservation2Activity extends AppCompatActivity {
                 else if (nickname.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "예약자 성명을 입력해주세요", Toast.LENGTH_SHORT).show();
                     nickname.requestFocus();
+                } else if (openTime.compareTo(rsvTime) > 0 || closeTime.compareTo(rsvTime) < 0) {
+                    Toast.makeText(getApplicationContext(), "예약 가능 시간이 아닙니다.\n예약 가능 시간은 " + openTimeString + "부터 " + closeTimeString + "까지 입니다.", Toast.LENGTH_SHORT).show();
                 }
                 //예약 가능 시간 확인
                 else if (rsvYear == curYear && rsvMonth == curMonth && rsvDay == curDay && (rsvHour < curHour + 1 || (rsvHour == curHour + 1 && rsvMin < curMin))) {
