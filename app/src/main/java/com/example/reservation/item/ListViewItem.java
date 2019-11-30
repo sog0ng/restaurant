@@ -8,6 +8,8 @@ import java.util.List;
 public class ListViewItem {
     //손님이 예앾
 
+    private String r_id;
+    private String owner_id;
     private int type;
     private String r_date;
     private int score;
@@ -25,6 +27,21 @@ public class ListViewItem {
     private String gtr = "null";//기본값 "null"
     private String gtc = "null";//기본값 "null"
 
+    public String getR_id() {
+        return r_id;
+    }
+
+    public void setR_id(String r_id) {
+        this.r_id = r_id;
+    }
+
+    public String getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(String owner_id) {
+        this.owner_id = owner_id;
+    }
 
     public String getKey() {
         return key;

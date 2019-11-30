@@ -138,6 +138,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     setScoreGtr(listViewItem, Integer.toString(selectedScore));
+                                    setScore(dataSnapshot, listViewItem);
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -180,12 +181,14 @@ public class CustomerListViewAdapter extends BaseAdapter {
         return v;
     }
 
-    public void addItemC(String key, String restaurant_name, String nickname, int year,
+    public void addItemC(String key, String r_id, String owner_id, String restaurant_name, String nickname, int year,
 
                          int month, int day, int hour, int minute, int covers,
                          String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
+        item.setR_id(r_id);
+        item.setOwner_id(owner_id);
         item.setRestaurant_name(restaurant_name);
         item.setNickname(nickname);
         item.setYear(year);
@@ -268,6 +271,29 @@ public class CustomerListViewAdapter extends BaseAdapter {
     public void setScoreGtr(ListViewItem item, String value) {
         Log.i("set GTR item 키값: ", item.getKey());
         myRef2.child(item.getKey()).child("gtr").setValue(value);
+    }
+
+    public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {
+
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            User user_each = childSnapshot.getValue(User.class);
+            if (user_each.getId1().equals(myRef2.child(item.getOwner_id()))) {
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtr()));
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRef2.child(item.getOwner_id()).child("sumScore").setValue(user_each.getSumScore());
+                myRef2.child(item.getOwner_id()).child("count").setValue(user_each.getCount());
+                myRef2.child(item.getOwner_id()).child("avgScore").setValue(user_each.getAvgScore());
+
+            } else {
+                continue;
+            }
+        }
+
+
     }
 
     public class ViewHolder {

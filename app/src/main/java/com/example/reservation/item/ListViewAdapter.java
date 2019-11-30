@@ -43,7 +43,9 @@ import java.util.Comparator;
 
 public class ListViewAdapter extends BaseAdapter {
     Activity activity;
-    //Adapter에서 이러는건 아닌것 같지만 일단은 이전에 사용한것과 동일한 방식으로 접근
+
+    FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef1 = database1.getReference("User_info/");
     FirebaseDatabase database2 = FirebaseDatabase.getInstance();
     final DatabaseReference myRef2 = database2.getReference("Reservation/");
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
@@ -179,19 +181,20 @@ public class ListViewAdapter extends BaseAdapter {
                                 Toast.makeText(context,
                                         "평점 " + selectedScore + "점 이 입력되었습니다.",
                                         Toast.LENGTH_SHORT).show();
-                                /*holder.gtc.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
+                                holder.status.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
 
                                 //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
                                 myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         setScoreGtc(listViewItem, Integer.toString(selectedScore));
+                                        setScore(dataSnapshot, listViewItem);
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
                                     }
-                                });*/
+                                });
                             }
                         });
                     }
@@ -324,11 +327,13 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    public void addItem(String key, String nickname, int year,
+    public void addItem(String key, String r_id, String owner_id, String nickname, int year,
                         int month, int day, int hour, int minute, int covers,
                         String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
+        item.setR_id(r_id);
+        item.setOwner_id(owner_id);
         item.setNickname(nickname);
         item.setYear(year);
         item.setMonth(month);
@@ -422,6 +427,29 @@ public class ListViewAdapter extends BaseAdapter {
     public void setScoreGtc(ListViewItem item, String value) {
         Log.i("set GTC item 키값: ", item.getKey());
         myRef2.child(item.getKey()).child("gtc").setValue(value);
+    }
+
+    public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {
+        //Log.i("set Score item 키값: ", item.getKey());
+
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            User user_each = childSnapshot.getValue(User.class);
+            if (user_each.getId1().equals(myRef2.child(item.getR_id()))) {
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtc()));
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRef2.child(item.getR_id()).child("sumScore").setValue(user_each.getSumScore());
+                myRef2.child(item.getR_id()).child("count").setValue(user_each.getCount());
+                myRef2.child(item.getR_id()).child("avgScore").setValue(user_each.getAvgScore());
+
+            } else {
+                continue;
+            }
+        }
+
     }
 
     public class ViewHolder {

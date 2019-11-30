@@ -8,6 +8,7 @@ public class User {
     private String is_owner;//사장일 경우 0, 손님일 경우 1
     private String close;
     private String open;
+
     private String type;
     private int avgScore=0;
     private int sumScore=0;
@@ -63,6 +64,7 @@ public class User {
 
     public String getIs_owner() { return is_owner; }
     public void setIs_owner(String is_owner) { this.is_owner = is_owner; }
+
 
     public User() { }
 
