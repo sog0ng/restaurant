@@ -431,7 +431,7 @@ public class ListViewAdapter extends BaseAdapter {
         final TextView r_date;
         final TextView covers;
 
-        final  TextView status;
+        final TextView status;
 
         final Button acceptButton;
         final Button rejectButton;

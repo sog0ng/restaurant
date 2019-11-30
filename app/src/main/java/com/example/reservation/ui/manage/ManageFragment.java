@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -178,6 +180,10 @@ public class ManageFragment extends Fragment {
         final EditText input = new EditText(getActivity());
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
         builder.setView(input);
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {

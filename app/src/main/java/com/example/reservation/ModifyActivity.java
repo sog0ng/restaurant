@@ -43,7 +43,6 @@ public class ModifyActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         final String restaurant_name = getIntent().getStringExtra("reservation_name");
         final String nickname = getIntent().getStringExtra("nickname");
         final int year = getIntent().getIntExtra("year",0);
@@ -82,7 +81,6 @@ public class ModifyActivity extends AppCompatActivity {
         Button next = (Button) findViewById(R.id.next);
 
         next.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 SimpleDateFormat yearFormat = new SimpleDateFormat("YYYY");
@@ -122,7 +120,7 @@ public class ModifyActivity extends AppCompatActivity {
                     myRef1.child(key1).child("week").setValue(rsvWeek);
                     myRef1.child(key1).child("hour").setValue(rsvHour);
                     myRef1.child(key1).child("minite").setValue(rsvMin);
-                      Toast.makeText(getApplicationContext(), "예약이 변경되었습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "예약이 변경되었습니다.", Toast.LENGTH_LONG).show();
 
                 }
             }

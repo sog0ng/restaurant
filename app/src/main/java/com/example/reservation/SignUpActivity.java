@@ -1,15 +1,24 @@
 package com.example.reservation;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,18 +34,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.lang.Object;
 
 public class SignUpActivity extends AppCompatActivity {
-    Button submit, same_id_check, same_rsrt_check;
-    RadioButton owner, customer;
-    EditText restaurant_name, id1, password, password_check, phone_num, type;
-    TextView restaurant_TV, type_TV;
-    String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num,s_type;
+    private Button submit, same_id_check, same_rsrt_check, openTimeButton, closeTimeButton;
+    private RadioButton owner, customer;
+    private EditText restaurant_name, id1, password, password_check, phone_num;
+    private Spinner typeSpinner;
+    private TextView restaurant_TV, type_TV, openTime, closeTime;
+    private TimePickerDialog timePickerDialog;
+    private String s_restaurant_name, s_id1, s_password, s_phone_num, c_id1, c_password, c_phone_num, s_type ,tmp;
+    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<String> typeList;
+    private LinearLayout RSRTLayout, typeLayout, openTimeLayout, closeTimeLayout;
 
     private boolean sameIdChecker = false, sameRSRTChecker = false;
+    private static final int TIME_PICKER_INTERVAL=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("User_info");
+        final DatabaseReference myRef2 = database.getReference("Type");
         final String user_info_key = myRef.push().getKey();//고유키
 
         submit = (Button) findViewById(R.id.submit);
@@ -59,9 +77,78 @@ public class SignUpActivity extends AppCompatActivity {
         restaurant_name = (EditText) findViewById(R.id.restaurant_name);
         same_id_check = (Button) findViewById(R.id.same_id_check);
         same_rsrt_check = (Button) findViewById(R.id.same_rsrt_check);
-        type = (EditText) findViewById(R.id.type);
+        typeSpinner = (Spinner) findViewById(R.id.type);
         restaurant_TV = (TextView)findViewById(R.id.text7);
         type_TV = (TextView)findViewById(R.id.text8);
+        openTime = (TextView) findViewById(R.id.open_time);
+        closeTime = (TextView) findViewById(R.id.close_time);
+        openTimeButton = (Button) findViewById(R.id.open_time_button);
+        closeTimeButton = (Button) findViewById(R.id.close_time_button);
+        RSRTLayout = (LinearLayout) findViewById(R.id.restaurant_name_layout) ;
+        typeLayout = (LinearLayout) findViewById(R.id.type_layout);
+        openTimeLayout = (LinearLayout) findViewById(R.id.open_time_layout);
+        closeTimeLayout = (LinearLayout) findViewById(R.id.close_time_layout);
+
+        typeList = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, typeList);
+
+        myRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    typeList.add(data.getValue().toString());
+                }
+                arrayAdapter.notifyDataSetChanged();
+                typeSpinner.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                s_type = typeList.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        openTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog = new TimePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        openTime.setText(hourOfDay+"시 "+minute+"분");//새 오픈시간
+
+                    }
+                }, 15,24, false);
+                timePickerDialog.show();
+                setTimePickerInterval(timePickerDialog);
+            }
+        });
+
+        closeTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog = new TimePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        closeTime.setText(hourOfDay+"시 "+minute+"분");//새 오픈시간
+
+                    }
+                }, 15,24, false);
+                timePickerDialog.show();
+                setTimePickerInterval(timePickerDialog);
+            }
+        });
 
         // 사용자 타입 선택 여부 검사
         // 검사라고 할 수 없음 그냥 토스트 메시지 띄워주는거 말고는 하는 기능이 없음
@@ -183,12 +270,12 @@ public class SignUpActivity extends AppCompatActivity {
         owner.setOnClickListener(new RadioButton.OnClickListener() {//owner체크박스 클릭시
             @Override
             public void onClick(View v) {
+                RSRTLayout.setVisibility(View.VISIBLE);
+                typeLayout.setVisibility(View.VISIBLE);
+                openTimeLayout.setVisibility(View.VISIBLE);
+                closeTimeLayout.setVisibility(View.VISIBLE);
+
                 if (owner.isChecked()) {//오너클릭시
-                    restaurant_name.setVisibility(View.VISIBLE);//가게 이름 나타나게
-                    restaurant_TV.setVisibility(View.VISIBLE);
-                    type.setVisibility(View.VISIBLE);//업종나타나게
-                    type_TV.setVisibility(View.VISIBLE);
-                    same_rsrt_check.setVisibility(View.VISIBLE);
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -256,9 +343,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                             }
 
-                            if (type.getText().toString().length() == 0) {
+                            if (s_type == null) {
                                 Toast.makeText(SignUpActivity.this, "업종을 입력하세요!", Toast.LENGTH_SHORT).show();
-                                type.requestFocus();
+                                typeSpinner.requestFocus();
                                 return;
                             }
 
@@ -268,14 +355,22 @@ public class SignUpActivity extends AppCompatActivity {
                                 return;
                             }
 
+                            if (openTime.getText().equals("")) {
+                                Toast.makeText(getApplicationContext(), "개점시간을 선택하세요",  Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (closeTime.getText().equals("")) {
+                                Toast.makeText(getApplicationContext(), "폐점시간을 선택하세요",  Toast.LENGTH_SHORT).show();
+                            }
+
                             // 데이터 db에 전송하는 코드 작성...
                             GetDataFromEditText();
                             user_info.setRestaurant_name(s_restaurant_name);
                             user_info.setId1(s_id1);
                             user_info.setPhone_num(s_phone_num);
                             user_info.setPassword(s_password);
-                            user_info.setOpen("null");
-                            user_info.setClose("null");
+                            user_info.setOpen(openTime.getText().toString());
+                            user_info.setClose(closeTime.getText().toString());
                             user_info.setType(s_type);
                             user_info.setIs_owner("0");//사장일 경우 0
 
@@ -288,7 +383,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     restaurant_name.setVisibility(View.GONE);
                     restaurant_TV.setVisibility(View.GONE);
-                    type.setVisibility(View.GONE);
+                    typeSpinner.setVisibility(View.GONE);
                     type_TV.setVisibility(View.GONE);
                     same_rsrt_check.setVisibility(View.GONE);
                 }
@@ -299,11 +394,11 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (customer.isChecked()) {//고객 클릭시
-                    restaurant_name.setVisibility(View.GONE);  //가게 이름 나타나지않게
-                    restaurant_TV.setVisibility(View.GONE);
-                    type.setVisibility(View.GONE);
-                    type_TV.setVisibility(View.GONE);
-                    same_rsrt_check.setVisibility(View.GONE);
+                    RSRTLayout.setVisibility(View.GONE);
+                    typeLayout.setVisibility(View.GONE);
+                    openTimeLayout.setVisibility(View.GONE);
+                    closeTimeLayout.setVisibility(View.GONE);
+
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -393,7 +488,6 @@ public class SignUpActivity extends AppCompatActivity {
         s_id1 = id1.getText().toString().trim();
         s_password = password.getText().toString().trim();
         s_phone_num = phone_num.getText().toString().trim();
-        s_type=type.getText().toString().trim();
     }
 
     public boolean ConfirmPassword(String input) {
@@ -447,6 +541,22 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    private void setTimePickerInterval(TimePickerDialog timePicker) {
+        try {
+            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
+                    "minute", "id", "android"));
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue((60/ TIME_PICKER_INTERVAL) - 1);
+            List<String> displayedValues = new ArrayList<String>();
+            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+                displayedValues.add(String.format("%02d", i));
+            }
+            minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

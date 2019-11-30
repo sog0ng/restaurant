@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
 
         Button submit = (Button) findViewById(R.id.submit);
 
-        restaurantName.setText(str_restaurantName+"("+type+")");
+        restaurantName.setText(str_restaurantName);
         r_time.setText(time);
         r_date.setText(year+"년"+month+"월"+day+"일");
         covers.setText(str_covers+"명");

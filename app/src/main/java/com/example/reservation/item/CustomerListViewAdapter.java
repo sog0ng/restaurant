@@ -129,9 +129,11 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
                     holder.submit.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View v) {
-                            holder.gtr.setText(Integer.toString(selectedScore)); //고객 화면에 몇점줬는지 나오도록 텍스트 설정만
-
                             //평점 DB에 넣어준다 고객이 레스토랑에 대한 평가하는거니까 gtr(give to restaurant)
+                            Toast.makeText(context,
+                                    "평점 " + selectedScore + "점 이 입력되었습니다.",
+                                    Toast.LENGTH_SHORT).show();
+
                             myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -150,7 +152,6 @@ public class CustomerListViewAdapter extends BaseAdapter {
                     holder.status.setText("<방문>");
                     holder.score.setVisibility(View.GONE);
                     holder.submit.setVisibility(View.GONE);
-                    holder.gtr.setVisibility(View.VISIBLE);
                 }
                 else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
                     holder.status.setText("<미방문>");
@@ -277,7 +278,6 @@ public class CustomerListViewAdapter extends BaseAdapter {
         final TextView status;
         final Spinner score;
         final Button submit;
-        final TextView gtr;
 
         public ViewHolder(View root) {
             title = (TextView) root.findViewById(R.id.title);
@@ -288,7 +288,6 @@ public class CustomerListViewAdapter extends BaseAdapter {
             status = (TextView) root.findViewById(R.id.status);
             score = (Spinner) root.findViewById(R.id.score_spinner);
             submit = (Button) root.findViewById(R.id.submit);
-            gtr = (TextView) root.findViewById(R.id.gtr);
         }
     }
 

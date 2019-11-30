@@ -157,12 +157,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/restaurant_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/text7"
@@ -181,24 +183,25 @@
                 android:ems="10"
                 android:hint="가게 이름"
                 android:inputType="textPersonName"
-                tools:visibility="GONE" />
+                />
 
             <Button
                 android:id="@+id/same_rsrt_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="중복확인"
-                tools:visibility="GONE" />
+                android:text="중복확인" />
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/type_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/text8"
@@ -208,18 +211,96 @@
             android:orientation="horizontal"
             android:text="업종" />
 
-        <EditText
+        <Spinner
             android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="업종" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/open_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text9"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:orientation="horizontal"
+            android:text="개점시간" />
+
+        <TextView
+            android:id="@+id/open_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="6"
             android:ems="10"
-            android:hint="업종"
-            android:inputType="textPersonName"
-            tools:visibility="GONE" />
+            android:hint="개점시간"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/open_time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="시간 선택" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/close_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text10"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:orientation="horizontal"
+            android:text="폐점시간" />
+
+        <TextView
+            android:id="@+id/close_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="6"
+            android:ems="10"
+            android:hint="폐점시간"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/close_time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="시간 선택" />
+
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
