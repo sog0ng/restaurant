@@ -2,7 +2,9 @@ package com.example.reservation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -32,7 +34,8 @@ public class ModifyActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
-    private String rsvWeek;
+    private String rsvWeek,covers2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +66,11 @@ public class ModifyActivity extends AppCompatActivity {
         final TextView restaurant_name1 = (TextView) findViewById(R.id.restaurant_name);
         final TextView nickname1 = (TextView) findViewById(R.id.nickname);
         restaurant_name1.setText(restaurant_name);
-        editcover = (EditText) findViewById(R.id.covers);
 
+        editcover = (EditText) findViewById(R.id.covers);
         editcover.setText(covers1);
+        covers2 = editcover.getText().toString();
+
         nickname1.setText(nickname);
 
         Button date = findViewById(R.id.date);
@@ -100,7 +105,7 @@ public class ModifyActivity extends AppCompatActivity {
                 curMin = Integer.parseInt(minFormat.format(minDate.getTime().getTime()));
                 Date date = new Date(rsvYear, rsvMonth - 1, rsvDay - 1);
                 rsvWeek = weekFormat.format(date);
-                rsvHour = tp.getHour() < curYear ? tp.getHour() + 12 : tp.getHour();
+                rsvHour = tp.getHour();
                 rsvMin = tp.getMinute()*10;
 
 
@@ -115,14 +120,30 @@ public class ModifyActivity extends AppCompatActivity {
                 else if (rsvYear == curYear && rsvMonth == curMonth && rsvDay == curDay && (rsvHour < curHour + 1 || (rsvHour == curHour + 1 && rsvMin < curMin))) {
                     Toast.makeText(getApplicationContext(), "현재시간 1시간 이후부터 예약 가능합니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    myRef1.child(key1).child("covers").setValue(editcover.getText().toString());//인원변경
-                    myRef1.child(key1).child("year").setValue(rsvYear);
-                    myRef1.child(key1).child("month").setValue(rsvMin);
-                    myRef1.child(key1).child("day").setValue(rsvDay);
-                    myRef1.child(key1).child("week").setValue(rsvWeek);
-                    myRef1.child(key1).child("hour").setValue(rsvHour);
-                    myRef1.child(key1).child("minite").setValue(rsvMin);
-                      Toast.makeText(getApplicationContext(), "예약이 변경되었습니다.", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder alert;
+                    alert = new AlertDialog.Builder(ModifyActivity.this);
+                    alert.setTitle("예약 변경");
+                    alert.setMessage("예약을 변경하시겠습니까?");
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            myRef1.child(key1).child("covers").setValue(Integer.parseInt(covers2));//인원변경/
+                            //일단 예약 인원변경 안됨
+                            myRef1.child(key1).child("year").setValue(rsvYear);
+                            myRef1.child(key1).child("month").setValue(rsvMonth);
+                            myRef1.child(key1).child("day").setValue(rsvDay);
+                            myRef1.child(key1).child("week").setValue(rsvWeek);
+                            myRef1.child(key1).child("hour").setValue(rsvHour);
+                            myRef1.child(key1).child("minute").setValue(rsvMin);
+                        }
+                    });
+
+                    alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert.show();
 
                 }
             }
@@ -130,6 +151,10 @@ public class ModifyActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
 
     void showDate() {
         Calendar c = Calendar.getInstance();
