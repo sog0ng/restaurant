@@ -43,7 +43,9 @@ import java.util.Comparator;
 
 public class ListViewAdapter extends BaseAdapter {
     Activity activity;
-    //Adapter에서 이러는건 아닌것 같지만 일단은 이전에 사용한것과 동일한 방식으로 접근
+
+    FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef1 = database1.getReference("User_info/");
     FirebaseDatabase database2 = FirebaseDatabase.getInstance();
     final DatabaseReference myRef2 = database2.getReference("Reservation/");
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
@@ -186,7 +188,7 @@ public class ListViewAdapter extends BaseAdapter {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         setScoreGtc(listViewItem, Integer.toString(selectedScore));
-                                        setScore(listViewItem, Integer.toString(selectedScore));
+                                        setScore(dataSnapshot, listViewItem);
                                     }
 
                                     @Override
@@ -427,9 +429,27 @@ public class ListViewAdapter extends BaseAdapter {
         myRef2.child(item.getKey()).child("gtc").setValue(value);
     }
 
-    public void setScore(ListViewItem item, String value) {
-        Log.i("set Score item 키값: ", item.getKey());
-        myRef2.child(item.getR_id()).child("score").setValue(value);
+    public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {
+        //Log.i("set Score item 키값: ", item.getKey());
+
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            User user_each = childSnapshot.getValue(User.class);
+            if (user_each.getId1().equals(myRef2.child(item.getR_id()))) {
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtc()));
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRef2.child(item.getR_id()).child("sumScore").setValue(user_each.getSumScore());
+                myRef2.child(item.getR_id()).child("count").setValue(user_each.getCount());
+                myRef2.child(item.getR_id()).child("avgScore").setValue(user_each.getAvgScore());
+
+            } else {
+                continue;
+            }
+        }
+
     }
 
     public class ViewHolder {

@@ -138,7 +138,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     setScoreGtr(listViewItem, Integer.toString(selectedScore));
-                                    setScore(listViewItem,Integer.toString(selectedScore));
+                                    setScore(dataSnapshot, listViewItem);
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -272,9 +272,28 @@ public class CustomerListViewAdapter extends BaseAdapter {
         Log.i("set GTR item 키값: ", item.getKey());
         myRef2.child(item.getKey()).child("gtr").setValue(value);
     }
-    public void setScore(ListViewItem item, String value) {
-        Log.i("set Score item 키값: ", item.getKey());
-        //myRef2.child(item.getKey()).child("gtr").setValue(value);
+
+    public void setScore(@NonNull DataSnapshot dataSnapshot, ListViewItem item) {
+
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            User user_each = childSnapshot.getValue(User.class);
+            if (user_each.getId1().equals(myRef2.child(item.getOwner_id()))) {
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtr()));
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRef2.child(item.getOwner_id()).child("sumScore").setValue(user_each.getSumScore());
+                myRef2.child(item.getOwner_id()).child("count").setValue(user_each.getCount());
+                myRef2.child(item.getOwner_id()).child("avgScore").setValue(user_each.getAvgScore());
+
+            } else {
+                continue;
+            }
+        }
+
+
     }
 
     public class ViewHolder {
