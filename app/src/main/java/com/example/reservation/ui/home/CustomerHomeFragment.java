@@ -37,7 +37,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CustomerHomeFragment extends Fragment {
     //private SearchView searchView;
@@ -46,6 +49,8 @@ public class CustomerHomeFragment extends Fragment {
     private SearchView searchView;
     private ListView listview;
     ArrayList<String> list;
+    ArrayList<String> openTimeList;
+    ArrayList<String> closeTimeList;
 
     public ArrayAdapter adapter;
 
@@ -56,7 +61,8 @@ public class CustomerHomeFragment extends Fragment {
         final DatabaseReference myRef2 = database.getReference("User_info/");
 
         list = new ArrayList<>();
-
+        openTimeList = new ArrayList<>();
+        closeTimeList = new ArrayList<>();
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -98,6 +104,8 @@ public class CustomerHomeFragment extends Fragment {
             public void onItemClick(AdapterView parent, View v, int position, long id){ //리스트뷰 클릭시 해당하는 레스토랑 정보로 감
                 Intent reservation2 = new Intent(getActivity(), Reservation2Activity.class);
                 reservation2.putExtra("restaurant_name", list.get(position));
+                reservation2.putExtra("openTime", openTimeList.get(position));
+                reservation2.putExtra("closeTime", closeTimeList.get(position));
                 reservation2.putExtra("id", id2);
                 startActivity(reservation2);
             }
@@ -134,7 +142,8 @@ public class CustomerHomeFragment extends Fragment {
                 Log.i("가게이름:", user_each.getRestaurant_name());
                 Log.i("이름", key);
                 list.add(user_each.getRestaurant_name());
-
+                openTimeList.add(user_each.getOpen());
+                closeTimeList.add(user_each.getClose());
             }else {
                 continue;
             }
