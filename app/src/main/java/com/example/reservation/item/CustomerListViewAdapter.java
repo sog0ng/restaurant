@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,16 +26,24 @@ import com.example.reservation.OwnerHomeActivity;
 import com.example.reservation.R;
 import com.example.reservation.Reservation;
 import com.example.reservation.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class CustomerListViewAdapter extends BaseAdapter {
     Activity activity;
+    FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef2 = database2.getReference("Reservation/");
 
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
     private int selectedScore;
@@ -67,7 +76,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
-        ListViewItem listViewItem = listViewItemList.get(position);
+        final ListViewItem listViewItem = listViewItemList.get(position);
         int iDday = countDday(listViewItem.getYear(), listViewItem.getMonth(), listViewItem.getDay());
 
         final ArrayList<Integer> scoreList = new ArrayList<>();
@@ -95,9 +104,10 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
             if (iDday < 0) {
                 //과거내역인 경우
+                holder.title.setText("과거내역");
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
                     holder.status.setText("<확인 중>");
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1")) {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getGtr().equals("null")) {
                     holder.status.setText("<방문>");
                     holder.status.setVisibility(View.GONE);
                     //holder.confirm.setVisibility(v.GONE);
@@ -119,11 +129,30 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
                     holder.submit.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View v) {
+                            holder.gtr.setText(Integer.toString(selectedScore)); //고객 화면에 몇점줬는지 나오도록 텍스트 설정만
 
-                            //평점 넣어주어야함 gtr DB에 넣어주어야함
+                            //평점 DB에 넣어준다 고객이 레스토랑에 대한 평가하는거니까 gtr(give to restaurant)
+                            myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    setScoreGtr(listViewItem, Integer.toString(selectedScore));
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+
+
                         }
                     });
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && !listViewItem.getGtr().equals("null")) {
+                    //이미 방문했고, 점수도 준 경우에는 자신이 준 점수만 나오도록 한다.
+                    holder.status.setText("<방문>");
+                    holder.score.setVisibility(View.GONE);
+                    holder.submit.setVisibility(View.GONE);
+                    holder.gtr.setVisibility(View.VISIBLE);
+                }
+                else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
                     holder.status.setText("<미방문>");
                 } else if (listViewItem.getIs_accepted().equals("0")) {
                     holder.status.setText("<예약 거절>");
@@ -148,7 +177,6 @@ public class CustomerListViewAdapter extends BaseAdapter {
         }
 
         return v;
-        //return convertView;
     }
 
     public void addItemC(String key, String restaurant_name, String nickname, int year,
@@ -236,6 +264,11 @@ public class CustomerListViewAdapter extends BaseAdapter {
         return (int) count;
     }
 
+    public void setScoreGtr(ListViewItem item, String value) {
+        Log.i("set GTR item 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("gtr").setValue(value);
+    }
+
     public class ViewHolder {
         final TextView title;
         final TextView restName;
@@ -244,6 +277,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
         final TextView status;
         final Spinner score;
         final Button submit;
+        final TextView gtr;
 
         public ViewHolder(View root) {
             title = (TextView) root.findViewById(R.id.title);
@@ -254,6 +288,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
             status = (TextView) root.findViewById(R.id.status);
             score = (Spinner) root.findViewById(R.id.score_spinner);
             submit = (Button) root.findViewById(R.id.submit);
+            gtr = (TextView) root.findViewById(R.id.gtr);
         }
     }
 

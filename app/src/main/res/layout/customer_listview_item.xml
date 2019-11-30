@@ -88,6 +88,15 @@
                 android:text="확인"
                 android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/gtr"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:visibility="visible"
+                />
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
