@@ -8,12 +8,11 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:text="과거 내역" />
+        android:layout_marginLeft="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:orientation="horizontal">
@@ -26,7 +25,8 @@
         <TextView
             android:id="@+id/r_date"
             android:layout_width="70dp"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            />
 
         <TextView
             android:id="@+id/covers"
@@ -39,21 +39,44 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/confirmB"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:text="방문" />
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:visibility="visible"/>
 
         <Button
-            android:id="@+id/noshowB"
+            android:id="@+id/acceptButton"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="승인"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/rejectButton"
+            android:layout_width="65dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content"
+            android:text="거절"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="방문"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/noshowButton"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
-            android:text="미방문" />
+            android:text="미방문"
+            android:visibility="gone" />
 
         <Spinner
-            android:id="@+id/score_spinner"
+            android:id="@+id/scoreSpinner"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -62,28 +85,12 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/submitButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:text="확인"
             android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/gtc"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:visibility="visible"
-            />
-
-        <TextView
-            android:id="@+id/confirm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
 
     </LinearLayout>
 

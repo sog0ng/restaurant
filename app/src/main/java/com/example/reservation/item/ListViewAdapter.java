@@ -97,15 +97,7 @@ public class ListViewAdapter extends BaseAdapter {
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (!listViewItem.getIs_accepted().equals("1")) {
-                v = inflater.inflate(R.layout.owner_unaccepted_listview_item, parent, false);
-            } else {
-                if (iDday <= 0) {
-                    v = inflater.inflate(R.layout.owner_past_listview_item, parent, false);
-                } else {
-                    v = inflater.inflate(R.layout.owner_accepted_listview_item, parent, false);
-                }
-            }
+            v = inflater.inflate(R.layout.owner_listview_item, parent, false);
 
             ViewHolder holder = new ViewHolder(v);
 
@@ -114,132 +106,121 @@ public class ListViewAdapter extends BaseAdapter {
 
         if (listViewItem != null) {//리스트뷰아이템에 뭐라도 있으면 값을 설정해서 보이도록
             final ViewHolder holder = (ViewHolder) v.getTag();
+            setVisibilityToGone(holder);
 
             holder.nickname.setText(listViewItem.getNickname());
             holder.r_date.setText(listViewItem.getR_date());
             holder.covers.setText(listViewItem.getCovers() + "명");
 
-            if (iDday > 0) {//예약 내역
-                if (listViewItem.getIs_accepted().equals("null")) {
-                    // 아직 승인이나 거절 안함
-                    holder.acceptButton.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {// 승인 팝업 띄움
-                            showAcceptPopup(listViewItem);
-                        }
-                    });
+            if (listViewItem.getIs_accepted().equals("null")) {                                     //예약 승인 안됨
+                holder.title.setText("승인 대기");
 
-                    holder.rejectButton.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {// 거절 팝업 띄움
-                            showRejectPopup(listViewItem);
+                holder.acceptButton.setVisibility(View.VISIBLE);
+                holder.rejectButton.setVisibility(View.VISIBLE);
+                // 아직 승인이나 거절 안함
+                holder.acceptButton.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View v) {// 승인 팝업 띄움
+                        showAcceptPopup(listViewItem);
+                    }
+                });
+
+                holder.rejectButton.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View v) {// 거절 팝업 띄움
+                        showRejectPopup(listViewItem);
+                    }
+                });
+            } else if (listViewItem.getIs_accepted().equals("1")) {                                 //예약 승인됨
+                if (iDday <= 0) {                                                                   //방문 예정일 : 과거 ~ 오늘
+                    if (listViewItem.getIs_confirm().equals("0")) {                                 //방문 확인 안됨
+                        holder.title.setText("방문 대기");
+
+                        holder.confirmButton.setVisibility(View.VISIBLE);
+                        holder.noshowButton.setVisibility(View.VISIBLE);
+
+                        holder.confirmButton.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                // 방문 확인 팝업 띄움
+                                showConfirmPopup(listViewItem);
+                            }
+                        });
+
+                        holder.noshowButton.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                // 미방문 확인 팝업 띄움
+                                showNoshowPopup(listViewItem);
+                            }
+                        });
+                    } else {                                                                        //방문 확인됨
+                        if (listViewItem.getIs_confirm().equals("1")) {
+                            holder.title.setText("방문 예약 - 평점 입력 대기");
+                        } else {
+                            holder.title.setText("미방문 예약 - 평점 입력 대기");
                         }
-                    });
-                } else {//승인이나 거절 했다면 버튼 보이지 않도록
-                    holder.acceptButton.setVisibility(View.GONE);
-                    holder.rejectButton.setVisibility(View.GONE);
+
+                        holder.scoreSpinner.setVisibility(View.VISIBLE);
+                        holder.submitButton.setVisibility(View.VISIBLE);
+
+                        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context,
+                                R.layout.support_simple_spinner_dropdown_item, scoreList);
+                        holder.scoreSpinner.setAdapter(arrayAdapter);
+                        holder.scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                selectedScore = scoreList.get(i);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
+
+                        holder.submitButton.setOnClickListener(new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                Toast.makeText(context,
+                                        "평점 " + selectedScore + "점 이 입력되었습니다.",
+                                        Toast.LENGTH_SHORT).show();
+                                /*holder.gtc.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
+
+                                //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
+                                myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        setScoreGtc(listViewItem, Integer.toString(selectedScore));
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                                });*/
+                            }
+                        });
+                    }
+
+                } else {
+                    holder.title.setText("승인 완료");
+
+                    holder.status.setVisibility(View.VISIBLE);
+                    holder.status.setText("D - " + iDday);
                 }
-            } else {//과거 내역
-                //과거 내역의 경우 예약 승인이나 거절의 버튼 보이지 않도록
-                holder.acceptButton.setVisibility(View.GONE);
-                holder.rejectButton.setVisibility(View.GONE);
-                if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
-                    //이미 승인되었고 과거니까
-                    //방문확인부터 먼저해야하는 상태
-                    holder.confirmButton.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {
-                            // 방문 확인 팝업 띄움
-                            showConfirmPopup(listViewItem);
-                        }
-                    });
+            } else {                                                                                //예약 거절됨
+                holder.title.setText("완료");
 
-                    holder.noshowButton.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {
-                            // 미방문 확인 팝업 띄움
-                            showNoshowPopup(listViewItem);
-                        }
-                    });
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getGtc().equals("null")) {
-                    //방문 했다고 확인했고, 아직 gtc 입력 안한 상태
-                    holder.confirmButton.setVisibility(View.GONE);
-                    holder.noshowButton.setVisibility(View.GONE);
-                    holder.score.setVisibility(View.VISIBLE);
-                    holder.submit.setVisibility(View.VISIBLE);
-
-                    ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, scoreList);
-                    holder.score.setAdapter(arrayAdapter);
-                    holder.score.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedScore = scoreList.get(i);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-                        }
-                    });
-
-                    holder.submit.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {
-                            holder.gtc.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
-
-                            //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
-                            myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    setScoreGtc(listViewItem, Integer.toString(selectedScore));
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                }
-                            });
-                        }
-                    });
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getGtc().equals("null")) {
-                    //방문 했다고 확인했고, gtc도 이미 입력한 상태
-                    //이미 방문했고, 점수도 준 경우에는 자신이 준 점수만 나오도록 한다.
-                    holder.confirmButton.setVisibility(View.GONE);
-                    holder.noshowButton.setVisibility(View.GONE);
-                    holder.score.setVisibility(View.GONE);
-                    holder.submit.setVisibility(View.GONE);
-                    holder.gtc.setVisibility(View.VISIBLE);
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")&&listViewItem.getGtc().equals("null")) {
-                    //예약 상태가 승인되었는데 미방문한 상태 = noshow에 해당
-                    //자동으로 DB에 1점을 주도록 한다.
-                    holder.gtc.setText("1"); //사장 화면에 1점을 주었다는 것을 띄워준다
-
-                    //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
-                    myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            setScoreGtc(listViewItem, "1");
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-                }
-                else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("") && !listViewItem.getGtc().equals("null")) {
-                    //미방문, noshow인데 이미 점수 입력한 경우
-                    holder.confirmButton.setVisibility(View.GONE);
-                    holder.noshowButton.setVisibility(View.GONE);
-                    holder.score.setVisibility(View.GONE);
-                    holder.submit.setVisibility(View.GONE);
-                    holder.gtc.setVisibility(View.VISIBLE);
-                }else {//예약 거절 또는 예약 취소
-                    holder.confirmButton.setVisibility(View.GONE);
-                    holder.noshowButton.setVisibility(View.GONE);
-                    holder.score.setVisibility(View.GONE);
-                    holder.submit.setVisibility(View.GONE);
-
-                }
-
-
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("거절된 예약");
             }
         }
 
-
         return v;
+    }
+
+    private void setVisibilityToGone(ViewHolder holder) {
+        holder.status.setVisibility(View.GONE);
+        holder.acceptButton.setVisibility(View.GONE);
+        holder.rejectButton.setVisibility(View.GONE);
+        holder.confirmButton.setVisibility(View.GONE);
+        holder.noshowButton.setVisibility(View.GONE);
+        holder.scoreSpinner.setVisibility(View.GONE);
+        holder.submitButton.setVisibility(View.GONE);
     }
 
 
@@ -443,40 +424,39 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
+        final TextView title;
 
         final TextView nickname;
         final TextView r_date;
         final TextView covers;
 
+        final  TextView status;
+
         final Button acceptButton;
         final Button rejectButton;
+
         final Button confirmButton;
         final Button noshowButton;
 
-        final TextView accept;
-        final TextView confirm;
-
-        final Spinner score;
-        final Button submit;
-        final TextView gtc;
+        final Spinner scoreSpinner;
+        final Button submitButton;
 
         public ViewHolder(View root) {
+            title = (TextView) root.findViewById(R.id.title);
 
             nickname = (TextView) root.findViewById(R.id.nickname);
             r_date = (TextView) root.findViewById(R.id.r_date);
             covers = (TextView) root.findViewById(R.id.covers);
 
-            acceptButton = (Button) root.findViewById(R.id.acceptB);//예약 승인 버튼
-            rejectButton = (Button) root.findViewById(R.id.rejectB);//예약 거절 버튼
-            confirmButton = (Button) root.findViewById(R.id.confirmB);//방문 확인 버튼
-            noshowButton = (Button) root.findViewById(R.id.noshowB);//방문 미확인 버튼
+            status = (TextView) root.findViewById(R.id.status);
 
-            accept = (TextView) root.findViewById(R.id.accept);
-            confirm = (TextView) root.findViewById(R.id.confirm);
+            acceptButton = (Button) root.findViewById(R.id.acceptButton);//예약 승인 버튼
+            rejectButton = (Button) root.findViewById(R.id.rejectButton);//예약 거절 버튼
+            confirmButton = (Button) root.findViewById(R.id.confirmButton);//방문 확인 버튼
+            noshowButton = (Button) root.findViewById(R.id.noshowButton);//방문 미확인 버튼
 
-            score = (Spinner) root.findViewById(R.id.score_spinner);
-            submit = (Button) root.findViewById(R.id.submit);
-            gtc = (TextView) root.findViewById(R.id.gtc);
+            scoreSpinner = (Spinner) root.findViewById(R.id.scoreSpinner);
+            submitButton = (Button) root.findViewById(R.id.submitButton);
         }
     }
 }

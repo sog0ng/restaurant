@@ -196,7 +196,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
         item.setCovers(covers);
         item.setIs_accepted(is_accepted);
         item.setIs_confirm(is_confirm);
-        item.setR_date(month + "월" + day + "일" + hour + "시" + minute + "분");
+        item.setR_date(month + "월" + day + "일\n" + hour + "시" + minute + "분");
 
         listViewItemList.add(0, item);
     }
