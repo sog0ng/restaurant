@@ -198,6 +198,7 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="right"
         android:text="수정하기"
+        tools:visibility="invisible"
         />
 
     <Button
@@ -208,6 +209,7 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="right"
         android:text="취소하기"
+        tools:visibility="invisible"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
