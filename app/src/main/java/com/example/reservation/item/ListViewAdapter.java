@@ -157,7 +157,8 @@ public class ListViewAdapter extends BaseAdapter {
 
                             }
                         });
-                    } else { ;
+                    } else if(listViewItem.getIs_confirm().equals("1")&&listViewItem.getGtc().equals("null")){
+                        //방문 했다고 확인했고, 아직 gtc 입력 안한 상태
                         holder.confirmButton.setVisibility(View.GONE);
                         holder.noshowButton.setVisibility(View.GONE);
                         holder.score.setVisibility(View.VISIBLE);
@@ -177,21 +178,33 @@ public class ListViewAdapter extends BaseAdapter {
 
                         holder.submit.setOnClickListener(new Button.OnClickListener() {
                             public void onClick(View v) {
+                                holder.gtc.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
 
-                                // db 에 평점 전달.
-
-/*
-                    if(matchingReservation.getIs_owner()==1){//사장인 경우
-                        matchingReservation.setGtc(score);//Edittext의 값을 givetocustomer에 넣는것
-
-                    }else{
-                        matchingReservation.setGtr(score);//Edittext의 값을 givetorestaurant에 넣는것
-                    }
-*/
+                                //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
+                                myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        setScoreGtc(listViewItem, Integer.toString(selectedScore));
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                                });
                             }
                         });
-
                     }
+
+                    else if(listViewItem.getIs_confirm().equals("1")&&!listViewItem.getGtc().equals("null")){
+                        //방문 했다고 확인했고, gtc도 이미 입력한 상태
+                        //이미 방문했고, 점수도 준 경우에는 자신이 준 점수만 나오도록 한다.
+
+                        holder.score.setVisibility(View.GONE);
+                        holder.submit.setVisibility(View.GONE);
+                        holder.gtc.setVisibility(View.VISIBLE);
+                    }
+
+
+
                 }
             }
 
@@ -394,6 +407,11 @@ public class ListViewAdapter extends BaseAdapter {
         myRef2.child(item.getKey()).child("is_accepted").setValue(value);
     }
 
+    public void setScoreGtc(ListViewItem item, String value) {
+        Log.i("set GTC item 키값: ", item.getKey());
+        myRef2.child(item.getKey()).child("gtc").setValue(value);
+    }
+
     public class ViewHolder {
 
         final TextView nickname;
@@ -410,6 +428,7 @@ public class ListViewAdapter extends BaseAdapter {
 
         final Spinner score;
         final Button submit;
+        final TextView gtc;
 
         public ViewHolder(View root) {
 
@@ -427,6 +446,7 @@ public class ListViewAdapter extends BaseAdapter {
 
             score = (Spinner) root.findViewById(R.id.score_spinner);
             submit = (Button) root.findViewById(R.id.submit);
+            gtc = (TextView) root.findViewById(R.id.gtc);
         }
     }
 }

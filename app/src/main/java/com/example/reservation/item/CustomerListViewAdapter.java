@@ -104,6 +104,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
             if (iDday < 0) {
                 //과거내역인 경우
+                holder.title.setText("과거내역");
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
                     holder.status.setText("<확인 중>");
                 } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getGtr().equals("null")) {
