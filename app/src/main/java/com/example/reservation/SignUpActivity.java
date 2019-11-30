@@ -188,7 +188,7 @@ public class SignUpActivity extends AppCompatActivity {
                     restaurant_TV.setVisibility(View.VISIBLE);
                     type.setVisibility(View.VISIBLE);//업종나타나게
                     type_TV.setVisibility(View.VISIBLE);
-
+                    same_rsrt_check.setVisibility(View.VISIBLE);
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -290,6 +290,7 @@ public class SignUpActivity extends AppCompatActivity {
                     restaurant_TV.setVisibility(View.GONE);
                     type.setVisibility(View.GONE);
                     type_TV.setVisibility(View.GONE);
+                    same_rsrt_check.setVisibility(View.GONE);
                 }
             }
         });
@@ -302,7 +303,7 @@ public class SignUpActivity extends AppCompatActivity {
                     restaurant_TV.setVisibility(View.GONE);
                     type.setVisibility(View.GONE);
                     type_TV.setVisibility(View.GONE);
-
+                    same_rsrt_check.setVisibility(View.GONE);
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

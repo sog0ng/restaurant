@@ -188,7 +188,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="중복확인" />
+                android:text="중복확인"
+                tools:visibility="GONE" />
         </LinearLayout>
 
     <LinearLayout
