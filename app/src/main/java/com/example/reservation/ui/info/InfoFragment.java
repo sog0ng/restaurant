@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.reservation.CustomerHomeActivity;
 import com.example.reservation.OwnerHomeActivity;
 import com.example.reservation.R;
 import com.example.reservation.SignUpActivity;
@@ -236,6 +237,7 @@ public class InfoFragment extends Fragment {
         final EditText input = new EditText(getActivity());
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
+
         builder.setView(input);
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
@@ -245,10 +247,15 @@ public class InfoFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 boolean login_success = false;
+                                String is_owner = "0";
+                                Intent intent;
                                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                     String key = childSnapshot.getKey();
                                     User user_each = childSnapshot.getValue(User.class);
 
+                                    if(id1.equals(user_each.getId1())) {
+                                        is_owner = user_each.getIs_owner();
+                                    }
                                     if (id1.equals(user_each.getId1())
                                             && input.getText().toString().equals(user_each.getPassword())) {
                                         Toast.makeText(getContext(), "아이디와 비밀번호가 일치 합니다.",Toast.LENGTH_SHORT).show();
@@ -258,7 +265,10 @@ public class InfoFragment extends Fragment {
                                 }
                                 if(!login_success) {
                                     Toast.makeText(getContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getContext(), OwnerHomeActivity.class);
+                                    if(is_owner.equals("0"))
+                                        intent = new Intent(getContext(), OwnerHomeActivity.class);
+                                    else
+                                        intent = new Intent(getContext(), CustomerHomeActivity.class);
                                     intent.putExtra("key", key);
                                     intent.putExtra("id", id1);
                                     startActivity(intent);
