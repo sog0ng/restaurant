@@ -8,8 +8,19 @@ public class User {
     private String is_owner;//사장일 경우 0, 손님일 경우 1
     private String close;
     private String open;
-
     private String type;
+    private int avgScore=0;
+    private int sumScore=0;
+    private int count=0;
+
+    public int getAvgScore() { return avgScore; }
+    public void setAvgScore(int avgScore) { this.avgScore = avgScore; }
+
+    public int getSumScore() { return sumScore; }
+    public void setSumScore(int sumScore) { this.sumScore = sumScore; }
+
+    public int getCount() { return count; }
+    public void setCount(int count) { this.count = count; }
 
     public String getClose() {
         return close;
@@ -55,7 +66,7 @@ public class User {
 
     public User() { }
 
-    public User(String id1, String password, String phone_num, String restaurant_name, String is_owner, String open, String close) {
+    public User(String id1, String password, String phone_num, String restaurant_name, String is_owner, String open, String close, int avgScore, int sumScore, int count) {
         this.id1 = id1;
         this.phone_num = phone_num;
         this.password = password;
@@ -63,6 +74,10 @@ public class User {
         this.is_owner = is_owner;
         this.open=open;
         this.close=close;
+        this.avgScore=avgScore;
+        this.sumScore=sumScore;
+        this.count=count;
+
 
     }
 

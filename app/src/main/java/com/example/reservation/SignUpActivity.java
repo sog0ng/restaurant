@@ -265,7 +265,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         //전화번호 입력시 -입력
-        phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+    //    phone_num.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         owner.setOnClickListener(new RadioButton.OnClickListener() {//owner체크박스 클릭시
             @Override
@@ -373,6 +373,9 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setClose(closeTime.getText().toString());
                             user_info.setType(s_type);
                             user_info.setIs_owner("0");//사장일 경우 0
+                            user_info.setAvgScore(0);
+                            user_info.setSumScore(0);
+                            user_info.setCount(0);
 
                             myRef.child(user_info_key).setValue(user_info);
 
@@ -468,6 +471,9 @@ public class SignUpActivity extends AppCompatActivity {
                             user_info.setClose("null");
                             user_info.setType("null");
                             user_info.setIs_owner("1");//손님일 경우1
+                            user_info.setAvgScore(0);
+                            user_info.setSumScore(0);
+                            user_info.setCount(0);
                             myRef.child(user_info_key).setValue(user_info);
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(main);
