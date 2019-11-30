@@ -179,19 +179,20 @@ public class ListViewAdapter extends BaseAdapter {
                                 Toast.makeText(context,
                                         "평점 " + selectedScore + "점 이 입력되었습니다.",
                                         Toast.LENGTH_SHORT).show();
-                                /*holder.gtc.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
+                                holder.status.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
 
                                 //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 gtc(give to customer)
                                 myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         setScoreGtc(listViewItem, Integer.toString(selectedScore));
+                                        setScore(listViewItem, Integer.toString(selectedScore));
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
                                     }
-                                });*/
+                                });
                             }
                         });
                     }
@@ -324,11 +325,13 @@ public class ListViewAdapter extends BaseAdapter {
         alert.show();
     }
 
-    public void addItem(String key, String nickname, int year,
+    public void addItem(String key, String r_id, String owner_id, String nickname, int year,
                         int month, int day, int hour, int minute, int covers,
                         String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
+        item.setR_id(r_id);
+        item.setOwner_id(owner_id);
         item.setNickname(nickname);
         item.setYear(year);
         item.setMonth(month);
@@ -424,6 +427,11 @@ public class ListViewAdapter extends BaseAdapter {
         myRef2.child(item.getKey()).child("gtc").setValue(value);
     }
 
+    public void setScore(ListViewItem item, String value) {
+        Log.i("set Score item 키값: ", item.getKey());
+        myRef2.child(item.getR_id()).child("score").setValue(value);
+    }
+
     public class ViewHolder {
         final TextView title;
 
@@ -431,7 +439,7 @@ public class ListViewAdapter extends BaseAdapter {
         final TextView r_date;
         final TextView covers;
 
-        final  TextView status;
+        final TextView status;
 
         final Button acceptButton;
         final Button rejectButton;

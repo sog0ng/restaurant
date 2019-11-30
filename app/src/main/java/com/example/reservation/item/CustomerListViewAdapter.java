@@ -136,6 +136,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     setScoreGtr(listViewItem, Integer.toString(selectedScore));
+                                    setScore(listViewItem,Integer.toString(selectedScore));
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -179,12 +180,14 @@ public class CustomerListViewAdapter extends BaseAdapter {
         return v;
     }
 
-    public void addItemC(String key, String restaurant_name, String nickname, int year,
+    public void addItemC(String key, String r_id, String owner_id, String restaurant_name, String nickname, int year,
 
                          int month, int day, int hour, int minute, int covers,
                          String is_accepted, String is_confirm) {
         ListViewItem item = new ListViewItem();
         item.setKey(key);
+        item.setR_id(r_id);
+        item.setOwner_id(owner_id);
         item.setRestaurant_name(restaurant_name);
         item.setNickname(nickname);
         item.setYear(year);
@@ -267,6 +270,10 @@ public class CustomerListViewAdapter extends BaseAdapter {
     public void setScoreGtr(ListViewItem item, String value) {
         Log.i("set GTR item 키값: ", item.getKey());
         myRef2.child(item.getKey()).child("gtr").setValue(value);
+    }
+    public void setScore(ListViewItem item, String value) {
+        Log.i("set Score item 키값: ", item.getKey());
+        //myRef2.child(item.getKey()).child("gtr").setValue(value);
     }
 
     public class ViewHolder {
