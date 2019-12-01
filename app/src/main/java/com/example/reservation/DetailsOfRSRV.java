@@ -45,6 +45,12 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
     TextView r_nickname, restaurantName, r_date, r_time, covers, status;
     Button submit,cancel, modify;
+    Spinner scoreSpinner;
+    View dialogView;
+
+    android.app.AlertDialog.Builder builder;
+
+    int selectedScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +58,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
         setContentView(R.layout.details_of_reservation);
 
         initDatabase();
-
-        intent = getIntent();
-
         initData();
         initView();
 
@@ -185,33 +188,13 @@ public class DetailsOfRSRV extends AppCompatActivity {
         return (int) count;
     }
 
-    Spinner scoreSpinner;
-
-    int selectedScore;
-    String tmp;
-
     void scorePopupOnwer() {
-        View dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
-
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
+        builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
         builder.setTitle("평점 입력");
         builder.setMessage("방문한 고객은 어땠나요?");
-
         builder.setView(dialogView);
 
-        scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
-
-        scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               selectedScore = Integer.parseInt(scoreSpinner.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        scoreSpinner.setOnItemSelectedListener(scoreSpinnerListener);
 
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
@@ -223,18 +206,13 @@ public class DetailsOfRSRV extends AppCompatActivity {
                         myRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                                 setScoreToCustomer(dataSnapshot);
-
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                             }
-
                         });
-
                     }
 
                 });
@@ -272,33 +250,16 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
                 break;
             }
-
         }
-
     }
 
     void scorePopupCustomer() {
-        View dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
-
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
+        builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
         builder.setTitle("평점 입력");
         builder.setMessage("방문한 매장은 어땠나요?");
-
         builder.setView(dialogView);
 
-        scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
-
-        scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedScore = Integer.parseInt(scoreSpinner.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        scoreSpinner.setOnItemSelectedListener(scoreSpinnerListener);
 
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
@@ -310,18 +271,13 @@ public class DetailsOfRSRV extends AppCompatActivity {
                         myRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                                 setScoreToRestaurant(dataSnapshot);
-
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                             }
-
                         });
-
                     }
 
                 });
@@ -371,6 +327,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
     }
 
     private void initData() {
+        intent = getIntent();
         str_nickname = intent.getStringExtra("nickname");
         str_restaurantName = intent.getStringExtra("restaurant_name");
         year = intent.getIntExtra("year", 0);
@@ -390,14 +347,11 @@ public class DetailsOfRSRV extends AppCompatActivity {
     };
 
     private void initView(){
-
         r_nickname = (TextView) findViewById(R.id.r_nickname);
         restaurantName = (TextView) findViewById(R.id.restaurant_name);
-
         r_date = (TextView) findViewById(R.id.r_date);
         r_time = (TextView) findViewById(R.id.r_time);
         covers = (TextView) findViewById(R.id.covers);
-
         status = (TextView) findViewById(R.id.status);
         submit = (Button) findViewById(R.id.submit);
         cancel = (Button) findViewById(R.id.cancel);
@@ -405,12 +359,15 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
         cancel.setVisibility(View.GONE);
         modify.setVisibility(View.GONE);
+
         restaurantName.setText(str_restaurantName+"("+type+")");
         r_nickname.setText(str_nickname);
-
         r_date.setText(year + "년 " + month + "월 " + day + "일");
         r_time.setText(hour + "시 " + minute + "분");
         covers.setText(cover + "명");
+
+        dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
+        scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
     };
 
     View.OnClickListener submitListener = new View.OnClickListener(){
@@ -463,6 +420,19 @@ public class DetailsOfRSRV extends AppCompatActivity {
             alert.show();
         }
     };
+
+    AdapterView.OnItemSelectedListener scoreSpinnerListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            selectedScore = Integer.parseInt(scoreSpinner.getSelectedItem().toString());
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
 
 }
 
