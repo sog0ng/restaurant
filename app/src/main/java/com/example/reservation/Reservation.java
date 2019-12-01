@@ -15,7 +15,7 @@ public class Reservation {
     int covers;
 
     String is_accepted = "null";
-    String is_confirm = "0";
+    String is_confirm = "null";
     String scoredByCustomer = "null";
     String scoredByRestaurant = "null";
 

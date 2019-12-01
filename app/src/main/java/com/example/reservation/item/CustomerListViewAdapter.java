@@ -98,87 +98,81 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
         if (listViewItem != null) {//리스트뷰아이템에 뭐라도 있으면 값을 설정해서 보이도록
             final ViewHolder holder = (ViewHolder) v.getTag();
+            setVisibilityToGone(holder);
+
             holder.restName.setText(listViewItem.getRestaurant_name());
             holder.r_date.setText(listViewItem.getR_date());
             holder.covers.setText(listViewItem.getCovers() + "명");
+            holder.title.setText("예약");
 
-            if (iDday < 0) {
-                //과거내역인 경우
-                holder.title.setText("과거내역");
-                if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
-                    holder.status.setText("<확인 중>");
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getScoredByCustomer().equals("null")) {
-                    holder.status.setText("<방문>");
-                    holder.status.setVisibility(View.GONE);
-                    //holder.confirm.setVisibility(v.GONE);
-                    holder.score.setVisibility(View.VISIBLE);
-                    holder.submit.setVisibility(View.VISIBLE);
+            if (listViewItem.getIs_accepted().equals("null")) {                                     //예약 승인 안됨
 
-                    ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, scoreList);
-                    holder.score.setAdapter(arrayAdapter);
-                    holder.score.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedScore = scoreList.get(i);
-                        }
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("<처리중>");
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-                        }
-                    });
-
-                    holder.submit.setOnClickListener(new Button.OnClickListener() {
-                        public void onClick(View v) {
-                            //평점 DB에 넣어준다 고객이 레스토랑에 대한 평가하는거니까 scoredByCustomer
-                            Toast.makeText(context,
-                                    "평점 " + selectedScore + "점 이 입력되었습니다.",
-                                    Toast.LENGTH_SHORT).show();
-
-                            myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    setScoreGtr(listViewItem, Integer.toString(selectedScore));
-                                    setScore(dataSnapshot, listViewItem);
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                }
-                            });
-
-
-                        }
-                    });
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && !listViewItem.getScoredByCustomer().equals("null")) {
-                    //이미 방문했고, 점수도 준 경우에는 자신이 준 점수만 나오도록 한다.
-                    holder.status.setText("<방문>");
-                    holder.score.setVisibility(View.GONE);
-                    holder.submit.setVisibility(View.GONE);
-                }
-                else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("0")) {
-                    holder.status.setText("<미방문>");
-                } else if (listViewItem.getIs_accepted().equals("0")) {
-                    holder.status.setText("<예약 거절>");
-                } else if (listViewItem.getIs_accepted().equals("-1")) {
-                    holder.status.setText("<예약 취소>");
-                }
-
-            } else {
-                //미래, 오늘 당일 예약
-                holder.title.setText("예약 내역");
-                if (listViewItem.getIs_accepted().equals("null")) {
-                    holder.status.setText("<처리 중>");
-                } else if (listViewItem.getIs_accepted().equals("1")) {
-                    holder.status.setText("<예약 승인>");
-                } else if (listViewItem.getIs_accepted().equals("0")) {
-                    holder.status.setText("<예약 거절>");
-                } else if (listViewItem.getIs_accepted().equals("-1")) {
-                    holder.status.setText("<예약 취소>");
-                }
             }
+            else if (listViewItem.getIs_accepted().equals("1")) {   //예약 승인됨
+
+                if (iDday <= 0) {                                                                   //방문 예정일 : 과거 ~ 오늘
+
+                    if (!listViewItem.getIs_confirm().equals("1")) {                                 //방문 확인 안됨
+
+                        holder.status.setVisibility(View.VISIBLE);
+                        holder.status.setText("<미방문>");
+
+                    } else {        //방문 확인 됨
+
+                        if (listViewItem.getScoredByCustomer().equals("null")) {
+
+                            holder.title.setText("예약 - 평점 입력 대기");
+
+                        } else {
+
+                            holder.title.setText("완료");
+
+                            holder.status.setVisibility(View.VISIBLE);
+                            holder.status.setText("평점 : " + listViewItem.getScoredByRestaurant());
+
+                        }
+
+                    }
+
+                } else {
+
+                    holder.status.setVisibility(View.VISIBLE);
+                    holder.status.setText("<D - " + iDday + ">");
+
+                }
+
+            }
+            else if(listViewItem.getIs_accepted().equals("0")){
+                //예약 거절됨
+                holder.title.setText("완료");
+
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("<예약 거절>");
+
+            }
+            else {
+
+                holder.title.setText("완료");
+
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("<예약 취소>");
+
+            }
+
             v.setTag(holder);
+
         }
 
         return v;
+    }
+
+    private void setVisibilityToGone(ViewHolder holder) {
+        holder.status.setVisibility(View.GONE);
+        holder.scoreSpinner.setVisibility(View.GONE);
+        holder.submitButton.setVisibility(View.GONE);
     }
 
     public void addItemC(String key, String r_id, String owner_id, String restaurant_name, String nickname, int year,
@@ -304,8 +298,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
         final TextView r_date;
         final TextView covers;
         final TextView status;
-        final Spinner score;
-        final Button submit;
+        final Spinner scoreSpinner;
+        final Button submitButton;
 
         public ViewHolder(View root) {
             title = (TextView) root.findViewById(R.id.title);
@@ -314,8 +308,8 @@ public class CustomerListViewAdapter extends BaseAdapter {
             covers = (TextView) root.findViewById(R.id.covers);
 
             status = (TextView) root.findViewById(R.id.status);
-            score = (Spinner) root.findViewById(R.id.score_spinner);
-            submit = (Button) root.findViewById(R.id.submit);
+            scoreSpinner = (Spinner) root.findViewById(R.id.score_spinner);
+            submitButton = (Button) root.findViewById(R.id.submit);
         }
     }
 

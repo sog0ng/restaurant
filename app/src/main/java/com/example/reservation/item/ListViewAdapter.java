@@ -107,6 +107,7 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         if (listViewItem != null) {//리스트뷰아이템에 뭐라도 있으면 값을 설정해서 보이도록
+
             final ViewHolder holder = (ViewHolder) v.getTag();
             setVisibilityToGone(holder);
 
@@ -115,6 +116,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.covers.setText(listViewItem.getCovers() + "명");
 
             if (listViewItem.getIs_accepted().equals("null")) {                                     //예약 승인 안됨
+
                 holder.title.setText("승인 대기");
 
                 holder.acceptButton.setVisibility(View.VISIBLE);
@@ -131,9 +133,14 @@ public class ListViewAdapter extends BaseAdapter {
                         showRejectPopup(listViewItem);
                     }
                 });
-            } else if (listViewItem.getIs_accepted().equals("1")) {                                 //예약 승인됨
-                if (iDday <= 0) {                                                                   //방문 예정일 : 과거 ~ 오늘
-                    if (listViewItem.getIs_confirm().equals("0")) {                                 //방문 확인 안됨
+
+            }
+            else if (listViewItem.getIs_accepted().equals("1")) {                                 //예약 승인됨
+
+                if (iDday <= 0) {
+                    //방문 예정일 : 과거 ~ 오늘
+                    if (listViewItem.getIs_confirm().equals("null")) {                                 //방문 확인 안됨
+
                         holder.title.setText("방문 대기");
 
                         holder.confirmButton.setVisibility(View.VISIBLE);
@@ -152,18 +159,28 @@ public class ListViewAdapter extends BaseAdapter {
                                 showNoshowPopup(listViewItem);
                             }
                         });
+
                     } else {//방문 확인됨
                         if (listViewItem.getScoredByRestaurant().equals("null")) {
+
                             if (listViewItem.getIs_confirm().equals("1")) {
+
                                 holder.title.setText("방문 예약 - 평점 입력 대기");
-                            } else {
-                                holder.title.setText("미방문 예약 - 평점 입력 대기");
+
                             }
+                            else {
+
+                                holder.title.setText("미방문 예약 - 평점 입력 대기");
+
+                            }
+
                         } else {
+
                             holder.title.setText("완료");
 
                             holder.status.setVisibility(View.VISIBLE);
                             holder.status.setText("평점 : " + listViewItem.getScoredByRestaurant());
+
                         }
 
                         /*holder.scoreSpinner.setVisibility(View.VISIBLE);
@@ -206,17 +223,31 @@ public class ListViewAdapter extends BaseAdapter {
                         });*/
                     }
 
-                } else {
+                }
+                else {
+
                     holder.title.setText("승인 완료");
 
                     holder.status.setVisibility(View.VISIBLE);
                     holder.status.setText("D - " + iDday);
+
                 }
-            } else {                                                                                //예약 거절됨
+            }
+            else if (listViewItem.getIs_accepted().equals("0")){
+                //예약 거절됨
                 holder.title.setText("완료");
 
                 holder.status.setVisibility(View.VISIBLE);
                 holder.status.setText("거절된 예약");
+
+            }
+            else {
+
+                holder.title.setText("완료");
+
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("거절된 예약");
+
             }
         }
 
