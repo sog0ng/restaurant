@@ -124,9 +124,9 @@ public class ListViewAdapter extends BaseAdapter {
                         User user_each = childSnapshot.getValue(User.class);
                         if (user_each.getId1().equals(listViewItem.getR_id())) {
                             if (user_each.getCount() < 30)
-                                avgScoreRestaurant = "평점 : 0점";
+                                avgScoreRestaurant = "고객 평점 : 0점";
                             else
-                                avgScoreRestaurant = "평점 : " + user_each.getAvgScore() + "점";
+                                avgScoreRestaurant = "고객 평점 : " + user_each.getAvgScore() + "점";
 
                             holder.scoreTV.setText(avgScoreRestaurant);
                         } else {
@@ -205,7 +205,7 @@ public class ListViewAdapter extends BaseAdapter {
                             holder.title.setText("완료");
 
                             holder.status.setVisibility(View.VISIBLE);
-                            holder.status.setText("평점 : " + listViewItem.getScoredByRestaurant());
+                            holder.status.setText("입력 평점 : " + listViewItem.getScoredByRestaurant());
 
                         }
 

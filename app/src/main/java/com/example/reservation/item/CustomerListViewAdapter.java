@@ -131,7 +131,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
                             holder.title.setText("완료");
 
                             holder.status.setVisibility(View.VISIBLE);
-                            holder.status.setText("평점 : " + listViewItem.getScoredByRestaurant());
+                            holder.status.setText("입력 평점 : " + listViewItem.getScoredByRestaurant());
 
                         }
 
