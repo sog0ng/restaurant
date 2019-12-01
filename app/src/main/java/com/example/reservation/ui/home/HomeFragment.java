@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -26,6 +27,7 @@ import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.reservation.DetailsOfRSRV;
 import com.example.reservation.MainActivity;
 import com.example.reservation.OwnerHomeActivity;
 import com.example.reservation.R;
@@ -132,6 +134,31 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 l_adapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "새로고침 되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListViewItem item = (ListViewItem) l_adapter.getItem(position);
+                Intent detailsOfRSRV = new Intent(getActivity(), DetailsOfRSRV.class);
+                detailsOfRSRV.putExtra("id", id);
+
+                detailsOfRSRV.putExtra("nickname", item.getNickname());
+                detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
+
+                detailsOfRSRV.putExtra("year", item.getYear());
+                detailsOfRSRV.putExtra("month", item.getMonth());
+                detailsOfRSRV.putExtra("day", item.getDay());
+                detailsOfRSRV.putExtra("hour", item.getHour());
+                detailsOfRSRV.putExtra("minute", item.getMinute());
+                detailsOfRSRV.putExtra("covers", item.getCovers());
+                detailsOfRSRV.putExtra("type", item.getType2());
+                detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
+                detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
+
+                System.out.println(item.getNickname());
+                startActivity(detailsOfRSRV);
             }
         });
 
