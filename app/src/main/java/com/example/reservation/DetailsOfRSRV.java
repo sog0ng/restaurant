@@ -98,11 +98,11 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
             if (iDday <= 0) {                                                                   //방문 예정일 : 과거 ~ 오늘
 
-                if (!is_confirm.equals("1")) {                                 //방문 확인 안됨
+                if (is_confirm.equals("null")) {                                 //방문 확인 안됨
 
                     status.setText("미방문");
 
-                } else {        //방문 확인 됨
+                } else if (is_confirm.equals("1")) {        //방문 확인 됨
 
                     if (isOwner.equals("0")) {
 
@@ -131,6 +131,27 @@ public class DetailsOfRSRV extends AppCompatActivity {
                             status.setText("평점 : " + scoredByCustomer);
 
                         }
+
+                    }
+
+                } else {
+                    if (isOwner.equals("0")) {
+
+                        if (scoredByRestaurant.equals("null")) {
+
+                            status.setText("평점 입력 대기");
+                            scorePopupOnwer();
+
+                        }
+                        else {
+
+                            status.setText("평점 : " + scoredByRestaurant);
+
+                        }
+
+                    } else {
+
+                        status.setText("미방문");
 
                     }
 
