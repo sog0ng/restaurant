@@ -40,7 +40,8 @@ public class Reservation2Activity extends AppCompatActivity {
     String owner_id,type;
     private int curYear, curMonth, curDay, curHour, curMin;
     private int rsvYear, rsvMonth, rsvDay, rsvHour, rsvMin;
-    private String rsvWeek, openTimeString, closeTimeString;
+    private String rsvWeek, openTimeString, closeTimeString, avgScoreRestaurant;
+
     Date openTime, closeTime, rsvTime;
 
     @Override
@@ -55,6 +56,7 @@ public class Reservation2Activity extends AppCompatActivity {
         final TextView restaurant_name = (TextView) findViewById(R.id.restaurant_name);
         restaurant_name.setText(intent.getStringExtra("restaurant_name"));
         final TextView type1 = (TextView) findViewById(R.id.type);
+        final TextView scoreTV = (TextView) findViewById(R.id.scoreTV);
 
         final String restaurant_name1=intent.getStringExtra("restaurant_name");
         final String r_id=intent.getExtras().getString("id");
@@ -75,9 +77,17 @@ public class Reservation2Activity extends AppCompatActivity {
                 for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
                     User user_each = childSnapshot.getValue(User.class);
                     if(user_each.getRestaurant_name().equals(restaurant_name1)){
-                        owner_id=user_each.getId1();
-                        type=user_each.getType();
+                        owner_id = user_each.getId1();
+                        type = user_each.getType();
+                        int scoreCount = user_each.getCount();
+                        if (scoreCount < 30 )
+                            avgScoreRestaurant = "평점 : 0점";
+                        else
+                            avgScoreRestaurant = "평점 : " + user_each.getAvgScore() + "점";
+
                         type1.setText(type);
+
+                        scoreTV.setText(avgScoreRestaurant);
                         Log.i("사장아이디",owner_id);
                         Log.i("type",type);
 

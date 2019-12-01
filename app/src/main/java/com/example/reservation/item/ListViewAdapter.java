@@ -51,6 +51,8 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
     private int selectedScore;
 
+    private String avgScoreRestaurant;
+
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
     }
@@ -114,6 +116,30 @@ public class ListViewAdapter extends BaseAdapter {
             holder.nickname.setText(listViewItem.getNickname());
             holder.r_date.setText(listViewItem.getR_date());
             holder.covers.setText(listViewItem.getCovers() + "명");
+
+            myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        User user_each = childSnapshot.getValue(User.class);
+                        if (user_each.getId1().equals(listViewItem.getR_id())) {
+                            if (user_each.getCount() < 30)
+                                avgScoreRestaurant = "평점 : 0점";
+                            else
+                                avgScoreRestaurant = "평점 : " + user_each.getAvgScore() + "점";
+
+                            holder.scoreTV.setText(avgScoreRestaurant);
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
             if (listViewItem.getIs_accepted().equals("null")) {                                     //예약 승인 안됨
 
@@ -459,6 +485,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     public class ViewHolder {
         final TextView title;
+        final  TextView scoreTV;
 
         final TextView nickname;
         final TextView r_date;
@@ -477,6 +504,7 @@ public class ListViewAdapter extends BaseAdapter {
 
         public ViewHolder(View root) {
             title = (TextView) root.findViewById(R.id.title);
+            scoreTV = (TextView) root.findViewById(R.id.scoreTV);
 
             nickname = (TextView) root.findViewById(R.id.nickname);
             r_date = (TextView) root.findViewById(R.id.r_date);
