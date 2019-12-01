@@ -1,27 +1,42 @@
 package com.example.reservation;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.reservation.item.ListViewItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
 public class DetailsOfRSRV extends AppCompatActivity {
+    DatabaseReference myRefReservation;
+    DatabaseReference myRefUser;
+
+    private String key, r_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +44,28 @@ public class DetailsOfRSRV extends AppCompatActivity {
         setContentView(R.layout.details_of_reservation);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("Reservation");
+        myRefReservation = database.getReference("Reservation/");
+        myRefUser = database.getReference("User_info/");
 
-        final String str_nickname=getIntent().getStringExtra("nickname");
-        final String str_restaurantName = getIntent().getStringExtra("restaurant_name");
-        final int year = getIntent().getIntExtra("year",0);
-        final int month = getIntent().getIntExtra("month",0);
-        final int day = getIntent().getIntExtra("day",0);
-        final int hour = getIntent().getIntExtra("hour",0);
-        final int minute = getIntent().getIntExtra("minute",0);
-        final int cover = getIntent().getIntExtra("covers", 0);
-        final String key=getIntent().getStringExtra("key");
-        final String is_accepted = getIntent().getStringExtra("is_accepted");//예약 승인여부
-        final String is_confirm = getIntent().getStringExtra("is_confirm");//방문 확인ㄴ 여부
-        final String type = getIntent().getStringExtra("type");
+        Intent intent = getIntent();
+
+        final String str_nickname = intent.getStringExtra("nickname");
+        final String str_restaurantName = intent.getStringExtra("restaurant_name");
+        final int year = intent.getIntExtra("year",0);
+        final int month = intent.getIntExtra("month",0);
+        final int day = intent.getIntExtra("day",0);
+        final int hour = intent.getIntExtra("hour",0);
+        final int minute = intent.getIntExtra("minute",0);
+        final int cover = intent.getIntExtra("covers", 0);
+        key = intent.getStringExtra("key");
+        final String is_accepted = intent.getStringExtra("is_accepted");//예약 승인여부
+        final String is_confirm = intent.getStringExtra("is_confirm");//방문 확인ㄴ 여부
+        final String type = intent.getStringExtra("type");
+        final String isOwner = intent.getStringExtra("isOwner");
+        final String scoredByCustomer = intent.getStringExtra("scoredByCustomer");
+        final String scoredByRestaurant = intent.getStringExtra("scoredByRestaurant");
+        r_id = intent.getStringExtra("r_id");
+
         int iDday = countDday(year, month, day);
 
         TextView r_nickname = (TextView) findViewById(R.id.r_nickname);
@@ -66,40 +89,76 @@ public class DetailsOfRSRV extends AppCompatActivity {
         covers.setText(cover + "명");
 
 
-        if (iDday < 0) {
-            //과거내역인 경우
-            if (is_accepted.equals("1") && is_confirm.equals("null")) {
-                status.setText("방문 확인 중");
-            } else if (is_accepted.equals("1") && is_confirm.equals("1")) {
-                status.setText("방문");
-            } else if (is_accepted.equals("1") && is_confirm.equals("0")) {
-                status.setText("미방문");
-            } else if(is_accepted.equals("0")){
-                status.setText("예약 거절");
-            }else if(is_accepted.equals("-1")){
-                status.setText("예약 취소");
-            }
-        } else {
-            //미래에 대한 것
-            if (is_accepted.equals("null")) {
-                status.setText("예약 처리 중");
-            } else if (is_accepted.equals("1")) {
-                status.setText("예약 승인");
-            } else if (is_accepted.equals("0")) {
-                status.setText("예약 거절");
-            }else if (is_accepted.equals("-1")) {
-                status.setText("예약 취소");
-            }
-        }
+        if (is_accepted.equals("null")) {                                     //예약 승인 안됨
 
+            status.setText("처리중");
+
+        }
+        else if (is_accepted.equals("1")) {   //예약 승인됨
+
+            if (iDday <= 0) {                                                                   //방문 예정일 : 과거 ~ 오늘
+
+                if (!is_confirm.equals("1")) {                                 //방문 확인 안됨
+
+                    status.setText("미방문");
+
+                } else {        //방문 확인 됨
+
+                    if (isOwner.equals("0")) {
+
+                        if (scoredByRestaurant.equals("null")) {
+
+                            status.setText("평점 입력 대기");
+                            scorePopup();
+
+                        }
+                        else {
+
+                            status.setText("평점 : " + scoredByRestaurant);
+
+                        }
+
+                    }
+                    else {
+
+                        if (scoredByCustomer.equals("null")) {
+
+                            status.setText("평점 입력 대기");
+                            scorePopup();
+
+                        } else {
+
+                            status.setText("평점 : " + scoredByCustomer);
+
+                        }
+
+                    }
+
+                }
+
+            } else {
+
+                status.setText("방문 예정 : D - " + iDday);
+
+            }
+
+        }
+        else if(is_accepted.equals("0")){
+
+            status.setText("예약 거절");
+
+        }
+        else {
+
+            status.setText("예약 취소");
+
+        }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-
 
         if ((countDday(year, month, day) >= 1 ) && (is_accepted.equals("null"))) {//하루 이전이고 예약 미처리 경우, 수정 가능,취소 불가
             modify.setVisibility(View.VISIBLE);
@@ -145,7 +204,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        myRef.child(key).child("is_accepted").setValue("-1");
+                        myRefReservation.child(key).child("is_accepted").setValue("-1");
                     }
                 });
                 alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -159,9 +218,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
         });
 
     }
-
-
-
 
     public int countDday(int myear, int mmonth, int mday) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -178,6 +234,98 @@ public class DetailsOfRSRV extends AppCompatActivity {
         long count = dday - today;
 
         return (int) count;
+    }
+
+    Spinner scoreSpinner;
+
+    int selectedScore;
+    String tmp;
+
+    void scorePopup() {
+        View dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
+        builder.setTitle("평점 입력");
+        builder.setMessage("방문한 고객은 어땠나요?");
+
+        builder.setView(dialogView);
+
+        scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
+
+        scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               selectedScore = Integer.parseInt(scoreSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(DetailsOfRSRV.this, "평점 " + selectedScore + "점 이 입력되었습니다.", Toast.LENGTH_SHORT).show();
+
+                        setScoredByRestaurant(Integer.toString(selectedScore));
+
+                        myRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                setScore(dataSnapshot);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+                        });
+
+                    }
+
+                });
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+    public void setScoredByRestaurant(String value) {
+        myRefReservation.child(key).child("scoredByRestaurant").setValue(value);
+    }
+
+    public void setScore(@NonNull DataSnapshot dataSnapshot) {
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+
+            User user_each = childSnapshot.getValue(User.class);
+
+            if (user_each.getId1().equals(r_id)) {
+
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + selectedScore);
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRefUser.child(childSnapshot.getKey()).child("sumScore").setValue(user_each.getSumScore());
+                myRefUser.child(childSnapshot.getKey()).child("count").setValue(user_each.getCount());
+                myRefUser.child(childSnapshot.getKey()).child("avgScore").setValue(user_each.getAvgScore());
+
+                break;
+            }
+
+        }
+
     }
 
 }

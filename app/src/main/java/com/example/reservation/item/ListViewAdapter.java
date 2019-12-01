@@ -183,44 +183,6 @@ public class ListViewAdapter extends BaseAdapter {
 
                         }
 
-                        /*holder.scoreSpinner.setVisibility(View.VISIBLE);
-                        holder.submitButton.setVisibility(View.VISIBLE);
-
-                        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context,
-                                R.layout.support_simple_spinner_dropdown_item, scoreList);
-                        holder.scoreSpinner.setAdapter(arrayAdapter);
-                        holder.scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectedScore = scoreList.get(i);
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {
-                            }
-                        });
-
-                        holder.submitButton.setOnClickListener(new Button.OnClickListener() {
-                            public void onClick(View v) {
-                                Toast.makeText(context,
-                                        "평점 " + selectedScore + "점 이 입력되었습니다.",
-                                        Toast.LENGTH_SHORT).show();
-                                holder.status.setText(Integer.toString(selectedScore)); //사장 화면에 몇점줬는지 나오도록 텍스트 설정만
-
-                                //평점 DB에 넣어준다 사장이 고객에 대한 평가하는거니까 scoredByReservation
-                                myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        setScoreGtc(listViewItem, Integer.toString(selectedScore));
-                                        setScore(dataSnapshot, listViewItem);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    }
-                                });
-                            }
-                        });*/
                     }
 
                 }

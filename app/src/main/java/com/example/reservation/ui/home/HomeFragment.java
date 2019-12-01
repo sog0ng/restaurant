@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
 
         final String id1 = intent.getExtras().getString("id");
         final String key1 = intent.getExtras().getString("key");
+        final String isOwner = intent.getStringExtra("isOwner");
 
         Log.i("id야 나와라", id1);
         Log.i("키야 나와라", key1);
@@ -143,10 +144,10 @@ public class HomeFragment extends Fragment {
                 ListViewItem item = (ListViewItem) l_adapter.getItem(position);
                 Intent detailsOfRSRV = new Intent(getActivity(), DetailsOfRSRV.class);
                 detailsOfRSRV.putExtra("id", id);
-
+                detailsOfRSRV.putExtra("r_id", item.getR_id());
                 detailsOfRSRV.putExtra("nickname", item.getNickname());
                 detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
-
+                detailsOfRSRV.putExtra("key", item.getKey());
                 detailsOfRSRV.putExtra("year", item.getYear());
                 detailsOfRSRV.putExtra("month", item.getMonth());
                 detailsOfRSRV.putExtra("day", item.getDay());
@@ -156,6 +157,9 @@ public class HomeFragment extends Fragment {
                 detailsOfRSRV.putExtra("type", item.getType2());
                 detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
                 detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
+                detailsOfRSRV.putExtra("scoredByCustomer", item.getScoredByCustomer());
+                detailsOfRSRV.putExtra("scoredByRestaurant", item.getScoredByRestaurant());
+                detailsOfRSRV.putExtra("isOwner", isOwner);
 
                 System.out.println(item.getNickname());
                 startActivity(detailsOfRSRV);

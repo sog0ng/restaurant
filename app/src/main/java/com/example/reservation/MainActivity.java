@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent owner = new Intent(getApplicationContext(), OwnerHomeActivity.class);//사장 첫화면으로
                                     owner.putExtra("key", key);
                                     owner.putExtra("id", editid.getText().toString());
+                                    owner.putExtra("isOwner", user_each.getIs_owner());
                                     saveForAutoLogin();
                                     startActivity(owner);
                                 } else {//고객인 경우
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent customer = new Intent(getApplicationContext(), CustomerHomeActivity.class);//손님 첫화면으로
                                     customer.putExtra("key", key);
                                     customer.putExtra("id", editid.getText().toString());
+                                    customer.putExtra("isOwner", user_each.getIs_owner());
                                     saveForAutoLogin();
                                     startActivity(customer);
                                 }

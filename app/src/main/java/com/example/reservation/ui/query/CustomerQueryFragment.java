@@ -55,6 +55,7 @@ public class CustomerQueryFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         final String id = intent.getExtras().getString("id");
         final String key = intent.getExtras().getString("key");
+        final String isOwner = intent.getStringExtra("isOwner");
 
         Log.i("id야 나와라", id);
         Log.i("키야 나와라", key);
@@ -91,7 +92,7 @@ public class CustomerQueryFragment extends Fragment {
                 ListViewItem item = (ListViewItem) adapter.getItem(position);
                 Intent detailsOfRSRV = new Intent(getActivity(), DetailsOfRSRV.class);
                 detailsOfRSRV.putExtra("id", id);
-
+                detailsOfRSRV.putExtra("r_id", item.getR_id());
                 detailsOfRSRV.putExtra("nickname", item.getNickname());
                 detailsOfRSRV.putExtra("restaurant_name", item.getRestaurant_name());
                 detailsOfRSRV.putExtra("key", item.getKey());
@@ -104,6 +105,9 @@ public class CustomerQueryFragment extends Fragment {
                 detailsOfRSRV.putExtra("type", item.getType2());
                 detailsOfRSRV.putExtra("is_accepted", item.getIs_accepted());//예약 승인 여부
                 detailsOfRSRV.putExtra("is_confirm", item.getIs_confirm());//방문 여부
+                detailsOfRSRV.putExtra("scoredByCustomer", item.getScoredByCustomer());
+                detailsOfRSRV.putExtra("scoredByRestaurant", item.getScoredByRestaurant());
+                detailsOfRSRV.putExtra("isOwner", isOwner);
                 startActivity(detailsOfRSRV);
             }
         });
