@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("넌.이.예.");
         setContentView(R.layout.activity_main);
 
         initView();

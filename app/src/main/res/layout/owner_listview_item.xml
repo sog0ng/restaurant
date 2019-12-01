@@ -94,7 +94,6 @@
             android:id="@+id/noshowButton"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
             android:layout_gravity="bottom"
             android:text="미방문"
             android:visibility="gone" />
