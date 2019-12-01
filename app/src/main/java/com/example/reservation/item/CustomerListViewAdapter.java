@@ -51,6 +51,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
     public CustomerListViewAdapter(Activity activity) {
         this.activity = activity;
     }
+    public CustomerListViewAdapter(){};
 
     @Override
     public int getCount() {

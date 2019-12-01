@@ -56,6 +56,7 @@ public class ListViewAdapter extends BaseAdapter {
     public ListViewAdapter(Activity activity) {
         this.activity = activity;
     }
+    public ListViewAdapter(){};
 
     public ListViewAdapter(CustomerHomeActivity customerHomeActivity, int simple_list_item_1, ArrayList<User> list) {
 

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         autoLogin = findViewById(R.id.autoLogin);
     }
 
-    private void initDatabase() {
+    public void initDatabase() {
         database = FirebaseDatabase.getInstance();
         myRef1 = getMyRef1();
         setting = getSharedPreferences("login", 0);
