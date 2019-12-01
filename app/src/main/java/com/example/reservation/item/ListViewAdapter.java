@@ -152,14 +152,21 @@ public class ListViewAdapter extends BaseAdapter {
                                 showNoshowPopup(listViewItem);
                             }
                         });
-                    } else {                                                                        //방문 확인됨
-                        if (listViewItem.getIs_confirm().equals("1")) {
-                            holder.title.setText("방문 예약 - 평점 입력 대기");
+                    } else {//방문 확인됨
+                        if (listViewItem.getScoredByRestaurant().equals("null")) {
+                            if (listViewItem.getIs_confirm().equals("1")) {
+                                holder.title.setText("방문 예약 - 평점 입력 대기");
+                            } else {
+                                holder.title.setText("미방문 예약 - 평점 입력 대기");
+                            }
                         } else {
-                            holder.title.setText("미방문 예약 - 평점 입력 대기");
+                            holder.title.setText("완료");
+
+                            holder.status.setVisibility(View.VISIBLE);
+                            holder.status.setText("평점 : " + listViewItem.getScoredByRestaurant());
                         }
 
-                        holder.scoreSpinner.setVisibility(View.VISIBLE);
+                        /*holder.scoreSpinner.setVisibility(View.VISIBLE);
                         holder.submitButton.setVisibility(View.VISIBLE);
 
                         ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(context,
@@ -196,7 +203,7 @@ public class ListViewAdapter extends BaseAdapter {
                                     }
                                 });
                             }
-                        });
+                        });*/
                     }
 
                 } else {
@@ -437,7 +444,7 @@ public class ListViewAdapter extends BaseAdapter {
             User user_each = childSnapshot.getValue(User.class);
             if (user_each.getId1().equals(myRef2.child(item.getR_id()))) {
                 Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
-                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtc()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getScoredByRestaurant()));
                 user_each.setCount(user_each.getCount() + 1);
                 user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
                 Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));

@@ -24,8 +24,8 @@ public class ListViewItem {
     private String restaurant_name;
     private String is_accepted = "null";//기본값 "null"
     private String is_confirm = "null";//기본값 "null"
-    private String gtr = "null";//기본값 "null"
-    private String gtc = "null";//기본값 "null"
+    private String scoredByCustomer = "null";//기본값 "null"
+    private String scoredByRestaurant = "null";//기본값 "null"
     private String type2;
 
     public String getPhone_num() { return phone_num; }
@@ -166,20 +166,20 @@ public class ListViewItem {
         this.restaurant_name = restaurant_name;
     }
 
-    public String getGtr() {
-        return gtr;
+    public String getScoredByCustomer() {
+        return scoredByCustomer;
     }
 
-    public void setGtr(String gtr) {
-        this.gtr = gtr;
+    public void setScoredByCustomer(String gtr) {
+        this.scoredByCustomer = scoredByCustomer;
     }
 
-    public String getGtc() {
-        return gtc;
+    public String getScoredByRestaurant() {
+        return scoredByRestaurant;
     }
 
-    public void setGtc(String gtr) {
-        this.gtc = gtc;
+    public void setScoredByRestaurant(String gtr) {
+        this.scoredByRestaurant = scoredByRestaurant;
     }
 }
 

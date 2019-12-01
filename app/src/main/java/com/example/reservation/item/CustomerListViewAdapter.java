@@ -107,7 +107,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
                 holder.title.setText("과거내역");
                 if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("null")) {
                     holder.status.setText("<확인 중>");
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getGtr().equals("null")) {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && listViewItem.getScoredByCustomer().equals("null")) {
                     holder.status.setText("<방문>");
                     holder.status.setVisibility(View.GONE);
                     //holder.confirm.setVisibility(v.GONE);
@@ -148,7 +148,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
 
                         }
                     });
-                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && !listViewItem.getGtr().equals("null")) {
+                } else if (listViewItem.getIs_accepted().equals("1") && listViewItem.getIs_confirm().equals("1") && !listViewItem.getScoredByCustomer().equals("null")) {
                     //이미 방문했고, 점수도 준 경우에는 자신이 준 점수만 나오도록 한다.
                     holder.status.setText("<방문>");
                     holder.score.setVisibility(View.GONE);
@@ -281,7 +281,7 @@ public class CustomerListViewAdapter extends BaseAdapter {
             User user_each = childSnapshot.getValue(User.class);
             if (user_each.getId1().equals(myRef2.child(item.getOwner_id()))) {
                 Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
-                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getGtr()));
+                user_each.setSumScore(user_each.getSumScore() + Integer.parseInt(item.getScoredByCustomer()));
                 user_each.setCount(user_each.getCount() + 1);
                 user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
                 Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));

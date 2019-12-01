@@ -17,7 +17,7 @@ public class Reservation {
     String is_accepted = "null";
     String is_confirm = "0";
     String scoredByCustomer = "null";
-    String scoredByReservation = "null";
+    String scoredByRestaurant = "null";
 
     String is_owner;
     String owner_id;
@@ -107,11 +107,11 @@ public class Reservation {
         this.scoredByCustomer = scoredByCustomer;
     }
 
-    public String getScoredByReservation() {
-        return scoredByReservation;
+    public String getScoredByRestaurant() {
+        return scoredByRestaurant;
     }
-    public void setScoredByReservation(String scoredByReservation) {
-        this.scoredByReservation = scoredByReservation;
+    public void setScoredByRestaurant(String scoredByRestaurant) {
+        this.scoredByRestaurant = scoredByRestaurant;
     }
 
     public String getIs_owner() {

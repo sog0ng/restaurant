@@ -83,7 +83,7 @@ public class ResultActivity extends AppCompatActivity {
                 reservation.setR_id(id);
                 reservation.setHour(hour);
                 reservation.setMinute(minute);
-                reservation.setScoredByReservation("null");//가게가 손님할때 주는 평점
+                reservation.setScoredByRestaurant("null");//가게가 손님할때 주는 평점
                 reservation.setScoredByCustomer("null");//손님님이 가게한테 주는 평점
                 reservation.setIs_owner("1");
                 reservation.setOwner_id(owner_id);
