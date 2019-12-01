@@ -170,7 +170,7 @@ public class ListViewItem {
         return scoredByCustomer;
     }
 
-    public void setScoredByCustomer(String gtr) {
+    public void setScoredByCustomer(String scoredByCustomer) {
         this.scoredByCustomer = scoredByCustomer;
     }
 
@@ -178,7 +178,7 @@ public class ListViewItem {
         return scoredByRestaurant;
     }
 
-    public void setScoredByRestaurant(String gtr) {
+    public void setScoredByRestaurant(String scoredByRestaurant) {
         this.scoredByRestaurant = scoredByRestaurant;
     }
 }

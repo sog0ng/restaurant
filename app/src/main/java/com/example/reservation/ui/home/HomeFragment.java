@@ -164,7 +164,8 @@ public class HomeFragment extends Fragment {
                         reservation_each.getNickname(),
                         reservation_each.getYear(), reservation_each.getMonth(), reservation_each.getDay(),
                         reservation_each.getHour(), reservation_each.getMinute(), reservation_each.getCovers(),
-                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType());
+                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType(),
+                        reservation_each.getScoredByRestaurant(), reservation_each.getScoredByCustomer());
                 //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
             } else {
                 continue;

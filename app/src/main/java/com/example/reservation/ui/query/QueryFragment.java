@@ -163,27 +163,28 @@ public class QueryFragment extends Fragment {
 
                 Log.i("닉네임:", reservation_each.getNickname());
                 Log.i("연도", Integer.toString(reservation_each.getYear()));
-                l_adapter.addItem(childSnapshot.getKey(),
-                        reservation_each.getR_id(), reservation_each.getOwner_id(),
-                        reservation_each.getNickname(),
+
+                l_adapter.addItem(childSnapshot.getKey(), reservation_each.getR_id(),
+                        reservation_each.getOwner_id(), reservation_each.getNickname(),
                         reservation_each.getYear(), reservation_each.getMonth(),
                         reservation_each.getDay(), reservation_each.getHour(),
                         reservation_each.getMinute(), reservation_each.getCovers(),
-                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType());
+                        reservation_each.getIs_accepted(), reservation_each.getIs_confirm(),reservation_each.getType(),
+                        reservation_each.getScoredByRestaurant(), reservation_each.getScoredByCustomer());
 
-                //Toast.makeText(getContext(), reservation_each.getNickname()+"\nrestaurant1: "+myRestaurant,Toast.LENGTH_LONG).show();
-            } else {
-                continue;
             }
+
         }
-        //과거 예약내역 조회를 위한 임시데이터
-        //l_adapter.addItem("key1", "징징이", 2000, 1, 1, 1, 00, 3);
-        //l_adapter.addItem("key2", "집게사장", 2000, 5, 5, 5, 50, 2);
+
         if (l_adapter.isEmpty()) {
+
             Toast.makeText(getContext(), "예약 내역이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
+
         }
+
         l_adapter.sort();//시간순 정렬
         l_adapter.notifyDataSetChanged();//새로고침
+
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) { // Get list adpter of listview;
@@ -206,5 +207,7 @@ public class QueryFragment extends Fragment {
         params.height = totalItemsHeight + totalDividersHeight;
         listView.setLayoutParams(params);
         listView.requestLayout();
+
     }
+
 }
