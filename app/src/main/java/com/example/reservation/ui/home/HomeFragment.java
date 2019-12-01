@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
 
     boolean loadFirstToday = true, loadFirstAll = true;
 
-    Calendar today;
+//    Calendar today;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
         l_adapter = new ListViewAdapter(getActivity());
         listview.setAdapter(l_adapter);//어댑터 지정해주고
 
-        today = Calendar.getInstance(Locale.KOREA);//오늘 날짜 갱신
+//        today = Calendar.getInstance(Locale.KOREA);//오늘 날짜 갱신
 
         //레스토랑 이름으로 자신의 리스트 addItem
         myRef2.addValueEventListener(new ValueEventListener() {
@@ -213,7 +213,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private boolean checkToday(Reservation reservation){
+    public boolean checkToday(Reservation reservation){
+        Calendar today = Calendar.getInstance(Locale.KOREA);
         boolean result=false;
         if(reservation.getYear()==today.get(Calendar.YEAR)&&(reservation.getMonth()==today.get(Calendar.MONTH)+1)&&(reservation.getDay()==today.get(Calendar.DATE))){
             result = true;

@@ -47,7 +47,7 @@ public class StatisticsFragment extends Fragment {
     int thu;
     int fri;
     int sat;
-    Calendar today;
+//    Calendar today;
     ArrayList<Integer> al1;
     //ArrayList<Integer> ydata;
     ArrayList<String> bTL;
@@ -55,7 +55,7 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
 
-        today = Calendar.getInstance(Locale.KOREA);
+//        today = Calendar.getInstance(Locale.KOREA);
 
         final FirebaseDatabase database1 = FirebaseDatabase.getInstance();
         final DatabaseReference myRef1 = database1.getReference("User_info/");
@@ -204,9 +204,10 @@ public class StatisticsFragment extends Fragment {
         }
     }
 
-    private boolean checkInMonth(Reservation reservation) {
+    public boolean checkInMonth(Reservation reservation) {
+        Calendar today = Calendar.getInstance(Locale.KOREA);
         if( reservation.getYear()==today.get(Calendar.YEAR) && reservation.getMonth() == (today.get(Calendar.MONTH) + 1)) {  // 오늘에서 1달 전후이면
-            Log.i("날짜 차이: ", (today.get(Calendar.MONTH) + 1 - reservation.getMonth())+"");
+//            Log.i("날짜 차이: ", (today.get(Calendar.MONTH) + 1 - reservation.getMonth())+"");
             return true;
         } else {
             return false;
