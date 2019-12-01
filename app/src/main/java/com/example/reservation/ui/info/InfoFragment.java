@@ -38,21 +38,29 @@ import java.util.regex.Pattern;
 
 public class InfoFragment extends Fragment {
     private Context context;
+    private View root;
     private InfoViewModel infoViewModel;
-    private String phone;
-    private String pw;
+    private TextView textView;
+
+    FirebaseDatabase database1;
+    DatabaseReference myRef1;
+    Intent intent;
+
+    private String id1, key1, pw, phone;
+
     EditText editpassword, editpassword_check, editphone_num, editid1;
     Button editsubmit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         context = container.getContext();
-        infoViewModel =
-                ViewModelProviders.of(this).get(InfoViewModel.class);
+        root = inflater.inflate(R.layout.fragment_info, container, false);
 
-        View root = inflater.inflate(R.layout.fragment_info, container, false);
+        initView();
+        initDatabase();
+        initData();
 
-        final TextView textView = root.findViewById(R.id.text_info);
 
         infoViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -60,29 +68,14 @@ public class InfoFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef1 = database1.getReference("User_info/");
-
-        Intent intent=getActivity().getIntent();
-        final String id1= intent.getExtras().getString("id");
-        final String key1 = intent.getExtras().getString("key");
-        Log.i("info_id",id1);
-        Log.i("info_key",key1);
 
         checkPwDialog(id1, key1);
 
-        editid1 = (EditText) root.findViewById(R.id.id1);
-        editpassword = (EditText) root.findViewById(R.id.password);
-        editpassword_check = (EditText) root.findViewById(R.id.password_check);
-        editphone_num = (EditText) root.findViewById(R.id.phone_num);
-        editsubmit = (Button) root.findViewById(R.id.submit);
 
         myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 setInfo(dataSnapshot, id1);
-
-
 
                 editid1.setHint(id1);
                 editpassword.setText(pw);
@@ -94,56 +87,7 @@ public class InfoFragment extends Fragment {
 
                         PhoneNumberFormattingTextWatcher());
 
-                editsubmit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // 비밀번호 입력 확인
-                        if (editpassword.getText().toString().length() == 0) {
-                            Toast.makeText(context, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
-                            editpassword.requestFocus();
-                            return;
-                        }
-                        // 비밀번호 확인 입력 확인
-                        if (editpassword_check.getText().toString().length() == 0) {
-                            Toast.makeText(context, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
-                            editpassword_check.requestFocus();
-                            return;
-                        }
-                        // 비밀번호 일치 확인
-                        if (!editpassword.getText().toString().equals(editpassword_check.getText().toString())) {
-                            Toast.makeText(context, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
-                            editpassword.setText("");
-                            editpassword_check.setText("");
-                            editpassword.requestFocus();
-                            return;
-                        }
-                        // 비밀번호 조건 확인
-                        if (!ConfirmPassword(editpassword.getText().toString())) {
-                            Toast.makeText(context, "8~16자 길이로 영어 대소문자, 숫자를 혼합하세요!", Toast.LENGTH_SHORT).show();
-                            editpassword.setText("");
-                            editpassword_check.setText("");
-                            editpassword.requestFocus();
-                            return;
-                        }
-                        // 전화 번호 조건 확인
-                        if (!ConfirmPhonenum(editphone_num.getText().toString())) {
-                            Toast.makeText(context, "올바른 번호를 입력하세요!", Toast.LENGTH_SHORT).show();
-                            editphone_num.setText("");
-                            editphone_num.requestFocus();
-                            return;
-                        }
-                        myRef1.child(key1).child("password").setValue(editpassword.getText().toString());//비밀번호 변경
-                        myRef1.child(key1).child("phone_num").setValue(editphone_num.getText().toString());//번호 변경
-                        Toast.makeText(context, "변경사항이 수정되었습니다.", Toast.LENGTH_LONG).show();
-                    }
-
-
-                });
-
-
-
-
+                editsubmit.setOnClickListener(editsubmitListener);
 
             }
 
@@ -151,7 +95,6 @@ public class InfoFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
 
         return root;
     }
@@ -229,14 +172,11 @@ public class InfoFragment extends Fragment {
     }
 
 
-    void checkPwDialog(final String id1,final String key)
-    {
+    void checkPwDialog(final String id1, final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("비밀 번호 확인");
         builder.setMessage("본인확인 위해 비밀번호를 입력해주세요");
         final EditText input = new EditText(getActivity());
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef1 = database1.getReference("User_info/");
 
         builder.setView(input);
         builder.setPositiveButton("확인",
@@ -248,24 +188,24 @@ public class InfoFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 boolean login_success = false;
                                 String is_owner = "0";
-                                Intent intent;
+
                                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                    String key = childSnapshot.getKey();
+
                                     User user_each = childSnapshot.getValue(User.class);
 
-                                    if(id1.equals(user_each.getId1())) {
+                                    if (id1.equals(user_each.getId1())) {
                                         is_owner = user_each.getIs_owner();
                                     }
                                     if (id1.equals(user_each.getId1())
                                             && input.getText().toString().equals(user_each.getPassword())) {
-                                        Toast.makeText(getContext(), "아이디와 비밀번호가 일치 합니다.",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "아이디와 비밀번호가 일치 합니다.", Toast.LENGTH_SHORT).show();
                                         login_success = true;
                                         break;
                                     }
                                 }
-                                if(!login_success) {
+                                if (!login_success) {
                                     Toast.makeText(getContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                    if(is_owner.equals("0"))
+                                    if (is_owner.equals("0"))
                                         intent = new Intent(getContext(), OwnerHomeActivity.class);
                                     else
                                         intent = new Intent(getContext(), CustomerHomeActivity.class);
@@ -274,6 +214,7 @@ public class InfoFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
                             }
@@ -284,4 +225,73 @@ public class InfoFragment extends Fragment {
         builder.setCancelable(false);
         builder.show();
     }
+
+    private void initView() {
+        infoViewModel =
+                ViewModelProviders.of(this).get(InfoViewModel.class);
+        textView = root.findViewById(R.id.text_info);
+    }
+
+    private void initDatabase(){
+        database1 = FirebaseDatabase.getInstance();
+        myRef1 = database1.getReference("User_info/");
+    }
+
+    private void initData(){
+        intent=getActivity().getIntent();
+        id1= intent.getExtras().getString("id");
+        key1 = intent.getExtras().getString("key");
+
+        editid1 = (EditText) root.findViewById(R.id.id1);
+        editpassword = (EditText) root.findViewById(R.id.password);
+        editpassword_check = (EditText) root.findViewById(R.id.password_check);
+        editphone_num = (EditText) root.findViewById(R.id.phone_num);
+        editsubmit = (Button) root.findViewById(R.id.submit);
+
+    }
+
+    View.OnClickListener editsubmitListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+            // 비밀번호 입력 확인
+            if (editpassword.getText().toString().length() == 0) {
+                Toast.makeText(context, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                editpassword.requestFocus();
+                return;
+            }
+            // 비밀번호 확인 입력 확인
+            if (editpassword_check.getText().toString().length() == 0) {
+                Toast.makeText(context, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
+                editpassword_check.requestFocus();
+                return;
+            }
+            // 비밀번호 일치 확인
+            if (!editpassword.getText().toString().equals(editpassword_check.getText().toString())) {
+                Toast.makeText(context, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
+                editpassword.setText("");
+                editpassword_check.setText("");
+                editpassword.requestFocus();
+                return;
+            }
+            // 비밀번호 조건 확인
+            if (!ConfirmPassword(editpassword.getText().toString())) {
+                Toast.makeText(context, "8~16자 길이로 영어 대소문자, 숫자를 혼합하세요!", Toast.LENGTH_SHORT).show();
+                editpassword.setText("");
+                editpassword_check.setText("");
+                editpassword.requestFocus();
+                return;
+            }
+            // 전화 번호 조건 확인
+            if (!ConfirmPhonenum(editphone_num.getText().toString())) {
+                Toast.makeText(context, "올바른 번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                editphone_num.setText("");
+                editphone_num.requestFocus();
+                return;
+            }
+            myRef1.child(key1).child("password").setValue(editpassword.getText().toString());//비밀번호 변경
+            myRef1.child(key1).child("phone_num").setValue(editphone_num.getText().toString());//번호 변경
+            Toast.makeText(context, "변경사항이 수정되었습니다.", Toast.LENGTH_LONG).show();
+        }
+    };
 }

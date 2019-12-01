@@ -42,7 +42,12 @@ import java.util.List;
 
 public class ManageFragment extends Fragment {
     private Context context;
+    private View root;
     private ManageViewModel shareViewModel;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef1;
+
     private String restaurant1 = "";
     private String open_hour="";
     private String close_hour="";
@@ -56,15 +61,13 @@ public class ManageFragment extends Fragment {
                              final ViewGroup container, Bundle savedInstanceState) {
 
         context=container.getContext();
+        root = inflater.inflate(R.layout.fragment_manage, container, false);
+
         shareViewModel =
                 ViewModelProviders.of(this).get(ManageViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_manage, container, false);
 
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef1 = database1.getReference("User_info/");
+        initDatabase();
 
-        FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef2 = database1.getReference("Reservation/");
 
         Intent intent = getActivity().getIntent();
 
@@ -220,5 +223,9 @@ public class ManageFragment extends Fragment {
                 });
         builder.setCancelable(false);
         builder.show();
+    }
+    private void initDatabase(){
+        database = FirebaseDatabase.getInstance();
+        myRef1 = database.getReference("User_info/");
     }
 }
