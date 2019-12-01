@@ -33,60 +33,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.w3c.dom.Text;
 
 public class DetailsOfRSRV extends AppCompatActivity {
+
+    FirebaseDatabase database;
     DatabaseReference myRefReservation;
     DatabaseReference myRefUser;
+    Intent intent;
 
-    private String key, r_id, str_restaurantName;
+    private String key, r_id, str_restaurantName, str_nickname, type,
+            is_accepted, is_confirm, isOwner, scoredByCustomer, scoredByRestaurant;
+    private int year, month, day, hour, minute, cover;
+
+    TextView r_nickname, restaurantName, r_date, r_time, covers, status;
+    Button submit,cancel, modify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_of_reservation);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRefReservation = database.getReference("Reservation/");
-        myRefUser = database.getReference("User_info/");
+        initDatabase();
 
-        Intent intent = getIntent();
+        intent = getIntent();
 
-        final String str_nickname = intent.getStringExtra("nickname");
-        str_restaurantName = intent.getStringExtra("restaurant_name");
-        final int year = intent.getIntExtra("year",0);
-        final int month = intent.getIntExtra("month",0);
-        final int day = intent.getIntExtra("day",0);
-        final int hour = intent.getIntExtra("hour",0);
-        final int minute = intent.getIntExtra("minute",0);
-        final int cover = intent.getIntExtra("covers", 0);
-        key = intent.getStringExtra("key");
-        final String is_accepted = intent.getStringExtra("is_accepted");//예약 승인여부
-        final String is_confirm = intent.getStringExtra("is_confirm");//방문 확인ㄴ 여부
-        final String type = intent.getStringExtra("type");
-        final String isOwner = intent.getStringExtra("isOwner");
-        final String scoredByCustomer = intent.getStringExtra("scoredByCustomer");
-        final String scoredByRestaurant = intent.getStringExtra("scoredByRestaurant");
-        r_id = intent.getStringExtra("r_id");
+        initData();
+        initView();
 
         int iDday = countDday(year, month, day);
-
-        TextView r_nickname = (TextView) findViewById(R.id.r_nickname);
-        TextView restaurantName = (TextView) findViewById(R.id.restaurant_name);
-
-        TextView r_date = (TextView) findViewById(R.id.r_date);
-        TextView r_time = (TextView) findViewById(R.id.r_time);
-        TextView covers = (TextView) findViewById(R.id.covers);
-
-        TextView status = (TextView) findViewById(R.id.status);
-        Button submit = (Button) findViewById(R.id.submit);
-        Button cancel = (Button) findViewById(R.id.cancel);
-        Button modify = (Button) findViewById(R.id.modify);
-        cancel.setVisibility(View.GONE);
-        modify.setVisibility(View.GONE);
-        restaurantName.setText(str_restaurantName+"("+type+")");
-        r_nickname.setText(str_nickname);
-
-        r_date.setText(year + "년" + month + "월" + day + "일");
-        r_time.setText(hour + "시 " + minute + "분");
-        covers.setText(cover + "명");
 
 
         if (is_accepted.equals("null")) {                                     //예약 승인 안됨
@@ -153,12 +125,8 @@ public class DetailsOfRSRV extends AppCompatActivity {
             status.setText("예약 취소");
 
         }
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        submit.setOnClickListener(submitListener);
 
         if ((countDday(year, month, day) >= 1 ) && (is_accepted.equals("null"))) {//하루 이전이고 예약 미처리 경우, 수정 가능,취소 불가
             modify.setVisibility(View.VISIBLE);
@@ -173,49 +141,9 @@ public class DetailsOfRSRV extends AppCompatActivity {
             cancel.setVisibility(View.VISIBLE);
         }
 
-        modify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //need to implement
-                Intent modify = new Intent(getApplicationContext(), ModifyActivity.class);
-                modify.putExtra("reservation_name",str_restaurantName);
-                modify.putExtra("nickname",str_nickname);
-                modify.putExtra("year",year);
-                modify.putExtra("month",month);
-                modify.putExtra("day",day);
-                modify.putExtra("hour",hour);
-                modify.putExtra("minute",minute);
-                modify.putExtra("covers",cover);
-                modify.putExtra("key",key);
-                modify.putExtra("type",type);
-                startActivity(modify);
-            }
-        });
+        modify.setOnClickListener(modifyListener);
 
-        cancel.setOnClickListener(new View.OnClickListener(){//
-            @Override
-            public void onClick(View v) {
-                //need to implement
-                //데이터베이스에서 해당 내용을 삭제하기보다는 상태를 취소로 하는게 좋을듯
-                AlertDialog.Builder alert;
-                alert = new AlertDialog.Builder(DetailsOfRSRV.this);
-                alert.setTitle("예약 삭제");
-                alert.setMessage("예약을 삭제하시겠습니까?");
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        myRefReservation.child(key).child("is_accepted").setValue("-1");
-                    }
-                });
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                alert.show();
-            }
-        });
+        cancel.setOnClickListener(cancelListener);
 
     }
 
@@ -414,6 +342,106 @@ public class DetailsOfRSRV extends AppCompatActivity {
         }
 
     }
+
+    private void initDatabase(){
+        database = FirebaseDatabase.getInstance();
+        myRefReservation = database.getReference("Reservation/");
+        myRefUser = database.getReference("User_info/");
+    }
+
+    private void initData() {
+        str_nickname = intent.getStringExtra("nickname");
+        str_restaurantName = intent.getStringExtra("restaurant_name");
+        year = intent.getIntExtra("year", 0);
+        month = intent.getIntExtra("month", 0);
+        day = intent.getIntExtra("day", 0);
+        hour = intent.getIntExtra("hour", 0);
+        minute = intent.getIntExtra("minute", 0);
+        cover = intent.getIntExtra("covers", 0);
+        key = intent.getStringExtra("key");
+        is_accepted = intent.getStringExtra("is_accepted");//예약 승인여부
+        is_confirm = intent.getStringExtra("is_confirm");//방문 확인 여부
+        type = intent.getStringExtra("type");
+        isOwner = intent.getStringExtra("isOwner");
+        scoredByCustomer = intent.getStringExtra("scoredByCustomer");
+        scoredByRestaurant = intent.getStringExtra("scoredByRestaurant");
+        r_id = intent.getStringExtra("r_id");
+    };
+
+    private void initView(){
+
+        r_nickname = (TextView) findViewById(R.id.r_nickname);
+        restaurantName = (TextView) findViewById(R.id.restaurant_name);
+
+        r_date = (TextView) findViewById(R.id.r_date);
+        r_time = (TextView) findViewById(R.id.r_time);
+        covers = (TextView) findViewById(R.id.covers);
+
+        status = (TextView) findViewById(R.id.status);
+        submit = (Button) findViewById(R.id.submit);
+        cancel = (Button) findViewById(R.id.cancel);
+        modify = (Button) findViewById(R.id.modify);
+
+        cancel.setVisibility(View.GONE);
+        modify.setVisibility(View.GONE);
+        restaurantName.setText(str_restaurantName+"("+type+")");
+        r_nickname.setText(str_nickname);
+
+        r_date.setText(year + "년 " + month + "월 " + day + "일");
+        r_time.setText(hour + "시 " + minute + "분");
+        covers.setText(cover + "명");
+    };
+
+    View.OnClickListener submitListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
+
+    View.OnClickListener modifyListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //need to implement
+            Intent modify = new Intent(getApplicationContext(), ModifyActivity.class);
+            modify.putExtra("reservation_name",str_restaurantName);
+            modify.putExtra("nickname",str_nickname);
+            modify.putExtra("year",year);
+            modify.putExtra("month",month);
+            modify.putExtra("day",day);
+            modify.putExtra("hour",hour);
+            modify.putExtra("minute",minute);
+            modify.putExtra("covers",cover);
+            modify.putExtra("key",key);
+            modify.putExtra("type",type);
+            startActivity(modify);
+        }
+    };
+
+    View.OnClickListener cancelListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //need to implement
+            //데이터베이스에서 해당 내용을 삭제하기보다는 상태를 취소로 하는게 좋을듯
+            AlertDialog.Builder alert;
+            alert = new AlertDialog.Builder(DetailsOfRSRV.this);
+            alert.setTitle("예약 삭제");
+            alert.setMessage("예약을 삭제하시겠습니까?");
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    myRefReservation.child(key).child("is_accepted").setValue("-1");
+                }
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            alert.show();
+        }
+    };
 
 }
 
