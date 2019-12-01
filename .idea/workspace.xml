@@ -13,7 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2325b93b-f557-4f5e-b7ac-0c1c3935f95d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/score_arrays.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -23,12 +22,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/DetailsOfRSRV.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/DetailsOfRSRV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/ListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/ListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/QueryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/QueryFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/addboxdialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/score_popup.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +53,7 @@
       </content>
     </window>
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_28" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_28_2" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -113,18 +108,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/DetailsOfRSRV.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="319" column="108" lean-forward="true" selection-start-line="319" selection-start-column="108" selection-end-line="319" selection-end-column="108" />
+            <state relative-caret-position="362">
+              <caret line="121" column="26" lean-forward="true" selection-start-line="121" selection-start-column="26" selection-end-line="121" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7097#7361#0" expanded="true" />
-                <element signature="e#7360#7361#0" expanded="true" />
+                <element signature="e#7201#7476#0" expanded="true" />
+                <element signature="e#7475#7476#0" expanded="true" />
                 <element signature="method#onNothingSelected#0;class#8988:9292" />
-                <element signature="e#9245#10163#0" expanded="true" />
-                <element signature="e#10162#10163#0" expanded="true" />
+                <element signature="e#9245#10122#0" expanded="true" />
+                <element signature="e#10121#10122#0" expanded="true" />
+                <element signature="method#onNothingSelected#0;class#12002:12381" />
+                <element signature="e#12438#13315#0" expanded="true" />
+                <element signature="e#13314#13315#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,8 +149,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1387">
-              <caret line="164" column="29" lean-forward="true" selection-start-line="164" selection-start-column="29" selection-end-line="164" selection-end-column="29" />
+            <state relative-caret-position="436">
+              <caret line="197" column="55" lean-forward="true" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -169,11 +167,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="93" column="49" lean-forward="true" selection-start-line="93" selection-start-column="49" selection-end-line="93" selection-end-column="49" />
+            <state relative-caret-position="340">
+              <caret line="130" column="104" selection-start-line="130" selection-start-column="104" selection-end-line="130" selection-end-column="104" />
             </state>
           </provider>
         </entry>
@@ -317,16 +315,16 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/customer_listview_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ResultActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/Reservation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/ListViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/addboxdialog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/score_popup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/score_arrays.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/home/HomeFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/QueryFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/DetailsOfRSRV.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java" />
       </list>
     </option>
   </component>
@@ -429,8 +427,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3_API_28" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-01T09:50:04.166Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3_API_28_2" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-01T10:03:26.414Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../Android/Sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
@@ -799,7 +797,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575188112299</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="사장은 이제 정상적으로 평점을 줄 수 있음">
+      <created>1575194380762</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1575194380762</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -815,7 +820,7 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="top" content_ui="combo" id="Project" order="0" sideWeight="0.49710426" weight="0.64377683" />
+      <window_info anchor="top" content_ui="combo" id="Project" order="0" sideWeight="0.49710426" weight="0.7832618" />
       <window_info id="Structure" order="0" sideWeight="0.5006821" side_tool="true" weight="0.24093817" />
       <window_info id="Captures" order="1" sideWeight="0.5006821" side_tool="true" weight="0.24093817" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -826,11 +831,11 @@
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="bottom" id="Logcat" order="0" sideWeight="0.65444016" weight="0.32725322" />
       <window_info anchor="bottom" id="Run" order="1" sideWeight="0.71814674" weight="0.28218883" />
-      <window_info active="true" anchor="bottom" id="Debug" order="2" sideWeight="0.4968017" visible="true" weight="0.35622317" />
+      <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.4968017" weight="0.35622317" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.2818533" side_tool="true" weight="0.21257143" />
       <window_info anchor="bottom" id="Version Control" order="4" sideWeight="0.69401544" weight="0.22854078" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49946696" weight="0.32939914" />
-      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.5907336" weight="0.2167382" />
+      <window_info active="true" anchor="bottom" id="Build" order="6" sideWeight="0.5907336" visible="true" weight="0.2167382" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.49946696" weight="0.46995708" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32939914" />
       <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.49973333" weight="0.19631237" />
@@ -928,7 +933,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=" SingUpActivity&#10;   버그 수정&#10;     Activity 진입시 토스트가 뜨는 버그 수정&#10;     사용자 타입 미선택시 토스트 메시지가 안뜨는 버그 수정" />
     <MESSAGE value=" SingUpActivity&#10;   버그 수정&#10;     아이디 중복체크를 하지 않아도 회원가입되는 버그 수정" />
     <MESSAGE value="result.xml&#10;  레이아웃 수정&#10;  예약시간 TextView 추가&#10;    id = r_time" />
     <MESSAGE value="reservation2.xml&#10;  ScrollView fillViewport=&quot;true&quot; 옵션 추가&#10;Reservation2Activity&#10;  시간 관련 버그 수정&#10;  예약자 이름이 없어도 예약이 되번 버그 수정" />
@@ -953,7 +957,8 @@
     <MESSAGE value="ListViewAdapter&#10;  평점 나오도록 수정" />
     <MESSAGE value="HomeFragment&#10;  리스트뷰 아이템 클릭시 세부 정보 표시하도록 수정" />
     <MESSAGE value="ListViewAdapter&#10;  레이아웃 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="ListViewAdapter&#10;  레이아웃 수정" />
+    <MESSAGE value="사장은 이제 정상적으로 평점을 줄 수 있음" />
+    <option name="LAST_COMMIT_MESSAGE" value="사장은 이제 정상적으로 평점을 줄 수 있음" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -969,6 +974,12 @@
           <line>52</line>
           <properties />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1257,13 +1268,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1387">
-          <caret line="164" column="29" lean-forward="true" selection-start-line="164" selection-start-column="29" selection-end-line="164" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/ListViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
@@ -1293,13 +1297,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="93" column="49" lean-forward="true" selection-start-line="93" selection-start-column="49" selection-end-line="93" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -1337,16 +1334,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/DetailsOfRSRV.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="319" column="108" lean-forward="true" selection-start-line="319" selection-start-column="108" selection-end-line="319" selection-end-column="108" />
+        <state relative-caret-position="362">
+          <caret line="121" column="26" lean-forward="true" selection-start-line="121" selection-start-column="26" selection-end-line="121" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7097#7361#0" expanded="true" />
-            <element signature="e#7360#7361#0" expanded="true" />
+            <element signature="e#7201#7476#0" expanded="true" />
+            <element signature="e#7475#7476#0" expanded="true" />
             <element signature="method#onNothingSelected#0;class#8988:9292" />
-            <element signature="e#9245#10163#0" expanded="true" />
-            <element signature="e#10162#10163#0" expanded="true" />
+            <element signature="e#9245#10122#0" expanded="true" />
+            <element signature="e#10121#10122#0" expanded="true" />
+            <element signature="method#onNothingSelected#0;class#12002:12381" />
+            <element signature="e#12438#13315#0" expanded="true" />
+            <element signature="e#13314#13315#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/item/CustomerListViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="197" column="55" lean-forward="true" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/reservation/ui/query/CustomerQueryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="130" column="104" selection-start-line="130" selection-start-column="104" selection-end-line="130" selection-end-column="104" />
         </state>
       </provider>
     </entry>

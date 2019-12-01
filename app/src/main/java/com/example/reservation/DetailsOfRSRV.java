@@ -36,7 +36,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
     DatabaseReference myRefReservation;
     DatabaseReference myRefUser;
 
-    private String key, r_id;
+    private String key, r_id, str_restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
         Intent intent = getIntent();
 
         final String str_nickname = intent.getStringExtra("nickname");
-        final String str_restaurantName = intent.getStringExtra("restaurant_name");
+        str_restaurantName = intent.getStringExtra("restaurant_name");
         final int year = intent.getIntExtra("year",0);
         final int month = intent.getIntExtra("month",0);
         final int day = intent.getIntExtra("day",0);
@@ -109,7 +109,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
                         if (scoredByRestaurant.equals("null")) {
 
                             status.setText("평점 입력 대기");
-                            scorePopup();
+                            scorePopupOnwer();
 
                         }
                         else {
@@ -124,7 +124,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
                         if (scoredByCustomer.equals("null")) {
 
                             status.setText("평점 입력 대기");
-                            scorePopup();
+                            scorePopupCustomer();
 
                         } else {
 
@@ -241,7 +241,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
     int selectedScore;
     String tmp;
 
-    void scorePopup() {
+    void scorePopupOnwer() {
         View dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
@@ -275,7 +275,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                setScore(dataSnapshot);
+                                setScoreToCustomer(dataSnapshot);
 
                             }
 
@@ -304,12 +304,99 @@ public class DetailsOfRSRV extends AppCompatActivity {
         myRefReservation.child(key).child("scoredByRestaurant").setValue(value);
     }
 
-    public void setScore(@NonNull DataSnapshot dataSnapshot) {
+    public void setScoreToCustomer(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
 
             User user_each = childSnapshot.getValue(User.class);
 
             if (user_each.getId1().equals(r_id)) {
+
+                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                user_each.setSumScore(user_each.getSumScore() + selectedScore);
+                user_each.setCount(user_each.getCount() + 1);
+                user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
+                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+
+                myRefUser.child(childSnapshot.getKey()).child("sumScore").setValue(user_each.getSumScore());
+                myRefUser.child(childSnapshot.getKey()).child("count").setValue(user_each.getCount());
+                myRefUser.child(childSnapshot.getKey()).child("avgScore").setValue(user_each.getAvgScore());
+
+                break;
+            }
+
+        }
+
+    }
+
+    void scorePopupCustomer() {
+        View dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
+        builder.setTitle("평점 입력");
+        builder.setMessage("방문한 매장은 어땠나요?");
+
+        builder.setView(dialogView);
+
+        scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
+
+        scoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedScore = Integer.parseInt(scoreSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(DetailsOfRSRV.this, "평점 " + selectedScore + "점 이 입력되었습니다.", Toast.LENGTH_SHORT).show();
+
+                        setScoredByCustomer(Integer.toString(selectedScore));
+
+                        myRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                setScoreToRestaurant(dataSnapshot);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+                        });
+
+                    }
+
+                });
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+    public void setScoredByCustomer(String value) {
+        myRefReservation.child(key).child("scoredByCustomer").setValue(value);
+    }
+
+    public void setScoreToRestaurant(@NonNull DataSnapshot dataSnapshot) {
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+
+            User user_each = childSnapshot.getValue(User.class);
+
+            if (user_each.getRestaurant_name().equals(str_restaurantName)) {
 
                 Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
                 user_each.setSumScore(user_each.getSumScore() + selectedScore);
