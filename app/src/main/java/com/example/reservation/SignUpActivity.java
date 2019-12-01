@@ -126,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
                 timePickerDialog = new TimePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        openTime.setText(hourOfDay+"시 "+minute+"분");//새 오픈시간
+                        openTime.setText(hourOfDay+"시 "+minute*10+"분");//새 오픈시간
 
                     }
                 }, 15,24, false);
@@ -141,7 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
                 timePickerDialog = new TimePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        closeTime.setText(hourOfDay+"시 "+minute+"분");//새 오픈시간
+                        closeTime.setText(hourOfDay+"시 "+minute*10+"분");//새 오픈시간
 
                     }
                 }, 15,24, false);
