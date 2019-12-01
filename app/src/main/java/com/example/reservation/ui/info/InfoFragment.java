@@ -279,8 +279,9 @@ public class InfoFragment extends Fragment {
                             }
                         });
                     }
-                });
 
+                });
+        builder.setCancelable(false);
         builder.show();
     }
 }

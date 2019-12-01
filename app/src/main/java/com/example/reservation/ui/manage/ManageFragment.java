@@ -218,7 +218,7 @@ public class ManageFragment extends Fragment {
                         });
                     }
                 });
-
+        builder.setCancelable(false);
         builder.show();
     }
 }
