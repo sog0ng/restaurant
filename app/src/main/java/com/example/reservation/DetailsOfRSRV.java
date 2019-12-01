@@ -41,7 +41,7 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
     private String key, r_id, str_restaurantName, str_nickname, type,
             is_accepted, is_confirm, isOwner, scoredByCustomer, scoredByRestaurant;
-    private int year, month, day, hour, minute, cover;
+    private int year, month, day, hour, minute, cover, iDday, selectedScore;
 
     TextView r_nickname, restaurantName, r_date, r_time, covers, status;
     Button submit,cancel, modify;
@@ -49,8 +49,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
     View dialogView;
 
     android.app.AlertDialog.Builder builder;
-
-    int selectedScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +59,14 @@ public class DetailsOfRSRV extends AppCompatActivity {
         initData();
         initView();
 
-        int iDday = countDday(year, month, day);
+        setStatus();
+        submit.setOnClickListener(submitListener);
+        checkChangeable();
+        modify.setOnClickListener(modifyListener);
+        cancel.setOnClickListener(cancelListener);
+    }
 
-
+    void setStatus(){
         if (is_accepted.equals("null")) {                                     //예약 승인 안됨
 
             status.setText("처리중");
@@ -149,48 +152,9 @@ public class DetailsOfRSRV extends AppCompatActivity {
             status.setText("예약 취소");
 
         }
-
-        submit.setOnClickListener(submitListener);
-
-        if ((countDday(year, month, day) >= 1 ) && (is_accepted.equals("null"))) {//하루 이전이고 예약 미처리 경우, 수정 가능,취소 불가
-            modify.setVisibility(View.VISIBLE);
-            cancel.setVisibility(View.VISIBLE);
-
-        }
-        else if((countDday(year, month, day) >= 1 ) && (is_accepted.equals("1"))){//하루 이전이고 승인일 경우 수정 불가, 취소 가능
-            cancel.setVisibility(View.VISIBLE);
-        }
-        else if((countDday(year, month, day) == 0 ) && is_accepted.equals("null")){//하루이내이고 미처리시 수정가능, 취소 가능
-            modify.setVisibility(View.VISIBLE);
-            cancel.setVisibility(View.VISIBLE);
-        }
-
-        modify.setOnClickListener(modifyListener);
-
-        cancel.setOnClickListener(cancelListener);
-
-    }
-
-    public int countDday(int myear, int mmonth, int mday) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar todaCal = Calendar.getInstance();
-        Calendar ddayCal = Calendar.getInstance();
-
-        mmonth -= 1;
-        ddayCal.set(myear, mmonth, mday);
-
-        long today = todaCal.getTimeInMillis() / 86400000;
-        long dday = ddayCal.getTimeInMillis() / 86400000;
-
-        long count = dday - today;
-
-        return (int) count;
     }
 
     void scorePopupOnwer() {
-        builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
-        builder.setTitle("평점 입력");
         builder.setMessage("방문한 고객은 어땠나요?");
         builder.setView(dialogView);
 
@@ -254,8 +218,6 @@ public class DetailsOfRSRV extends AppCompatActivity {
     }
 
     void scorePopupCustomer() {
-        builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
-        builder.setTitle("평점 입력");
         builder.setMessage("방문한 매장은 어땠나요?");
         builder.setView(dialogView);
 
@@ -298,16 +260,14 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
     public void setScoreToRestaurant(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-
             User user_each = childSnapshot.getValue(User.class);
-
             if (user_each.getRestaurant_name().equals(str_restaurantName)) {
 
-                Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
+                //Log.i("원래 SumScore ", Integer.toString(user_each.getSumScore()));
                 user_each.setSumScore(user_each.getSumScore() + selectedScore);
                 user_each.setCount(user_each.getCount() + 1);
                 user_each.setAvgScore(user_each.getSumScore() / user_each.getCount());
-                Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
+                //Log.i("변경된 SumScore ", Integer.toString(user_each.getSumScore()));
 
                 myRefUser.child(childSnapshot.getKey()).child("sumScore").setValue(user_each.getSumScore());
                 myRefUser.child(childSnapshot.getKey()).child("count").setValue(user_each.getCount());
@@ -318,6 +278,36 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
         }
 
+    }
+
+    void checkChangeable() {
+        if (iDday >= 1 && (is_accepted.equals("null"))) {//하루 이전이고 예약 미처리 경우, 수정 가능,취소 불가
+            modify.setVisibility(View.VISIBLE);
+            cancel.setVisibility(View.VISIBLE);
+
+        } else if (iDday >= 1 && (is_accepted.equals("1"))) {//하루 이전이고 승인일 경우 수정 불가, 취소 가능
+            cancel.setVisibility(View.VISIBLE);
+        } else if (iDday == 0 && is_accepted.equals("null")) {//하루이내이고 미처리시 수정가능, 취소 가능
+            modify.setVisibility(View.VISIBLE);
+            cancel.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public int countDday(int myear, int mmonth, int mday) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar todaCal = Calendar.getInstance();
+        Calendar ddayCal = Calendar.getInstance();
+
+        mmonth -= 1;
+        ddayCal.set(myear, mmonth, mday);
+
+        long today = todaCal.getTimeInMillis() / 86400000;
+        long dday = ddayCal.getTimeInMillis() / 86400000;
+
+        long count = dday - today;
+
+        return (int) count;
     }
 
     private void initDatabase(){
@@ -344,6 +334,8 @@ public class DetailsOfRSRV extends AppCompatActivity {
         scoredByCustomer = intent.getStringExtra("scoredByCustomer");
         scoredByRestaurant = intent.getStringExtra("scoredByRestaurant");
         r_id = intent.getStringExtra("r_id");
+
+        iDday = countDday(year, month, day);
     };
 
     private void initView(){
@@ -368,6 +360,9 @@ public class DetailsOfRSRV extends AppCompatActivity {
 
         dialogView = getLayoutInflater().inflate(R.layout.score_popup, null);
         scoreSpinner = (Spinner) dialogView.findViewById(R.id.scoreSpinner);
+
+        builder = new android.app.AlertDialog.Builder(DetailsOfRSRV.this);
+        builder.setTitle("평점 입력");
     };
 
     View.OnClickListener submitListener = new View.OnClickListener(){

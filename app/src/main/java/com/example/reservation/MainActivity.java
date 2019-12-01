@@ -144,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 String pw = editpw.getText().toString();
 
                 if (userLoginCheck(id, pw, user_each)) {
-
-
                     login_success = userDivisionCheck(user_each, key, id);
                     editid.setText(null);
                     editpw.setText(null);
@@ -167,24 +165,24 @@ public class MainActivity extends AppCompatActivity {
 
     // 데이터베이스 단위테스트를 진행하기위한 메서드
     // null 인지 아닌지 체크하면 좋을듯
-    private DatabaseReference getMyRef1() {
+    public DatabaseReference getMyRef1() {
         return database.getReference("User_info/");
     }
 
-    private String getKeyCheck(DataSnapshot childSnapshot) {
+    public String getKeyCheck(DataSnapshot childSnapshot) {
         return childSnapshot.getKey();
     }
 
-    private User getValueCheck(DataSnapshot childSnapshot) {
+    public User getValueCheck(DataSnapshot childSnapshot) {
         return childSnapshot.getValue(User.class);
     }
 
-    private boolean userLoginCheck(String id, String pw, User user_each){
+    public boolean userLoginCheck(String id, String pw, User user_each){
         return (id.equals(user_each.getId1()) && pw.equals(user_each.getPassword()));
 
     }
 
-    private boolean userDivisionCheck(User user_each, String key, String id){
+    public boolean userDivisionCheck(User user_each, String key, String id){
         if (user_each.getIs_owner().equals("0")) {//사장인 경우
 //                        Log.i("id:", editid.getText().toString());
 //                        Log.i("pw:", editpw.getText().toString());
